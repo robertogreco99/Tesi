@@ -39,12 +39,12 @@ RUN mkdir -p /usr/local/share/model
 RUN git clone https://git.ffmpeg.org/ffmpeg.git /ffmpeg \
     && cd /ffmpeg \
     && ./configure --enable-gpl  --enable-libvmaf --enable-libx264 --enable-libx265 --enable-libvpx --enable-libvorbis --enable-libopus \
-    && make -j$(nproc) \
+    && make -j4 \
     && make install
 
 
 # Crea una directory per i video e i risultati
-RUN mkdir -p /videos /results
+RUN mkdir -p /inputs /results
 
 # Imposta la directory di lavoro
 WORKDIR /app

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Directory dei video di input
-INPUT_DIR="/videos"
+INPUT_DIR="/inputs"
 # Directory per salvare i risultati (video codificati e risultati di valutazione)
 OUTPUT_DIR="/results"
 # Modello VMAF

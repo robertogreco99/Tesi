@@ -1,9 +1,9 @@
 0. Lanciare docker
-docker run -it -v /home/roberto/Scaricati/Tesi/Lavoro\ sulla\ tesi/Tesi/Input:/videos -v /home/roberto/Scaricati/Tesi/Lavoro\ sulla\ tesi/Tesi/Risultato:/results image sh
+docker run -it -v /home/roberto/Scaricati/Tesi/Lavoro\ sulla\ tesi/Tesi/Input:/inputs -v /home/roberto/Scaricati/Tesi/Lavoro\ sulla\ tesi/Tesi/Risultato:/results image sh
 
 
 Codifica in avc il video
-1. ffmpeg -i /videos/input.mp4 -c:v libx264 /results/output_h264.mp4
+1. ffmpeg -i /inputs/input.mp4 -c:v libx264 /results/output_h264.mp4
 Trovare il valore di vmaf
 2. json : 
-ffmpeg -i /results/output_h264.mp4 -i /videos/input.mp4 -lavfi "libvmaf=log_path=result.json:log_fmt=json" -f null -
+ffmpeg -i /results/output_h264.mp4 -i /inputs/input.mp4 -lavfi "libvmaf=log_path=result.json:log_fmt=json" -f null -
