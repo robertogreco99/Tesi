@@ -17,11 +17,13 @@ RUN apk add --no-cache \
     zlib-dev \
     linux-headers \ 
     vim  \
+    nano \
     x264-dev \
     x265-dev \
     libvpx-dev \
     libvorbis-dev \
-    opus-dev 
+    opus-dev \
+    aom-dev
 
 # Installa le librerie Python per l'analisi e la grafica
 RUN pip3 install matplotlib pandas
@@ -32,13 +34,11 @@ RUN git clone https://github.com/Netflix/vmaf.git /vmaf \
     && meson build --buildtype release \
     && ninja -C build \
     && ninja -C build install
-#Crea la directory per il modello VMAF
-RUN mkdir -p /usr/local/share/model
 
 # Clona il repository di FFmpeg
 RUN git clone https://git.ffmpeg.org/ffmpeg.git /ffmpeg \
     && cd /ffmpeg \
-    && ./configure --enable-gpl  --enable-libvmaf --enable-libx264 --enable-libx265 --enable-libvpx --enable-libvorbis --enable-libopus \
+    && ./configure --enable-gpl  --enable-libvmaf --enable-libx264 --enable-libx265 --enable-libaom --enable-libvpx --enable-libvorbis --enable-libopus \
     && make -j4 \
     && make install
 
@@ -52,6 +52,12 @@ WORKDIR /app
 # Copia i file necessari
 COPY analyze.py .
 COPY run_experiments.sh .
+
+# Aggiungi permessi di esecuzione agli script
+RUN chmod +x run_experiments.sh analyze.py
+
+# Esegui lo script 
+RUN ./run_experiments.sh
 
 # Avvia una shell Bash
 CMD ["/bin/sh"]
