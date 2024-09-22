@@ -1,7 +1,7 @@
-# Usa l'immagine base di Alpine
+# Parto dall'immagine base di alpine
 FROM python:3.9-alpine
 
-# Aggiorna gli indici dei pacchetti e installa dipendenze di base e FFmpeg
+# Pacchetti necessari
 RUN apk add --no-cache \
     bash \
     build-base \
@@ -25,38 +25,38 @@ RUN apk add --no-cache \
     opus-dev \
     aom-dev
 
-# Installa le librerie Python per l'analisi e la grafica
+# Librerie pyhton per l'analisi grafica
 RUN pip3 install matplotlib pandas
 
-# Clona il repository VMAF e compila la libreria
+# Clono vmaf e installo libvmaf
 RUN git clone https://github.com/Netflix/vmaf.git /vmaf \
     && cd /vmaf/libvmaf \
     && meson build --buildtype release \
     && ninja -C build \
     && ninja -C build install
 
-# Clona il repository di FFmpeg
+# Clona il repository di FFmpeg e lo compilo con le dipendenze necessarie
 RUN git clone https://git.ffmpeg.org/ffmpeg.git /ffmpeg \
     && cd /ffmpeg \
     && ./configure --enable-gpl  --enable-libvmaf --enable-libx264 --enable-libx265 --enable-libaom --enable-libvpx --enable-libvorbis --enable-libopus \
-    && make -j4 \
+    && make -j$(nproc) \
     && make install
 
 
-# Crea una directory per i video e i risultati
+# Creo una directory per i video e  unai risultati
 RUN mkdir -p /inputs /results
 
-# Imposta la directory di lavoro
+# Imposto la workdir
 WORKDIR /app
 
-# Copia i file necessari
+# Copio gli script
 COPY analyze.py .
 COPY run_experiments.sh .
 
-# Aggiungi permessi di esecuzione agli script
+# Rendo script eseguibili
 RUN chmod +x run_experiments.sh analyze.py
 
-# Esegui lo script 
+# Eseguo lo script 
 RUN ./run_experiments.sh
 
 # Avvia una shell Bash

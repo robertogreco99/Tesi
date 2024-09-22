@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 # Dove metto i risultati 
-result_folder = "/results"
+result_folder = "./results"
 
 # Funzione per analizzare i risultati VMAF
 def vmaf_analyze_results(json_file):
@@ -31,3 +31,16 @@ for json_file in os.listdir(result_folder):
 
 # Converti i risultati in un DataFrame per una gestione migliore
 df_results = pd.DataFrame(results, columns=["File", "Mean VMAF", "Median VMAF"])
+
+# Visualizzazione dei risultati con matplotlib
+plt.figure(figsize=(10, 6))
+plt.bar(df_results["File"], df_results["Mean VMAF"], label="Mean VMAF", color="b", alpha=0.7)
+plt.bar(df_results["File"], df_results["Median VMAF"], label="Median VMAF", color="r", alpha=0.5)
+plt.xlabel("File")
+plt.ylabel("VMAF Score")
+plt.title("Mean and Median VMAF Scores for Each File")
+plt.xticks(rotation=45, ha="right")
+plt.legend()
+plt.tight_layout()
+plt.show()
+plt.savefig("vmaf_scores.png")
