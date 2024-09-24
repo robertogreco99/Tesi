@@ -56,8 +56,8 @@ COPY run_experiments.sh .
 # Rendo script eseguibili
 RUN chmod +x run_experiments.sh analyze.py
 
-# Eseguo lo script 
-RUN ./run_experiments.sh
+# Creazione di uno script per eseguire entrambi gli script
+RUN echo -e '#!/bin/sh\n./run_experiments.sh\npython3 analyze.py' > run_both.sh && chmod +x run_both.sh
 
-# Avvia una shell Bash
-CMD ["/bin/sh"]
+# Comando per eseguire lo script run_both.sh all'avvio del contenitore
+CMD ["./run_both.sh"]
