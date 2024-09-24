@@ -2,6 +2,7 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import numpy as np
 
 # Dove metto i risultati 
 result_folder = "/results"
@@ -29,5 +30,22 @@ for json_file in os.listdir(result_folder):
         results.append((json_file, mean, median))
         print(f"File: {json_file}, Mean VMAF: {mean}, Median VMAF: {median}")
 
-# Converti i risultati in un DataFrame per una gestione migliore
+
+#  Creo il data frame
 df_results = pd.DataFrame(results, columns=["File", "Mean VMAF", "Median VMAF"])
+print(df_results)
+
+# lista di indici da 0 alla dimensione del data frame
+index = np.arange(len(df_results))
+width = 0.3
+
+plt.figure(figsize=(12, 6)) 
+
+plt.title("Confronto di input vs Media e Mediana")
+plt.bar(index, df_results['Mean VMAF'],width = width ,label='Mean VMAF', color='b')
+plt.bar(index+width, df_results['Median VMAF'],width = width, label='Median VMAF', color='r')
+plt.xticks(index+width/2, df_results['File'])
+plt.legend()
+
+# Salvo il grafico
+plt.savefig('/results/vmaf_scores.png', format='png')

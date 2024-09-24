@@ -2,6 +2,7 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import numpy as np
 
 # Dove metto i risultati 
 result_folder = "./results"
@@ -32,15 +33,22 @@ for json_file in os.listdir(result_folder):
 # Converti i risultati in un DataFrame per una gestione migliore
 df_results = pd.DataFrame(results, columns=["File", "Mean VMAF", "Median VMAF"])
 
-# Visualizzazione dei risultati con matplotlib
-plt.figure(figsize=(10, 6))
-plt.bar(df_results["File"], df_results["Mean VMAF"], label="Mean VMAF", color="b", alpha=0.7)
-plt.bar(df_results["File"], df_results["Median VMAF"], label="Median VMAF", color="r", alpha=0.5)
-plt.xlabel("File")
-plt.ylabel("VMAF Score")
-plt.title("Mean and Median VMAF Scores for Each File")
-plt.xticks(rotation=45, ha="right")
+#  Creo il data frame
+df_results = pd.DataFrame(results, columns=["File", "Mean VMAF", "Median VMAF"])
+print(df_results)
+
+# lista di indici da 0 alla dimensione del data frame
+index = np.arange(len(df_results))
+width = 0.3
+
+plt.figure(figsize=(12, 6)) 
+
+plt.title("Confronto di input vs Media e Mediana")
+plt.bar(index, df_results['Mean VMAF'],width = width ,label='Mean VMAF', color='b')
+plt.bar(index+width, df_results['Median VMAF'],width = width, label='Median VMAF', color='r')
+plt.xticks(index+width/2, df_results['File'])
 plt.legend()
-plt.tight_layout()
-plt.show()
-plt.savefig("vmaf_scores.png")
+
+# Salvo il grafico
+plt.savefig('/results/vmaf_scores.png', format='png')
+
