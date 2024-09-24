@@ -7,3 +7,6 @@ Codifica in avc il video
 Trovare il valore di vmaf
 2. json : 
 ffmpeg -i /results/output_h264.mp4 -i /inputs/input.mp4 -lavfi "libvmaf=log_path=result.json:log_fmt=json" -f null -
+
+
+3. Lanciare il docker con gli script docker run -it   -v /home/roberto/Scaricati/Tesi/Lavoro\ sulla\ tesi/Tesi/Input:/inputs   -v /home/roberto/Scaricati/Tesi/Lavoro\ sulla\ tesi/Tesi/Risultato:/results   image
