@@ -4,7 +4,7 @@
 INPUT_DIR="/inputs"
 # Directory per salvare i risultati
 OUTPUT_DIR="/results"
-# Modello VMAF
+# Modello VMAF da utilizzare
 VMAF_MODEL="/vmaf/model/vmaf_v0.6.1.json"
 
 # Controllo se la directory di input esiste
@@ -14,7 +14,7 @@ if [ ! -d "$INPUT_DIR" ]; then
 fi
 
 # Codifica e valutazione con vmaf
-#Parto con input in mp4
+#Parto con input in mp4 ( file è h.264)
 video_coding_vmafevaluation(){
 input_file=$1
 video_name=$(basename "$input_file" .mp4)
