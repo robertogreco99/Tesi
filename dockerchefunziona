@@ -1,32 +1,31 @@
-# Parto dall'immagine base di Debian Bookworm
-FROM python:3.12-bookworm
+# Parto dall'immagine base di alpine
+FROM python:3.9-alpine
 
-# Aggiornare i pacchetti e installare pacchetti necessari
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Pacchetti necessari da installare
+RUN apk add --no-cache \
     bash \
-    build-essential \
+    build-base \
     meson \
     nasm \
     yasm \
     git \
     python3-dev \
-    gcc \ 
+    libgcc \
     libtool \
     libpng-dev \
-    libjpeg-dev \
-    zlib1g-dev \
-    linux-headers-amd64 \  
-    vim \
+    jpeg-dev \
+    zlib-dev \
+    linux-headers \ 
+    vim  \
     nano \
-    libx264-dev \
-    libx265-dev \
+    x264-dev \
+    x265-dev \
     libvpx-dev \
     libvorbis-dev \
-    libopus-dev \
-    libaom-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    opus-dev \
+    aom-dev
 
-    # Librerie di python per fare le analisi e i grafici
+# Librerie di python per fare le analisi e i grafici
 RUN pip3 install matplotlib pandas
 
 # Clono vmaf e installo libvmaf
@@ -57,4 +56,8 @@ COPY run_experiments.sh .
 # Rendo script eseguibili
 RUN chmod +x run_experiments.sh analyze.py
 
-CMD ["/bin/sh"]
+# Creo uno script per lanciare gli script insieme
+RUN echo -e '#!/bin/sh\n./run_experiments.sh\npython3 analyze.py' > run_both.sh && chmod +x run_both.sh
+
+# All'avvio il container lancia questo script per lanciarli insieme
+CMD ["./run_both.sh"]
