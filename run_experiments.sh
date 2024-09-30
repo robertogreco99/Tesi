@@ -21,23 +21,48 @@ fi
 ##FIFA17_decoded.yuv: output yuv file name
 
 video_coding_vmafevaluation(){
-input_file=$1
-video_name=$(basename "$input_file" .mp4)
-# Output YUV file name
+distorted=$1
+original=$2
 
-output_yuv="$OUTPUT_DIR/${video_name}_decoded.yuv"
-    
-# Decode the video to YUV format
-ffmpeg -i "$input_file" -pix_fmt yuv420p -f rawvideo "$output_yuv"
-    
+echo "Input distorted file: $distorted"
+echo "Original YUV file: $original"
+
+# Output YUV file name
+output_yuv="$OUTPUT_DIR/FIFA17_30fps_30sec_v2_1920x1080_600_x264_mp4_decoded.yuv"
+
+
+# Decode the video
+ffmpeg -i "$distorted" -pix_fmt yuv420p -f rawvideo "$output_yuv"
+
+# Print the name of the output file
+echo "Output YUV: $output_yuv"
+
+
+# VMAF evaluation
+    /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+        --reference "$original" \
+        --distorted "$output_yuv" \
+        --width 1920 \
+        --height 1080 \
+        --pixel_format 420 \
+        --bitdepth 8 \
+        --model version=vmaf_v0.6.1 \
+        --feature psnr \
+        --output "$OUTPUT_DIR/result__KUGVD__1920x1080_600_x264__vmaf_v0.6.1.json" \
+        --json
 }
 
-# Check on input directory to see if there are videos
-for video_file in "$INPUT_DIR"/*.mp4; do
-    if [ -f "$video_file" ]; then
-        video_coding_vmafevaluation "$video_file"
+# Check on input directory to see if there are YUV videos
+for original in "$INPUT_DIR"/*.yuv; do
+    if [ -f "$original" ]; then
+        for distorted in "$INPUT_DIR"/*.mp4; do
+            if [ -f "$distorted" ]; then
+                video_coding_vmafevaluation "$distorted" "$original"
+            else
+                echo "Nessun file video MP4 trovato in '$INPUT_DIR'."
+            fi
+        done
     else
-        echo "Nessun file video trovato in '$INPUT_DIR'."
+        echo "Nessun file video YUV trovato in '$INPUT_DIR'."
     fi
 done
-
