@@ -1,7 +1,7 @@
-# Parto dall'immagine base di Debian Bookworm
+# Base image 
 FROM python:3.12-bookworm
 
-# Aggiornare i pacchetti e installare pacchetti necessari
+# Update packages and install necessary packets
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     build-essential \
@@ -26,17 +26,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libaom-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-    # Librerie di python per fare le analisi e i grafici
+# Python libraries for analysis and graphs
 RUN pip3 install matplotlib pandas
 
-# Clono vmaf e installo libvmaf
+# Clone vmaf and install libvmaf
 RUN git clone https://github.com/Netflix/vmaf.git /vmaf \
     && cd /vmaf/libvmaf \
     && meson build --buildtype release \
     && ninja -C build \
     && ninja -C build install
 
-# Clono il repository di ffmpeg per compilare con le opzioni giuste
+# Clone the ffmpeg repository to compile with the correct options
 RUN git clone https://git.ffmpeg.org/ffmpeg.git /ffmpeg \
     && cd /ffmpeg \
     && ./configure --enable-gpl  --enable-libvmaf --enable-libx264 --enable-libx265 --enable-libaom --enable-libvpx --enable-libvorbis --enable-libopus \
@@ -44,17 +44,17 @@ RUN git clone https://git.ffmpeg.org/ffmpeg.git /ffmpeg \
     && make install
 
 
-# Creo una directory per i video e  unai risultati
+# Create a directory for videos and results
 RUN mkdir -p /inputs /results
 
-# Imposto al workdir
+# Set the working directory
 WORKDIR /app
 
-# Copio gli script
+# Copy scripts
 COPY analyze.py .
 COPY run_experiments.sh .
 
-# Rendo script eseguibili
+# Make scripts executable
 RUN chmod +x run_experiments.sh analyze.py
 
 CMD ["/bin/sh"]
