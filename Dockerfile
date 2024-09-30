@@ -3,27 +3,27 @@ FROM python:3.12-bookworm
 
 # Update packages and install necessary packets
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    bash \
-    build-essential \
-    meson \
-    nasm \
-    yasm \
-    git \
-    python3-dev \
-    gcc\ 
-    libtool \
-    libpng-dev \
-    libjpeg-dev \
-    zlib1g-dev \
-    linux-headers-amd64 \  
-    vim \
-    nano \
-    libx264-dev \
-    libx265-dev \
-    libvpx-dev \
-    libvorbis-dev \
-    libopus-dev \
-    libaom-dev 
+    bash=5.2.15-2+b7 \
+    build-essential=12.9 \
+    meson=1.0.1-5\
+    nasm=2.16.01-1\
+    yasm=1.3.0-4\
+    git=1:2.39.5-0+deb12u1\
+    python3-dev=3.11.2-1+b1\
+    gcc=4:12.2.0-3\
+    libtool=2.4.7-7~deb12u1\
+    libpng-dev=1.6.39-2\
+    libjpeg-dev=1:2.1.5-2\
+    zlib1g-dev=1:1.2.13.dfsg-1\
+    linux-headers-amd64=6.1.106-3\  
+    vim=2:9.0.1378-2\
+    nano=7.2-1+deb12u1\
+    libx264-dev=2:0.164.3095+gitbaee400-3\
+    libx265-dev=3.5-2+b1\
+    libvpx-dev=1.12.0-1+deb12u3\
+    libvorbis-dev=1.3.7-1\
+    libopus-dev=1.3.1-3\
+    libaom-dev=3.6.0-1+deb12u1
    
 
 # Python libraries for analysis and graphs
@@ -37,8 +37,6 @@ RUN curl -L https://github.com/Netflix/vmaf/archive/refs/tags/v3.0.0.zip -o vmaf
     && ninja -C build \
     && ninja -C build install
 
-    
-
 
 # Download the zip of FFmpeg version 7.0.2 and compile with the correct options
 RUN curl -L https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n7.0.2.zip -o ffmpeg.zip \
@@ -49,8 +47,6 @@ RUN curl -L https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n7.0.2.zip -o ffm
     && make install \
     && ldconfig  
     
-
-
 
 # Create a directory for videos and results
 RUN mkdir -p /inputs /results
