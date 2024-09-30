@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libvpx-dev=1.12.0-1+deb12u3\
     libvorbis-dev=1.3.7-1\
     libopus-dev=1.3.1-3\
-    libaom-dev=3.6.0-1+deb12u1
+    libaom-dev=3.6.0-1+deb12u1\
+    xxd=2:9.0.1378-2
    
 
 # Python libraries for analysis and graphs
