@@ -13,3 +13,5 @@ Lavoro sulla tesi
 - produrre i files per fare i grafici con gnuplot  o direttamente i grafici con una libreria python (come per es. matplotlib).
 
 
+Per trovare le versioni
+apt-cache policy <libreria> e ho preso quella candidata (se candidata = installata è stata installata l'ultima)
