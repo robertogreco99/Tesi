@@ -15,3 +15,9 @@ docker run -it \
     -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Input:/inputs \
     -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results \
     image
+
+docker run -it \
+    -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Input:/inputs \
+    -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results \
+    -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash:/hash \
+    image

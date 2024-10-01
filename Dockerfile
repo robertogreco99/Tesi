@@ -51,7 +51,7 @@ RUN curl -L https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n7.0.2.zip -o ffm
     
 
 # Create a directory for videos and results
-RUN mkdir -p /inputs /results
+RUN mkdir -p /inputs /results /hash
 
 # Set the working directory
 WORKDIR /app

@@ -6,6 +6,8 @@ INPUT_DIR="/inputs"
 OUTPUT_DIR="/results"
 # Vmaf nodel
 VMAF_MODEL="/vmaf-3.0.0/model/vmaf_v0.6.1.json"
+# Hash directory
+HASH_DIR="/hash"  
 
 # Check of existing input directory
 if [ ! -d "$INPUT_DIR" ]; then
@@ -24,6 +26,9 @@ video_coding_vmafevaluation(){
 distorted=$1
 original=$2
 
+ 
+output_hash="$HASH_DIR/decoded_file.md5"
+
 echo "Input distorted file: $distorted"
 echo "Original YUV file: $original"
 
@@ -36,6 +41,12 @@ ffmpeg -i "$distorted" -pix_fmt yuv420p -f rawvideo "$output_yuv"
 
 # Print the name of the output file
 echo "Output YUV: $output_yuv"
+
+#  MD5 hash of decoded YUV file
+echo "Hash MD5 per $output_yuv..."
+md5sum "$output_yuv" > "$output_hash"
+echo "Hash saved in $output_hash."
+
 
 
 # VMAF evaluation
