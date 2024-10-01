@@ -21,7 +21,7 @@ BITRATE=600
 VIDEO_CODEC="x264" 
 
 
-# Print of the variables
+# Print variable
 echo "MODEL_VERSION: $MODEL_VERSION"
 echo "database: $DATASET"
 echo "width: $WIDTH"
@@ -91,7 +91,7 @@ echo "Hash saved in $output_hash."
         --pixel_format 420 \
         --bitdepth 8 \
         --model version="$MODEL_VERSION" \
-        --feature psnr \
+        --feature  psnr  \
         --output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}_${VIDEO_CODEC}__${MODEL_VERSION}.json" \
         --json
 }
