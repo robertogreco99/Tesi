@@ -5,7 +5,7 @@ import os
 import numpy as np
 
 # Dove metto i risultati 
-result_folder = "./results"
+result_folder = "/results"
 
 # Funzione per analizzare i risultati VMAF
 def vmaf_analyze_results(json_file):
@@ -30,8 +30,6 @@ for json_file in os.listdir(result_folder):
         results.append((json_file, mean, median))
         print(f"File: {json_file}, Mean VMAF: {mean}, Median VMAF: {median}")
 
-# Converti i risultati in un DataFrame per una gestione migliore
-df_results = pd.DataFrame(results, columns=["File", "Mean VMAF", "Median VMAF"])
 
 #  Creo il data frame
 df_results = pd.DataFrame(results, columns=["File", "Mean VMAF", "Median VMAF"])
@@ -51,4 +49,3 @@ plt.legend()
 
 # Salvo il grafico
 plt.savefig('/results/vmaf_scores.png', format='png')
-
