@@ -4,14 +4,46 @@
 INPUT_DIR="/inputs"
 # Output results directory
 OUTPUT_DIR="/results"
-# Vmaf nodel
-VMAF_MODEL="/vmaf-3.0.0/model/vmaf_v0.6.1.json"
 # Hash directory
-HASH_DIR="/hash"  
+HASH_DIR="/hash" 
+
+# VMAF model
+MODEL_VERSION="vmaf_v0.6.1"  
+# Dataset
+DATASET="KUGVD"
+# Width
+WIDTH=1920  
+#Height
+HEIGHT=1080  
+# Bitrate     
+BITRATE=600     
+# Videocodec              
+VIDEO_CODEC="x264" 
+
+
+# Print of the variables
+echo "MODEL_VERSION: $MODEL_VERSION"
+echo "database: $DATASET"
+echo "width: $WIDTH"
+echo "height: $HEIGHT"
+echo "bitrate $BITRATE"
+echo "video_codec: $VIDEO_CODEC"
 
 # Check of existing input directory
 if [ ! -d "$INPUT_DIR" ]; then
     echo "Errore: la directory di input '$INPUT_DIR' non esiste."
+    exit 1
+fi
+
+#Check of existing output directory
+if [ ! -d "$OUTPUT_DIR" ]; then
+    echo "Errore: la directory di output '$OUTPUT_DIR' non esiste."
+    exit 1
+fi
+
+# Check of existing hash directory
+if [ ! -d "$HASH_DIR" ]; then
+    echo "Errore: la directory hash '$HASH_DIR' non esiste."
     exit 1
 fi
 
@@ -43,10 +75,11 @@ ffmpeg -i "$distorted" -pix_fmt yuv420p -f rawvideo "$output_yuv"
 echo "Output YUV: $output_yuv"
 
 #  MD5 hash of decoded YUV file
-echo "Hash MD5 per $output_yuv..."
+echo "Hash MD5 for $output_yuv..."
 md5sum "$output_yuv" > "$output_hash"
 echo "Hash saved in $output_hash."
 
+# --output "$OUTPUT_DIR/result__KUGVD__1920x1080_600_x264__${MODEL_VERSION}.json" \
 
 
 # VMAF evaluation
@@ -57,9 +90,9 @@ echo "Hash saved in $output_hash."
         --height 1080 \
         --pixel_format 420 \
         --bitdepth 8 \
-        --model version=vmaf_v0.6.1 \
+        --model version="$MODEL_VERSION" \
         --feature psnr \
-        --output "$OUTPUT_DIR/result__KUGVD__1920x1080_600_x264__vmaf_v0.6.1.json" \
+        --output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}_${VIDEO_CODEC}__${MODEL_VERSION}.json" \
         --json
 }
 
