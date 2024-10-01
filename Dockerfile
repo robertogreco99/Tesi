@@ -50,7 +50,7 @@ RUN curl -L https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n7.0.2.zip -o ffm
     && ldconfig  
     
 
-# Create a directory for videos and results
+# Create a directory for videos,results and hash
 RUN mkdir -p /inputs /results /hash
 
 # Set the working directory
