@@ -36,38 +36,39 @@ echo "BITDEPTH: $BIT_DEPTH"
 
 # Check of existing input directory
 if [ ! -d "$INPUT_DIR" ]; then
-    echo "Errore: la directory di input '$INPUT_DIR' non esiste."
+    echo "Error: input directory '$INPUT_DIR' does not exists "
     exit 1
 fi
 
 # Check of existing output directory
 if [ ! -d "$OUTPUT_DIR" ]; then
-    echo "Errore: la directory di output '$OUTPUT_DIR' non esiste."
+    echo "Error: output directory '$OUTPUT_DIR' does not exists"
     exit 1
 fi
 
 # Check of existing hash directory
 if [ ! -d "$HASH_DIR" ]; then
-    echo "Errore: la directory hash '$HASH_DIR' non esiste."
+    echo "Error : hash directory '$HASH_DIR' does not exists"
     exit 1
 fi
 
 # Function for decoding and VMAF evaluation
 video_coding_vmafevaluation() {
-    distorted=$1
-    original=$2
+    distorted=$1 #distorted video
+    original=$2 # orginal video
 
+    #directory where to save hash file
     output_hash="$HASH_DIR/${distorted}_decoded.md5"
 
     echo "Input distorted file: $distorted"
     echo "Original YUV file: $original"
 
-    # Output YUV file name decoded ( file decodificato)
+    # Output YUV : file name of decoded file
     output_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
 
 
-     # Print the name of the output file
-    echo "Output YUV: $output_yuv"
+    # Print the name of the decoded file
+    echo "Decoded file: $output_yuv"
 
     # Decode the video
     ffmpeg -i "$INPUT_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$output_yuv"
@@ -104,10 +105,10 @@ for original_file in "$INPUT_DIR"/*.yuv; do
                 original=$(basename "$original_file")
                 video_coding_vmafevaluation "$distorted" "$original"
             else
-                echo "Nessun file video MP4 trovato in '$INPUT_DIR'."
+                echo "No mp4 file founded '$INPUT_DIR'."
             fi
         done
     else
-        echo "Nessun file YUV trovato in '$INPUT_DIR'."
+        echo " No yuv file founded in '$INPUT_DIR'."
     fi
 done
