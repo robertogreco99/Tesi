@@ -22,12 +22,19 @@ def create_vmaf_command(image_name,input_dir, output_dir, hash_dir, model_versio
     # Create the command base
     #command = f"docker run --rm -it -v {input_dir}:/inputs -v{output_dir}:/results -v {hash_dir}:/hash {image_name} " 
     #print(command)
+    #command = f"docker run --rm -it \
+    #-v {input_dir}:/inputs \
+    #-v {output_dir}:/results \
+    #-v {hash_dir}:/hash \
+    #{image_name} \
+    #/bin/bash -c './run_experiments.sh {input_dir} {output_dir} {hash_dir} {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth}; exec /bin/bash'"
+
     command = f"docker run --rm -it \
     -v {input_dir}:/inputs \
     -v {output_dir}:/results \
     -v {hash_dir}:/hash \
     {image_name} \
-    /bin/bash -c './run_experiments.sh {input_dir} {output_dir} {hash_dir} {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth}; exec /bin/bash'"
+    /bin/bash -c './run_experiments.sh {input_dir} {output_dir} {hash_dir} {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} && python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version} {output_dir}'"
 
 
    

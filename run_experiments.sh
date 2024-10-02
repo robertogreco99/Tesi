@@ -24,20 +24,19 @@
 # BIT DEPTH
 #BIT_DEPTH=8
 
-# Prendi gli argomenti passati allo script
-INPUT_DIR="$1"      # Primo argomento
-OUTPUT_DIR="$2"     # Secondo argomento
-HASH_DIR="$3"       # Terzo argomento
-MODEL_VERSION="$4"  # Quarto argomento
-DATASET="$5"        # Quinto argomento
-WIDTH="$6"          # Sesto argomento
-HEIGHT="$7"         # Settimo argomento
-BITRATE="$8"        # Ottavo argomento
-VIDEO_CODEC="$9"    # Nono argomento
-PIXEL_FORMAT="${10}" # Decimo argomento
-BIT_DEPTH="${11}"    # Undicesimo argomento
+INPUT_DIR="$1"     
+OUTPUT_DIR="$2"    
+HASH_DIR="$3"       
+MODEL_VERSION="$4"  
+DATASET="$5"        
+WIDTH="$6"          
+HEIGHT="$7"         
+BITRATE="$8"        
+VIDEO_CODEC="$9"    
+PIXEL_FORMAT="${10}" 
+BIT_DEPTH="${11}"    
 
-# A questo punto, puoi usare tutte queste variabili nel tuo script
+
 echo "Eseguendo con i seguenti parametri:"
 echo "Input Directory: $INPUT_DIR"
 echo "Output Directory: $OUTPUT_DIR"
@@ -82,26 +81,26 @@ video_coding_vmafevaluation() {
     echo "Original YUV file: $original"
 
     # Output YUV : file name of decoded file
-    output_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
+    distorted_decoded_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
 
 
     # Print the name of the decoded file
-    echo "Decoded file: $output_yuv"
+    echo "Decoded file: $distorted_decoded_yuv"
 
     # Decode the video
-    ffmpeg -i "$INPUT_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$output_yuv"
+    ffmpeg -i "$INPUT_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv"
 
    
 
     # MD5 hash of decoded YUV file
-    echo "Hash MD5 for $output_yuv..."
-    md5sum "$output_yuv" > "$output_hash"
+    echo "Hash MD5 for $distorted_decoded_yuv..."
+    md5sum "$distorted_decoded_yuv" > "$output_hash"
     echo "Hash saved in $output_hash."
 
     # VMAF evaluation
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_DIR/$original" \
-        --distorted "$output_yuv" \
+        --distorted "$distorted_decoded_yuv" \
         --width "$WIDTH" \
         --height "$HEIGHT" \
         --pixel_format "$PIXEL_FORMAT" \

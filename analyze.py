@@ -1,22 +1,37 @@
 import pandas as pd
 import json
+import sys
 
 # Parameters : 
 #VMAF model
-model_version = "vmaf_v0.6.1"
+#model_version = "vmaf_v0.6.1"
 # Dataset
-dataset = "KUGVD"
+#dataset = "KUGVD"
 # Dimensions 
-width = 1920
-height = 1080
+#width = 1920
+#height = 1080
 # Bitrate
-bitrate = 600
+#bitrate = 600
 # Codec video
-video_codec = "x264"
+#video_codec = "x264"
 # Pixel format
-pixel_format = 420
+#pixel_format = 420
 # Bit depth
-bit_depth = 8
+#bit_depth = 8
+
+if len(sys.argv) != 8:
+    print("Error , format is : python analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory>")
+    sys.exit(1)
+
+# Parameters
+dataset = sys.argv[1]        
+width = int(sys.argv[2])     
+height = int(sys.argv[3])    
+bitrate = int(sys.argv[4])   
+video_codec = sys.argv[5]   
+model_version = sys.argv[6] 
+output_directory = sys.argv[7]  
+
 
 # Create the json filename
 json_filename = f'/results/result__{dataset}__{width}x{height}__{bitrate}__{video_codec}__{model_version}.json'
