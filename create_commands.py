@@ -14,9 +14,7 @@ import json
 
 def create_vmaf_command(image_name,input_dir, output_dir, hash_dir, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth):
     # Directory
-    original_file = os.path.join(input_dir, 'original.yuv')
-    distorted_file = os.path.join(output_dir, 'distorted.yuv')
-    
+      
     #output_file = os.path.join(output_dir, f'result_{hash_dir}_{dataset}_{model_version}.json')
     #print(output_file)
 
