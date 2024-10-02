@@ -10,6 +10,7 @@
 
 import os
 import sys
+import json
 
 def create_vmaf_command(image_name,input_dir, output_dir, hash_dir, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth):
     # Directory
@@ -48,20 +49,32 @@ def create_vmaf_command(image_name,input_dir, output_dir, hash_dir, model_versio
     return command
 
 if __name__ == '__main__':
-    if len(sys.argv) != 13:
-        print("Usage: python create_commands.py IMAGE_NAME INPUT_DIR OUTPUT_DIR HASH_DIR MODEL_VERSION DATASET WIDTH HEIGHT BITRATE VIDEO_CODEC PIXEL_FORMAT BIT_DEPTH")
+    if len(sys.argv) != 2:
+        print("Usage: python create_vmaf_cmdlines.py config file")
         sys.exit(1)
     
-    # need to check error in the params
-    image_name,input_dir, output_dir, hash_dir, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth = sys.argv[1:]
+    config_file = sys.argv[1]
     
-    command = create_vmaf_command(image_name,input_dir, output_dir, hash_dir, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
+    # Read the JSON configuration file
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+    
+    # Get parameters from the config file
+    image_name = config['IMAGE_NAME']
+    input_dir = config['INPUT_DIR']
+    output_dir = config['OUTPUT_DIR']
+    hash_dir = config['HASH_DIR']
+    model_version = config['MODEL_VERSION']
+    dataset = config['DATASET']
+    width = config['WIDTH']
+    height = config['HEIGHT']
+    bitrate = config['BITRATE']
+    video_codec = config['VIDEO_CODEC']
+    pixel_format = config['PIXEL_FORMAT']
+    bit_depth = config['BIT_DEPTH']
+    
+    command = create_vmaf_command(image_name, input_dir, output_dir, hash_dir, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
 
-      
-    
-    # Print command line
-    #print(command)
-    
-    # Save line command
+    # Save the command to a file
     with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
         f.write(command + '\n')
