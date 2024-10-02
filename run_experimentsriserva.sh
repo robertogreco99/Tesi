@@ -1,60 +1,114 @@
 #!/bin/bash
 
-# Directory dei video di input
+# Input video directory
 INPUT_DIR="/inputs"
-# Directory per salvare i risultati
+# Output results directory
 OUTPUT_DIR="/results"
-# Modello VMAF da utilizzare
-VMAF_MODEL="/vmaf/model/vmaf_v0.6.1.json"
+# Hash directory
+HASH_DIR="/hash"
 
-# Controllo se la directory di input esiste
+# VMAF model
+MODEL_VERSION="vmaf_v0.6.1"
+# Dataset
+DATASET="KUGVD"
+# Width
+WIDTH=1920
+# Height
+HEIGHT=1080
+# Bitrate
+BITRATE=600
+# Video codec
+VIDEO_CODEC="x264"
+# Pixel format
+PIXEL_FORMAT=420
+# BIT DEPTH
+BIT_DEPTH=8
+
+# Print of the variables
+echo "MODEL_VERSION: $MODEL_VERSION"
+echo "database: $DATASET"
+echo "width: $WIDTH"
+echo "height: $HEIGHT"
+echo "bitrate: $BITRATE"
+echo "video_codec: $VIDEO_CODEC"
+echo "PIXEL FORMAT: $PIXEL_FORMAT"
+echo "BITDEPTH: $BIT_DEPTH"
+
+# Check of existing input directory
 if [ ! -d "$INPUT_DIR" ]; then
-    echo "Errore: la directory di input '$INPUT_DIR' non esiste."
+    echo "Error: input directory '$INPUT_DIR' does not exists "
     exit 1
 fi
 
-# Codifica e valutazione con vmaf
-#Parto con input in mp4 ( file è h.264)
-video_coding_vmafevaluation(){
-input_file=$1
-video_name=$(basename "$input_file" .mp4)
+# Check of existing output directory
+if [ ! -d "$OUTPUT_DIR" ]; then
+    echo "Error: output directory '$OUTPUT_DIR' does not exists"
+    exit 1
+fi
 
-# Codifica in h264 : avc
-echo "Codificando $video_name in H.264..."
-ffmpeg -i "$input_file" -c:v libx264 "$OUTPUT_DIR/${video_name}_h264.mp4"
-# Codifica in in H.265 : hevc
-echo "Codificando $video_name in H.265..."
-ffmpeg -i "$input_file" -c:v libx265 "$OUTPUT_DIR/${video_name}_h265.mp4"
-# Codifica in AV1
-#echo "Codificando $video_name in AV1..."
-#ffmpeg -i "$input_file" -c:v libaom-av1 -crf 30 -b:v 2000k "$OUTPUT_DIR/${video_name}_av1.mp4"
+# Check of existing hash directory
+if [ ! -d "$HASH_DIR" ]; then
+    echo "Error : hash directory '$HASH_DIR' does not exists"
+    exit 1
+fi
 
-# Valutazione con libvmaf per H.264 (avc)
-echo "Valutazione qualità per $video_name H.264..."
-ffmpeg -i "$OUTPUT_DIR/${video_name}_h264.mp4" -i "$input_file" -lavfi "libvmaf=log_path=$OUTPUT_DIR/${video_name}_h264_vmaf.json:log_fmt=json" -f null -
+# Function for decoding and VMAF evaluation
+video_coding_vmafevaluation() {
+    distorted=$1 #distorted video
+    original=$2 # orginal video
+
+    #directory where to save hash file
+    output_hash="$HASH_DIR/${distorted}_decoded.md5"
+
+    echo "Input distorted file: $distorted"
+    echo "Original YUV file: $original"
+
+    # Output YUV : file name of decoded file
+    output_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
 
 
+    # Print the name of the decoded file
+    echo "Decoded file: $output_yuv"
 
-# Valutazione con libvmaf per H.265 (hevc)
-echo "Valutazione qualità per $video_name H.265..."
-ffmpeg -i "$OUTPUT_DIR/${video_name}_h265.mp4" -i "$input_file" -lavfi "libvmaf=log_path=$OUTPUT_DIR/${video_name}_h265_vmaf.json:log_fmt=json" -f null -
+    # Decode the video
+    ffmpeg -i "$INPUT_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$output_yuv"
 
+   
 
+    # MD5 hash of decoded YUV file
+    echo "Hash MD5 for $output_yuv..."
+    md5sum "$output_yuv" > "$output_hash"
+    echo "Hash saved in $output_hash."
 
-# Valutazione con libvmaf per AV1
-#echo "Valutazione qualità per $video_name AV1..."
-#ffmpeg -i "$OUTPUT_DIR/${video_name}_AV1.mp4" -i "$input_file" -lavfi "libvmaf=log_path=$OUTPUT_DIR/${video_name}_av1_vmaf.json:log_fmt=json" -f null -
-
-## Stampa della fine 
-echo "Processo completato per $video_name"
+    # VMAF evaluation
+    /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+       --reference "$INPUT_DIR/$original" \
+        --distorted "$output_yuv" \
+        --width "$WIDTH" \
+        --height "$HEIGHT" \
+        --pixel_format "$PIXEL_FORMAT" \
+        --bitdepth "$BIT_DEPTH" \
+        --model version="$MODEL_VERSION" \
+        --feature psnr \
+        --output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
+        --json
 }
 
-# Scorri tutti i file .mp4 nella directory di input e chiama la funzione
-for video_file in "$INPUT_DIR"/*.mp4; do
-    if [ -f "$video_file" ]; then
-        video_coding_vmafevaluation "$video_file"
+# Check on input directory to see if there are YUV videos
+for original_file in "$INPUT_DIR"/*.yuv; do
+    if [ -f "$original_file" ]; then
+        # Check for MP4 files
+        for distorted_file in "$INPUT_DIR"/*.mp4; do
+            if [ -f "$distorted_file" ]; then
+                # Extract filenames
+                distorted=$(basename "$distorted_file")
+                original=$(basename "$original_file")
+                video_coding_vmafevaluation "$distorted" "$original"
+            else
+                echo "No mp4 file founded '$INPUT_DIR'."
+            fi
+        done
     else
-        echo "Nessun file video trovato in '$INPUT_DIR'."
+        echo " No yuv file founded in '$INPUT_DIR'."
     fi
 done
-

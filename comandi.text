@@ -21,3 +21,8 @@ docker run -it \
     -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results \
     -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash:/hash \
     image
+
+
+podman run --rm image -r /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Input/original.yuv -d /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/distorted.yuv -o /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/result_/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash_KUGVD_vmaf_v0.6.1.json --json -q -m version=vmaf_v0.6.1
+
+python3 create_commands.py image /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Input /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash vmaf_v0.6.1 KUGVD 1920 1080 600 X265 420 8 

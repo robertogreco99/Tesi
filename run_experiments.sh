@@ -1,38 +1,56 @@
 #!/bin/bash
 
 # Input video directory
-INPUT_DIR="/inputs"
+#INPUT_DIR="/inputs"
 # Output results directory
-OUTPUT_DIR="/results"
+#OUTPUT_DIR="/results"
 # Hash directory
-HASH_DIR="/hash"
+#HASH_DIR="/hash"
 
 # VMAF model
-MODEL_VERSION="vmaf_v0.6.1"
+#MODEL_VERSION="vmaf_v0.6.1"
 # Dataset
-DATASET="KUGVD"
+#DATASET="KUGVD"
 # Width
-WIDTH=1920
+#WIDTH=1920
 # Height
-HEIGHT=1080
+#HEIGHT=1080
 # Bitrate
-BITRATE=600
+#BITRATE=600
 # Video codec
-VIDEO_CODEC="x264"
+#VIDEO_CODEC="x264"
 # Pixel format
-PIXEL_FORMAT=420
+#PIXEL_FORMAT=420
 # BIT DEPTH
-BIT_DEPTH=8
+#BIT_DEPTH=8
 
-# Print of the variables
-echo "MODEL_VERSION: $MODEL_VERSION"
-echo "database: $DATASET"
-echo "width: $WIDTH"
-echo "height: $HEIGHT"
-echo "bitrate: $BITRATE"
-echo "video_codec: $VIDEO_CODEC"
-echo "PIXEL FORMAT: $PIXEL_FORMAT"
-echo "BITDEPTH: $BIT_DEPTH"
+# Prendi gli argomenti passati allo script
+INPUT_DIR="$1"      # Primo argomento
+OUTPUT_DIR="$2"     # Secondo argomento
+HASH_DIR="$3"       # Terzo argomento
+MODEL_VERSION="$4"  # Quarto argomento
+DATASET="$5"        # Quinto argomento
+WIDTH="$6"          # Sesto argomento
+HEIGHT="$7"         # Settimo argomento
+BITRATE="$8"        # Ottavo argomento
+VIDEO_CODEC="$9"    # Nono argomento
+PIXEL_FORMAT="${10}" # Decimo argomento
+BIT_DEPTH="${11}"    # Undicesimo argomento
+
+# A questo punto, puoi usare tutte queste variabili nel tuo script
+echo "Eseguendo con i seguenti parametri:"
+echo "Input Directory: $INPUT_DIR"
+echo "Output Directory: $OUTPUT_DIR"
+echo "Hash Directory: $HASH_DIR"
+echo "Model Version: $MODEL_VERSION"
+echo "Dataset: $DATASET"
+echo "Width: $WIDTH"
+echo "Height: $HEIGHT"
+echo "Bitrate: $BITRATE"
+echo "Video Codec: $VIDEO_CODEC"
+echo "Pixel Format: $PIXEL_FORMAT"
+echo "Bit Depth: $BIT_DEPTH"
+
 
 # Check of existing input directory
 if [ ! -d "$INPUT_DIR" ]; then
