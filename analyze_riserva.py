@@ -1,51 +1,64 @@
-import json
 import pandas as pd
-import matplotlib.pyplot as plt
-import os
-import numpy as np
+import json
+import sys
 
-# Dove metto i risultati 
-result_folder = "/results"
+# Parameters : 
+#VMAF model
+#model_version = "vmaf_v0.6.1"
+# Dataset
+#dataset = "KUGVD"
+# Dimensions 
+#width = 1920
+#height = 1080
+# Bitrate
+#bitrate = 600
+# Codec video
+#video_codec = "x264"
+# Pixel format
+#pixel_format = 420
+# Bit depth
+#bit_depth = 8
 
-# Funzione per analizzare i risultati VMAF
-def vmaf_analyze_results(json_file):
-    with open(json_file, 'r') as f:
-        data = json.load(f)
-    # Estraggo  i punteggi VMAF frame-by-frame
-    vmaf_scores = [frame['metrics']['vmaf'] for frame in data['frames']]
-    
-    # Applico i vari metodi di temporal pooling
-    mean_vmaf = sum(vmaf_scores) / len(vmaf_scores)
-    median_vmaf = sorted(vmaf_scores)[len(vmaf_scores) // 2]
-    
-    return mean_vmaf, median_vmaf, vmaf_scores
+if len(sys.argv) != 8:
+    print("Error , format is : python analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory>")
+    sys.exit(1)
 
-# Lista dove salvo i risultati
-results = []
-
-# Analizzo tutti i json nella cartella
-for json_file in os.listdir(result_folder):
-    if json_file.endswith(".json"):
-        mean, median, vmaf_scores = vmaf_analyze_results(os.path.join(result_folder, json_file))
-        results.append((json_file, mean, median))
-        print(f"File: {json_file}, Mean VMAF: {mean}, Median VMAF: {median}")
+# Parameters
+dataset = sys.argv[1]        
+width = int(sys.argv[2])     
+height = int(sys.argv[3])    
+bitrate = int(sys.argv[4])   
+video_codec = sys.argv[5]   
+model_version = sys.argv[6] 
+output_directory = sys.argv[7]  
 
 
-#  Creo il data frame
-df_results = pd.DataFrame(results, columns=["File", "Mean VMAF", "Median VMAF"])
-print(df_results)
+# Create the json filename
+json_filename = f'/results/result__{dataset}__{width}x{height}__{bitrate}__{video_codec}__{model_version}.json'
+# Read json filename
+with open(json_filename) as f:
+    data = json.load(f)
 
-# lista di indici da 0 alla dimensione del data frame
-index = np.arange(len(df_results))
-width = 0.3
+# Take data from pooled metrics
+metrics = data["pooled_metrics"]
+rows = []
 
-plt.figure(figsize=(12, 6)) 
+# A row for every metric
+for metric, values in metrics.items():
+    rows.append({
+        "Metric": metric,  
+        "Min": values["min"],
+        "Max": values["max"],
+        "Mean": values["mean"],
+        "Harmonic Mean": values["harmonic_mean"]
+    })
 
-plt.title("Confronto di input vs Media e Mediana")
-plt.bar(index, df_results['Mean VMAF'],width = width ,label='Mean VMAF', color='b')
-plt.bar(index+width, df_results['Median VMAF'],width = width, label='Median VMAF', color='r')
-plt.xticks(index+width/2, df_results['File'])
-plt.legend()
+#  A new dataframe
+df = pd.DataFrame(rows)
 
-# Salvo il grafico
-plt.savefig('/results/vmaf_scores.png', format='png')
+csv_filename = f'/results/result__{dataset}__{width}x{height}__{bitrate}_{video_codec}__{model_version}.json.csv'
+
+# Save as .csv in results/filename.csv
+df.to_csv(csv_filename, index=False)
+
+print("Csv ending")
