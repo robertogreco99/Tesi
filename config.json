@@ -1,6 +1,7 @@
 {
     "IMAGE_NAME": "image",
-    "INPUT_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Input",
+    "INPUT_REF_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Referencevideos",
+    "INPUT_DIST_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Distortedvideos",
     "OUTPUT_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result",
     "HASH_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash",
     "MODEL_VERSION": "vmaf_4k_v0.6.1neg",
