@@ -33,6 +33,7 @@ model_version = sys.argv[6]
 output_directory = sys.argv[7]  
 
 
+
 # Create the json filename
 json_filename = f'/results/result__{dataset}__{width}x{height}__{bitrate}__{video_codec}__{model_version}.json'
 # Read json filename

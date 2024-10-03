@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Input video directory
-#INPUT_DIR="/inputs"
+#INPUT_REFERENCE_DIR="/inputs"
 # Output results directory
 #OUTPUT_DIR="/results"
 # Hash directory
@@ -24,21 +24,23 @@
 # BIT DEPTH
 #BIT_DEPTH=8
 
-INPUT_DIR="$1"     
-OUTPUT_DIR="$2"    
-HASH_DIR="$3"       
-MODEL_VERSION="$4"  
-DATASET="$5"        
-WIDTH="$6"          
-HEIGHT="$7"         
-BITRATE="$8"        
-VIDEO_CODEC="$9"    
-PIXEL_FORMAT="${10}" 
-BIT_DEPTH="${11}"    
+INPUT_REFERENCE_DIR="$1"   
+INPUT_DISTORTED_DIR="$2"    
+OUTPUT_DIR="$3"    
+HASH_DIR="$4"       
+MODEL_VERSION="$5"  
+DATASET="$6"        
+WIDTH="$7"          
+HEIGHT="$8"         
+BITRATE="$9"        
+VIDEO_CODEC="${10}"    
+PIXEL_FORMAT="${11}" 
+BIT_DEPTH="${12}"    
 
 
-echo "Eseguendo con i seguenti parametri:"
-echo "Input Directory: $INPUT_DIR"
+echo "---------------------------"
+echo "Input Reference Directory: $INPUT_REFERENCE_DIR"
+echo "Input Distorted Directory: $INPUT_DISTORTED_DIR"
 echo "Output Directory: $OUTPUT_DIR"
 echo "Hash Directory: $HASH_DIR"
 echo "Model Version: $MODEL_VERSION"
@@ -51,11 +53,19 @@ echo "Pixel Format: $PIXEL_FORMAT"
 echo "Bit Depth: $BIT_DEPTH"
 
 
+
+
 # Check of existing input directory
-if [ ! -d "$INPUT_DIR" ]; then
-    echo "Error: input directory '$INPUT_DIR' does not exists "
+if [ ! -d "$INPUT_REFERENCE_DIR" ]; then
+    echo "Error: input directory '$INPUT_REFERENCE_DIR' ( for reference videos ) does not exists  "
     exit 1
 fi
+# Check of existing input directory
+if [ ! -d "$INPUT_DISTORTED_DIR" ]; then
+    echo "Error: input directory '$INPUT_DISTORTED_DIR' (for distorted videos) does not exists "
+    exit 1
+fi
+
 
 # Check of existing output directory
 if [ ! -d "$OUTPUT_DIR" ]; then
@@ -88,7 +98,7 @@ video_coding_vmafevaluation() {
     echo "Decoded file: $distorted_decoded_yuv"
 
     # Decode the video
-    ffmpeg -i "$INPUT_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv"
+    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv"
 
    
 
@@ -99,7 +109,7 @@ video_coding_vmafevaluation() {
 
     # VMAF evaluation
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-       --reference "$INPUT_DIR/$original" \
+       --reference "$INPUT_REFERENCE_DIR/$original" \
         --distorted "$distorted_decoded_yuv" \
         --width "$WIDTH" \
         --height "$HEIGHT" \
@@ -112,20 +122,20 @@ video_coding_vmafevaluation() {
 }
 
 # Check on input directory to see if there are YUV videos
-for original_file in "$INPUT_DIR"/*.yuv; do
+for original_file in "$INPUT_REFERENCE_DIR"/*.yuv; do
     if [ -f "$original_file" ]; then
         # Check for MP4 files
-        for distorted_file in "$INPUT_DIR"/*.mp4; do
+        for distorted_file in "$INPUT_DISTORTED_DIR"/*.mp4; do
             if [ -f "$distorted_file" ]; then
                 # Extract filenames
                 distorted=$(basename "$distorted_file")
                 original=$(basename "$original_file")
                 video_coding_vmafevaluation "$distorted" "$original"
             else
-                echo "No mp4 file founded '$INPUT_DIR'."
+                echo "No mp4 file founded '$INPUT_DISTORTED_DIR'."
             fi
         done
     else
-        echo " No yuv file founded in '$INPUT_DIR'."
+        echo " No yuv file founded in '$INPUT_REFERENCE_DIR'."
     fi
 done

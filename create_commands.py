@@ -12,43 +12,21 @@ import os
 import sys
 import json
 
-def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth):
+def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth):
   
-    # Directory
-
-   
-    #output_file = os.path.join(output_dir, f'result_{hash_dir}_{dataset}_{model_version}.json')
-    #print(output_file)
-
-    # Create the command base
-    #command = f"docker run --rm -it -v {input_orig_dir}:/inputs -v{output_dir}:/results -v {hash_dir}:/hash {image_name} " 
-    #print(command)
-    #command = f"docker run --rm -it \
-    #-v {input_orig_dir}:/inputs \
-    #-v {output_dir}:/results \
-    #-v {hash_dir}:/hash \
-    #{image_name} \
-    #/bin/bash -c './run_experiments.sh {input_orig_dir} {output_dir} {hash_dir} {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth}; exec /bin/bash'"
-
+    print(f"Original Video: {original_video}")
+    print(f"Distorted Video: {distorted_video}")
+    
     command = f"docker run --rm -it \
     -v {input_reference_dir}:/reference \
     -v {input_distorted_dir}:/distorted \
     -v {output_dir}:/results \
     -v {hash_dir}:/hash \
     {image_name} \
-    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} && python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version} /results'"
+    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {original_video} {distorted_video} && python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results'"
 
+    print("-----------------------------------")
 
-    
-    
-
-   
-    
-    #-o {output_file} --json -q -m version={model_version}"
-    #command = f"podman run -it --rm -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Input:/inputs 
-    # -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results 
-    # -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash:/hash 
-    # image -r {original_file} -d {distorted_file} -o {output_file} --json -q -m version={model_version}"
 
     return command
 
@@ -69,6 +47,7 @@ if __name__ == '__main__':
     input_distorted_dir = config['INPUT_DIST_DIR']
     output_dir = config['OUTPUT_DIR']
     hash_dir = config['HASH_DIR']
+    original_video=config['ORIGINAL_VIDEO']
     model_version = config['MODEL_VERSION']
     dataset = config['DATASET']
     width = config['WIDTH']
@@ -78,9 +57,29 @@ if __name__ == '__main__':
     pixel_format = config['PIXEL_FORMAT']
     bit_depth = config['BIT_DEPTH']
     
-    command = create_vmaf_command(image_name, input_reference_dir,  input_distorted_dir , output_dir, hash_dir, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
+    
+    #command = create_vmaf_command(image_name, input_reference_dir,  input_distorted_dir , output_dir, hash_dir, original_video, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
 
 
     # Save the command to a file
-    with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
-        f.write(command + '\n')
+    #with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+     #   f.write(command + '\n')
+
+# Ottiene il nome del file originale senza estensione (radice)
+original_base = os.path.splitext(os.path.basename(original_video))[0]
+
+# Scorre tutti i file nella directory distorted
+for distorted_file in os.listdir(input_distorted_dir):
+    # Mantiene il nome del file distorto completo per l'output
+    distorted_full_name = distorted_file  
+    distorted_base = os.path.splitext(distorted_full_name)[0]
+
+    # Se il nome del file originale è contenuto nel nome del file distorto, genera il comando
+    if original_base in distorted_base:
+        command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
+
+        # Salva il comando nel file
+        with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+            f.write(command + '\n')
+
+print(f"Comandi VMAF generati e salvati in {output_dir}/commands.txt")

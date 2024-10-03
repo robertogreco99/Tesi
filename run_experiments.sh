@@ -35,7 +35,9 @@ HEIGHT="$8"
 BITRATE="$9"        
 VIDEO_CODEC="${10}"    
 PIXEL_FORMAT="${11}" 
-BIT_DEPTH="${12}"    
+BIT_DEPTH="${12}"
+ORIGINAL_VIDEO="${13}"
+DISTORTED_VIDEO="${14}"    
 
 
 echo "---------------------------"
@@ -51,6 +53,8 @@ echo "Bitrate: $BITRATE"
 echo "Video Codec: $VIDEO_CODEC"
 echo "Pixel Format: $PIXEL_FORMAT"
 echo "Bit Depth: $BIT_DEPTH"
+echo "Original Video : $ORIGINAL_VIDEO"
+echo "Distorted Video : $DISTORTED_VIDEO"
 
 
 
@@ -121,21 +125,25 @@ video_coding_vmafevaluation() {
         --json
 }
 
+
+video_coding_vmafevaluation "$DISTORTED_VIDEO" "$ORIGINAL_VIDEO"
+
+
 # Check on input directory to see if there are YUV videos
-for original_file in "$INPUT_REFERENCE_DIR"/*.yuv; do
-    if [ -f "$original_file" ]; then
+#for original_file in "$INPUT_REFERENCE_DIR"/*.yuv; do
+ #   if [ -f "$original_file" ]; then
         # Check for MP4 files
-        for distorted_file in "$INPUT_DISTORTED_DIR"/*.mp4; do
-            if [ -f "$distorted_file" ]; then
+  #      for distorted_file in "$INPUT_DISTORTED_DIR"/*.mp4; do
+   #         if [ -f "$distorted_file" ]; then
                 # Extract filenames
-                distorted=$(basename "$distorted_file")
-                original=$(basename "$original_file")
-                video_coding_vmafevaluation "$distorted" "$original"
-            else
-                echo "No mp4 file founded '$INPUT_DISTORTED_DIR'."
-            fi
-        done
-    else
-        echo " No yuv file founded in '$INPUT_REFERENCE_DIR'."
-    fi
-done
+    #            distorted=$(basename "$distorted_file")
+     #           original=$(basename "$original_file")
+                ##video_coding_vmafevaluation "$distorted" "$original"
+      #      else
+       #         echo "No mp4 file founded '$INPUT_DISTORTED_DIR'."
+        #    fi
+        #done
+    #else
+        #echo " No yuv file founded in '$INPUT_REFERENCE_DIR'."
+    #fi
+#done
