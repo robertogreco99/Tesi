@@ -55,6 +55,8 @@ if __name__ == '__main__':
     
     
     dataset_file = f"{dataset}.json"  
+    # Specifica il percorso completo del file
+    dataset_file = os.path.join("Dataset", f"{dataset}.json")
 
 with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
