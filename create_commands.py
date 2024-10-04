@@ -16,6 +16,8 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
   
     print(f"Original Video: {original_video}")
     print(f"Distorted Video: {distorted_video}")
+
+    print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
     
     command = f"docker run --rm -it \
     -v {input_reference_dir}:/reference \
@@ -50,12 +52,13 @@ if __name__ == '__main__':
     original_video=config['ORIGINAL_VIDEO']
     model_version = config['MODEL_VERSION']
     dataset = config['DATASET']
-    width = config['WIDTH']
-    height = config['HEIGHT']
-    bitrate = config['BITRATE']
-    video_codec = config['VIDEO_CODEC']
-    pixel_format = config['PIXEL_FORMAT']
-    bit_depth = config['BIT_DEPTH']
+    
+    
+    dataset_file = f"{dataset}.json"  
+
+with open(dataset_file, 'r') as f:
+    video_metadata = json.load(f)
+    
     
 
 # Ottiene il nome del file originale senza estensione (radice)
@@ -69,6 +72,22 @@ for distorted_file in os.listdir(input_distorted_dir):
 
     # Se il nome del file originale è contenuto nel nome del file distorto, genera il comando
     if original_base in distorted_base:
+        # Estrai i metadati associati al file distorto
+        # Trova il video distorto con file_name pari a distorted_full_name  
+        metadata = next((video for video in video_metadata["distorted_videos"] if video["file_name"] == distorted_full_name), None)
+
+        #  Se il video esiste, estrai i suoi metadati
+        if metadata:
+            width = metadata["width"]
+            height = metadata["height"]
+            bitrate = metadata["bitrate"]
+            video_codec = metadata["video_codec"]
+            pixel_format=metadata["pixel_format"]
+            bit_depth = metadata["bitdepth"]
+        else:
+            print(f"Video con nome {distorted_full_name} non trovato nei video distorti.")
+
+
         command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
 
         # Salva il comando nel file
