@@ -12,12 +12,12 @@ import os
 import sys
 import json
 
-def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth):
+def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, features):
   
-    print(f"Original Video: {original_video}")
-    print(f"Distorted Video: {distorted_video}")
+    #print(f"Original Video: {original_video}")
+    #print(f"Distorted Video: {distorted_video}")
 
-    print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
+    #print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
     
     command = f"docker run --rm -it \
     -v {input_reference_dir}:/reference \
@@ -25,9 +25,9 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
     -v {output_dir}:/results \
     -v {hash_dir}:/hash \
     {image_name} \
-    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {original_video} {distorted_video} && python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results'"
+    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {original_video} {distorted_video} {features} && python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results'"
 
-    print("-----------------------------------")
+    #print("-----------------------------------")
 
 
     return command
@@ -52,6 +52,7 @@ if __name__ == '__main__':
     original_video=config['ORIGINAL_VIDEO']
     model_version = config['MODEL_VERSION']
     dataset = config['DATASET']
+    features = config['FEATURES']
     
     
     dataset_file = f"{dataset}.json"  
@@ -90,7 +91,7 @@ for distorted_file in os.listdir(input_distorted_dir):
             print(f"Video con nome {distorted_full_name} non trovato nei video distorti.")
 
 
-        command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
+        command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features)
 
         # Salva il comando nel file
         with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:

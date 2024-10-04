@@ -38,6 +38,7 @@ PIXEL_FORMAT="${11}"
 BIT_DEPTH="${12}"
 ORIGINAL_VIDEO="${13}"
 DISTORTED_VIDEO="${14}"    
+FEATURES="${15}" 
 
 
 echo "---------------------------"
@@ -55,6 +56,7 @@ echo "Pixel Format: $PIXEL_FORMAT"
 echo "Bit Depth: $BIT_DEPTH"
 echo "Original Video : $ORIGINAL_VIDEO"
 echo "Distorted Video : $DISTORTED_VIDEO"
+echo "Features: $FEATURES"
 
 
 

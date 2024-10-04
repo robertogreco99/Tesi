@@ -1,5 +1,24 @@
 # Tesi
 
+Per fare girare  
+1. specificare  nel json config.json : 
+    - nome immagine docker 
+    - cartella dove trovare i video di input di riferimento
+    - cartella dove trovare i video distorted
+    - cartella dove salvare i risultati
+    - cartella dove salvare i file di hash
+    - video di interesse
+    - versione del modello vmaf di interesse
+    - dataset di interesse
+2. python3 create_commands.py config.json
+3. docker build -t <_nome immagine scelto nel file_>
+4. lancio il comando salvato nel file 
+5. ottengo un json con i risultati
+
+
+
+
+
 Lavoro sulla tesi 
 1. Docker file 
     - a. docker build -t image_name .

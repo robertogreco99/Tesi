@@ -6,5 +6,12 @@
     "HASH_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash",
     "ORIGINAL_VIDEO" : "FIFA17_30fps_30sec_v2.yuv",
     "MODEL_VERSION": "vmaf_4k_v0.6.1neg",
-    "DATASET": "KUGVD"
+    "DATASET": "KUGVD",
+    "FEATURES": [
+        "float_ssim",
+        "psnr",
+        "float_ms_ssim",
+        "ciede",
+        "psnr_hvs"
+    ]
 }
