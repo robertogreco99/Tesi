@@ -5,13 +5,14 @@
     "OUTPUT_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result",
     "HASH_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash",
     "ORIGINAL_VIDEO" : "FIFA17_30fps_30sec_v2.yuv",
-    "MODEL_VERSION": "vmaf_4k_v0.6.1neg",
+    "MODEL_VERSION": "vmaf_v0.6.1",
     "DATASET": "KUGVD",
-    "WIDTH": 1920,
-    "HEIGHT": 1080,
-    "BITRATE": 600,
-    "VIDEO_CODEC": "x264",
-    "PIXEL_FORMAT": "420",
-    "BIT_DEPTH": 8
+    "FEATURES": [
+        "psnr",
+        "float_ms_ssim",
+        "cambi",
+        "float_ssim",
+        "ciede",
+        "psnr_hvs"
+        ]
 }
-

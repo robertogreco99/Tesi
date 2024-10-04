@@ -38,6 +38,7 @@ PIXEL_FORMAT="${11}"
 BIT_DEPTH="${12}"
 ORIGINAL_VIDEO="${13}"
 DISTORTED_VIDEO="${14}"    
+FEATURES="${15}" 
 
 
 echo "---------------------------"
@@ -55,6 +56,7 @@ echo "Pixel Format: $PIXEL_FORMAT"
 echo "Bit Depth: $BIT_DEPTH"
 echo "Original Video : $ORIGINAL_VIDEO"
 echo "Distorted Video : $DISTORTED_VIDEO"
+echo "Features: $FEATURES"
 
 
 
@@ -111,6 +113,15 @@ video_coding_vmafevaluation() {
     md5sum "$distorted_decoded_yuv" > "$output_hash"
     echo "Hash saved in $output_hash."
 
+    # Convert FEATURES string to an array
+    IFS=',' read -r -a feature_array <<< "$FEATURES"
+
+    # Prepare features argument for VMAF command
+    feature_args=""
+    for feature in "${feature_array[@]}"; do
+        feature_args+="--feature $feature "
+    done
+
     # VMAF evaluation
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \
@@ -120,7 +131,7 @@ video_coding_vmafevaluation() {
         --pixel_format "$PIXEL_FORMAT" \
         --bitdepth "$BIT_DEPTH" \
         --model version="$MODEL_VERSION" \
-        --feature psnr \
+         $feature_args \
         --output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
         --json
 }

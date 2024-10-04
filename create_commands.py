@@ -1,16 +1,8 @@
-#lo script mi deve generare delle linee del tipo : 
-#podman run --rm miovmaf -r original.y4m -d distorted.y4m -o result_NAME.json --json -q -m version=vmaf_4k_v0.6.1neg
-#questo comando è da lanciare dentro il container
-
-# 1. lo script che lancio con 
-#python create_vmaf_cmdlines.py  input_orig_dir  OUTPUT_DIR HASH_DIR  MODEL VERSION DATASET WIDTH HEIGHT BITRATE  VIDEO_CODEC PIXEL_FORMAT BIT DEPTH
-#fuori genera le linee--> lanciate dentro
-
-# 2. quindi fa fuori è creo.py---> questo crea la linea , docker build e docker run con il run creato dentro
-
 import os
 import sys
 import json
+from jsonschema import validate, ValidationError
+
 
 def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, features_list):
   
@@ -42,9 +34,14 @@ if __name__ == '__main__':
     
     config_file = sys.argv[1]
     
+    # Carica lo schema da un file
+
+
     # Read the JSON configuration file
-    with open(config_file, 'r') as f:
+with open(config_file, 'r') as f:
         config = json.load(f)
+with open('Json/configschema.json') as schema_file:
+    schema = json.load(schema_file)
     
     # Get parameters from the config file
     image_name = config['IMAGE_NAME']
@@ -56,11 +53,21 @@ if __name__ == '__main__':
     model_version = config['MODEL_VERSION']
     dataset = config['DATASET']
     features_list= config['FEATURES']
-    
+
     
     dataset_file = f"{dataset}.json"  
-    # Specifica il percorso completo del file
+   
     dataset_file = os.path.join("Dataset", f"{dataset}.json")
+   
+try:
+    validate(instance=config, schema=schema)
+    print("JSON is valid")
+except ValidationError as e:
+    print("JSON is not valid", e.message)
+    sys.exit(1) 
+    
+    
+   
 
 with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
@@ -91,14 +98,14 @@ for distorted_file in os.listdir(input_distorted_dir):
             pixel_format=metadata["pixel_format"]
             bit_depth = metadata["bitdepth"]
         else:
-            print(f"Video con nome {distorted_full_name} non trovato nei video distorti.")
+            print(f"{distorted_full_name} was not found.")
             
        
 
         command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
 
-        # Salva il comando nel file
+        # Save the command
         with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
             f.write(command + '\n')
 
-print(f"Comandi VMAF generati e salvati in {output_dir}/commands.txt")
+print(f" VMAF comands saved in {output_dir}/commands.txt")
