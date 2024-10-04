@@ -57,13 +57,6 @@ if __name__ == '__main__':
     pixel_format = config['PIXEL_FORMAT']
     bit_depth = config['BIT_DEPTH']
     
-    
-    #command = create_vmaf_command(image_name, input_reference_dir,  input_distorted_dir , output_dir, hash_dir, original_video, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth)
-
-
-    # Save the command to a file
-    #with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
-     #   f.write(command + '\n')
 
 # Ottiene il nome del file originale senza estensione (radice)
 original_base = os.path.splitext(os.path.basename(original_video))[0]
