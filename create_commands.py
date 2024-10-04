@@ -34,7 +34,7 @@ if __name__ == '__main__':
     
     config_file = sys.argv[1]
     
-    # Carica lo schema da un file
+    
 
 
     # Read the JSON configuration file
@@ -72,24 +72,24 @@ except ValidationError as e:
 with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
     
-    
+with open(os.path.join(output_dir, 'commands.txt'), 'w') as f:
+    pass  # Just opening in write mode clears the file
 
-# Ottiene il nome del file originale senza estensione (radice)
+
+# Gets the name of the original file without the extension (root)
 original_base = os.path.splitext(os.path.basename(original_video))[0]
 
-# Scorre tutti i file nella directory distorted
+# Gets the name of the original file without the extension (root)
 for distorted_file in os.listdir(input_distorted_dir):
-    # Mantiene il nome del file distorto completo per l'output
+    # Gets the name of the original file without the extension (root)
     distorted_full_name = distorted_file  
     distorted_base = os.path.splitext(distorted_full_name)[0]
-
-    # Se il nome del file originale è contenuto nel nome del file distorto, genera il comando
+    # If the original file name is contained in the distorted file name, generate the command
     if original_base in distorted_base:
-        # Estrai i metadati associati al file distorto
-        # Trova il video distorto con file_name pari a distorted_full_name  
+        # Extract metadata associated with the distorted file
+        # Find the distorted video with file_name equal to distorted_full_name    
         metadata = next((video for video in video_metadata["distorted_videos"] if video["file_name"] == distorted_full_name), None)
-
-        #  Se il video esiste, estrai i suoi metadati
+   # If the video exists, extract its metadata
         if metadata:
             width = metadata["width"]
             height = metadata["height"]
