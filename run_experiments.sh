@@ -1,29 +1,5 @@
 #!/bin/bash
 
-# Input video directory
-#INPUT_REFERENCE_DIR="/inputs"
-# Output results directory
-#OUTPUT_DIR="/results"
-# Hash directory
-#HASH_DIR="/hash"
-
-# VMAF model
-#MODEL_VERSION="vmaf_v0.6.1"
-# Dataset
-#DATASET="KUGVD"
-# Width
-#WIDTH=1920
-# Height
-#HEIGHT=1080
-# Bitrate
-#BITRATE=600
-# Video codec
-#VIDEO_CODEC="x264"
-# Pixel format
-#PIXEL_FORMAT=420
-# BIT DEPTH
-#BIT_DEPTH=8
-
 INPUT_REFERENCE_DIR="$1"   
 INPUT_DISTORTED_DIR="$2"    
 OUTPUT_DIR="$3"    
@@ -58,6 +34,10 @@ echo "Original Video : $ORIGINAL_VIDEO"
 echo "Distorted Video : $DISTORTED_VIDEO"
 echo "Features: $FEATURES"
 
+if [ "$#" -ne 15 ]; then
+    echo "Error: Expected 15 arguments, but got $#."
+    exit 1
+fi
 
 
 
@@ -85,10 +65,10 @@ if [ ! -d "$HASH_DIR" ]; then
     exit 1
 fi
 
-# Function for decoding and VMAF evaluation
-video_coding_vmafevaluation() {
-    distorted=$1 #distorted video
-    original=$2 # orginal video
+
+original="$ORIGINAL_VIDEO"
+distorted="$DISTORTED_VIDEO"
+
 
     #directory where to save hash file
     output_hash="$HASH_DIR/${distorted}_decoded.md5"
@@ -134,27 +114,6 @@ video_coding_vmafevaluation() {
          $feature_args \
         --output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
         --json
-}
 
 
-video_coding_vmafevaluation "$DISTORTED_VIDEO" "$ORIGINAL_VIDEO"
 
-
-# Check on input directory to see if there are YUV videos
-#for original_file in "$INPUT_REFERENCE_DIR"/*.yuv; do
- #   if [ -f "$original_file" ]; then
-        # Check for MP4 files
-  #      for distorted_file in "$INPUT_DISTORTED_DIR"/*.mp4; do
-   #         if [ -f "$distorted_file" ]; then
-                # Extract filenames
-    #            distorted=$(basename "$distorted_file")
-     #           original=$(basename "$original_file")
-                ##video_coding_vmafevaluation "$distorted" "$original"
-      #      else
-       #         echo "No mp4 file founded '$INPUT_DISTORTED_DIR'."
-        #    fi
-        #done
-    #else
-        #echo " No yuv file founded in '$INPUT_REFERENCE_DIR'."
-    #fi
-#done

@@ -108,4 +108,4 @@ for distorted_file in os.listdir(input_distorted_dir):
         with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
             f.write(command + '\n')
 
-print(f" VMAF comands saved in {output_dir}/commands.txt")
+print(f"VMAF comands saved in {output_dir}/commands.txt")
