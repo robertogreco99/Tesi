@@ -8,10 +8,7 @@
     "MODEL_VERSION": "vmaf_4k_v0.6.1neg",
     "DATASET": "KUGVD",
     "FEATURES": [
-        "float_ssim",
         "psnr",
-        "float_ms_ssim",
-        "ciede",
-        "psnr_hvs"
-    ]
+        "float_ms_ssim"
+        ]
 }
