@@ -73,7 +73,7 @@ with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
     
 with open(os.path.join(output_dir, 'commands.txt'), 'w') as f:
-    pass  # Just opening in write mode clears the file
+    pass  
 
 
 # Gets the name of the original file without the extension (root)
