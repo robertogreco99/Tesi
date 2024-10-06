@@ -8,6 +8,7 @@
     "MODEL_VERSION": "vmaf_v0.6.1",
     "DATASET": "KUGVD",
     "FEATURES": [
-        "ciede"
+        "ciede",
+        "psnr"
         ]
 }
