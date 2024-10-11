@@ -14,7 +14,7 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
     #features are in a list and i create a list separeted by commas to pass 
     features = ','.join(features_list)  
     
-    command = f"podman run --rm -it \
+    command = f"docker run --rm -it \
     -v {input_reference_dir}:/reference \
     -v {input_distorted_dir}:/distorted \
     -v {output_dir}:/results \
@@ -41,9 +41,9 @@ vmaf_models = [
                 "vmaf_float_v0.6.1neg", 
                 "vmaf_float_b_v0.6.3", 
                 "vmaf_b_v0.6.3", 
-                "vmaf_float_4k_v0.6.1", 
+                "vmaf_flat_4k_v0.6.1", 
                 "vmaf_4k_v0.6.1", 
-                "vmaf_4k_v0.6.1neg"
+                "vmaf_4k_v0.6.1neg",
           ]
 
     # Read the JSON configuration file

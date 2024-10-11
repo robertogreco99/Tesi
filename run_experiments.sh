@@ -86,15 +86,8 @@ distorted="$DISTORTED_VIDEO"
     # Decode the video
     ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv"
 
-    
-    # Scale the decoded video if it is not 1920x1080
-    #if [[ "$WIDTH" -ne 1920 || "$HEIGHT" -ne 1080 ]]; then
-    #ffmpeg -i "$distorted_decoded_yuv" -vf scale=1920x1080:flags=lanczos:param0=3 -sws_flags lanczos+accurate_rnd+full_chroma_int "$distorted_decoded_yuv"
-    #  Print the characteristics of the converted file
-    #echo "Characteristics of the converted file:"
-    #ffprobe -v error -show_format -show_streams "$distorted_decoded_yuv"
-    #fi
-    
+   
+
     # MD5 hash of decoded YUV file
     echo "Hash MD5 for $distorted_decoded_yuv..."
     md5sum "$distorted_decoded_yuv" > "$output_hash"
