@@ -14,13 +14,14 @@
             "enum": [
                 "vmaf_v0.6.1", 
                 "vmaf_v0.6.1neg", 
-                "vmaf_oat_v0.6.1", 
-                "vmaf_oat_v0.6.1neg", 
-                "vmaf_oat_b_v0.6.3", 
+                "vmaf_float_v0.6.1", 
+                "vmaf_float_v0.6.1neg", 
+                "vmaf_float_b_v0.6.3", 
                 "vmaf_b_v0.6.3", 
-                "vmaf_oat_4k_v0.6.1", 
+                "vmaf_float_4k_v0.6.1", 
                 "vmaf_4k_v0.6.1", 
-                "vmaf_4k_v0.6.1neg"
+                "vmaf_4k_v0.6.1neg",
+                "VMAF_ALL"
             ]
         },
         "DATASET": { "type": "string", "description": "The name of the dataset" },

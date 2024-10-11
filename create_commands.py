@@ -60,9 +60,10 @@ with open('Json/configschema.json') as schema_file:
     output_dir = config['OUTPUT_DIR']
     hash_dir = config['HASH_DIR']
     original_video=config['ORIGINAL_VIDEO']
-    #model_version = config['MODEL_VERSION']
+    model_version_file = config['MODEL_VERSION']
     dataset = config['DATASET']
     features_list= config['FEATURES']
+    print(model_version_file)
 
     # Read the database file name 
     dataset_file = f"{dataset}.json"  
@@ -111,11 +112,16 @@ for distorted_file in os.listdir(input_distorted_dir):
         else:
             print(f"{distorted_full_name} was not found.")
             
-       
-        for model_version in vmaf_models:
-            command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
-            # Save the command
+        if model_version_file == 'VMAF_ALL':   
+            for model_version  in vmaf_models:
+                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
+                # Save the command
+                with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                    f.write(command + '\n')
+        else:  
+            command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
             with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
-                f.write(command + '\n')
+               f.write(command + '\n')
+    
 
 print(f"VMAF comands saved in {output_dir}/commands.txt")
