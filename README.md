@@ -34,3 +34,6 @@ Lavoro sulla tesi
 
 Per trovare le versioni
 apt-cache policy <libreria> e ho preso quella candidata (se candidata = installata è stata installata l'ultima)
+
+
+Chiedere : bitdepth e pixel format

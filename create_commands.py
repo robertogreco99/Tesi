@@ -6,15 +6,15 @@ from jsonschema import validate, ValidationError
 
 def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, features_list):
   
-    #print(f"Original Video: {original_video}")
-    #print(f"Distorted Video: {distorted_video}")
+    print(f"Original Video: {original_video}")
+    print(f"Distorted Video: {distorted_video}")
 
-    #print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
+    print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
     
-
+    #features are in a list and i create a list separeted by commas to pass 
     features = ','.join(features_list)  
     
-    command = f"docker run --rm -it \
+    command = f"podman run --rm -it \
     -v {input_reference_dir}:/reference \
     -v {input_distorted_dir}:/distorted \
     -v {output_dir}:/results \
@@ -29,17 +29,27 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: python create_vmaf_cmdlines.py config file")
+        print("The scripts needs two argument.You need to call it like :  python create_vmaf_cmdlines.py config file")
         sys.exit(1)
     
     config_file = sys.argv[1]
     
-    
-
+vmaf_models = [
+                "vmaf_v0.6.1", 
+                "vmaf_v0.6.1neg", 
+                "vmaf_float_v0.6.1", 
+                "vmaf_float_v0.6.1neg", 
+                "vmaf_float_b_v0.6.3", 
+                "vmaf_b_v0.6.3", 
+                "vmaf_float_4k_v0.6.1", 
+                "vmaf_4k_v0.6.1", 
+                "vmaf_4k_v0.6.1neg"
+          ]
 
     # Read the JSON configuration file
 with open(config_file, 'r') as f:
         config = json.load(f)
+    # Read the json schema file
 with open('Json/configschema.json') as schema_file:
     schema = json.load(schema_file)
     
@@ -50,15 +60,16 @@ with open('Json/configschema.json') as schema_file:
     output_dir = config['OUTPUT_DIR']
     hash_dir = config['HASH_DIR']
     original_video=config['ORIGINAL_VIDEO']
-    model_version = config['MODEL_VERSION']
+    #model_version = config['MODEL_VERSION']
     dataset = config['DATASET']
     features_list= config['FEATURES']
 
-    
+    # Read the database file name 
     dataset_file = f"{dataset}.json"  
-   
+    # Find the database in the corrett path
     dataset_file = os.path.join("Dataset", f"{dataset}.json")
-   
+
+# validate the schema 
 try:
     validate(instance=config, schema=schema)
     print("JSON is valid")
@@ -101,11 +112,10 @@ for distorted_file in os.listdir(input_distorted_dir):
             print(f"{distorted_full_name} was not found.")
             
        
-
-        command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
-
-        # Save the command
-        with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
-            f.write(command + '\n')
+        for model_version in vmaf_models:
+            command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
+            # Save the command
+            with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                f.write(command + '\n')
 
 print(f"VMAF comands saved in {output_dir}/commands.txt")
