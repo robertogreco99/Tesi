@@ -5,10 +5,9 @@
     "OUTPUT_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result",
     "HASH_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Hash",
     "ORIGINAL_VIDEO" : "FIFA17_30fps_30sec_v2.yuv",
-    "MODEL_VERSION": "VMAF_ALL",
+    "MODEL_VERSION": "vmaf_float_4k_v0.6.1.json",
     "DATASET": "KUGVD",
     "FEATURES": [
-        "ciede",
         "psnr"
         ]
 }

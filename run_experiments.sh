@@ -110,10 +110,11 @@ distorted="$DISTORTED_VIDEO"
         --height "$HEIGHT" \
         --pixel_format "$PIXEL_FORMAT" \
         --bitdepth "$BIT_DEPTH" \
-        --model version="$MODEL_VERSION" \
-         $feature_args \
+        --model path=/vmaf-3.0.0/model/${MODEL_VERSION}\
+        $feature_args \
         --output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
         --json
+    
 
 
 

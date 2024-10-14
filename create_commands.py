@@ -6,12 +6,13 @@ from jsonschema import validate, ValidationError
 
 def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, features_list):
   
-    print(f"Original Video: {original_video}")
-    print(f"Distorted Video: {distorted_video}")
+    #print(f"Original Video: {original_video}")
+    #print(f"Distorted Video: {distorted_video}")
 
-    print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
+    #print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
     
-    #features are in a list and i create a list separeted by commas to pass 
+    #features are in a list and i create a list in which thery are split by a ',' to pass 
+    #print(model_version)
     features = ','.join(features_list)  
     
     command = f"docker run --rm -it \
@@ -35,15 +36,15 @@ if __name__ == '__main__':
     config_file = sys.argv[1]
     
 vmaf_models = [
-                "vmaf_v0.6.1", 
-                "vmaf_v0.6.1neg", 
-                "vmaf_float_v0.6.1", 
-                "vmaf_float_v0.6.1neg", 
-                "vmaf_float_b_v0.6.3", 
-                "vmaf_b_v0.6.3", 
-                "vmaf_flat_4k_v0.6.1", 
-                "vmaf_4k_v0.6.1", 
-                "vmaf_4k_v0.6.1neg",
+                "vmaf_v0.6.1.json", 
+                "vmaf_v0.6.1neg.json", 
+                "vmaf_float_v0.6.1.json", 
+                "vmaf_float_v0.6.1neg.json", 
+                "vmaf_float_b_v0.6.3.json", 
+                "vmaf_b_v0.6.3.json", 
+                "vmaf_flat_4k_v0.6.1.json", 
+                "vmaf_4k_v0.6.1.json", 
+                "vmaf_4k_v0.6.1neg.json",
           ]
 
     # Read the JSON configuration file

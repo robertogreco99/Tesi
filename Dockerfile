@@ -35,7 +35,8 @@ RUN pip3 install matplotlib==3.9.2 numpy==2.1.1 pandas==2.2.3
 RUN curl -L https://github.com/Netflix/vmaf/archive/refs/tags/v3.0.0.zip -o vmaf.zip \
     && unzip vmaf.zip \
     && cd vmaf-3.0.0/libvmaf \
-    && meson build --buildtype release \
+    #&& meson build --buildtype release \
+    && meson setup build --buildtype release -Denable_float=true \
     && ninja -C build \
     && ninja -C build install
 
