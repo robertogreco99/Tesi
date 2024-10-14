@@ -1,63 +1,55 @@
 {
     "database": "AVT-VQDB-UHD-1",
     "reference_videos": [
-      {
-        "id": 1,
-        "file_name": "bigbuck_bunny_8bit.mkv"
-      },
-      {
-        "id": 2,
-        "file_name": "bigbuck_bunny_8bit.yuv"
-      },
-      {
-        "id": 3,
-        "file_name": "cutting_orange_tuil_8s.mkv"
-      },
-      {
-        "id": 4,
-        "file_name": "cutting_orange_tuil.mkv"
-      },
-      {
-        "id": 5,
-        "file_name": "Dancers_8s.mkv"
-      },
-      {
-        "id": 6,
-        "file_name": "Daydreamer_SDR_8s_3840x2160_8.mkv"
-      },
-      {
-        "id": 7,
-        "file_name": "Daydreamer_SDR_8s_3840x2160_8.yuv"
-      },
-      {
-        "id": 8,
-        "file_name": "fr-041_debris_3840x2160_60p_422_ffvhuff_4_8s.mkv"
-      },
-      {
-        "id": 9,
-        "file_name": "Giftmord-SDR_8s_11_3840x2160.mkv"
-      },
-      {
-        "id": 10,
-        "file_name": "Sparks_cut_13.mkv"
-      },
-      {
-        "id": 11,
-        "file_name": "Sparks_cut_15.mkv"
-      },
-      {
-        "id": 12,
-        "file_name": "vegetables_tuil.mkv"
-      },
-      {
-        "id": 13,
-        "file_name": "water_netflix_8s.mkv"
-      },
-      {
-        "id": 14,
-        "file_name": "water_netflix.mkv"
-      }
-    ],
+        {
+          "id": 1,
+          "file_name": "bigbuck_bunny_8bit.yuv"
+        },
+        {
+          "id": 2,
+          "file_name": "cutting_orange_tuil_8s.yuv"
+        },
+        {
+          "id": 3,
+          "file_name": "cutting_orange_tuil.yuv"
+        },
+        {
+          "id": 4,
+          "file_name": "Dancers_8s.yuv"
+        },
+        {
+          "id": 5,
+          "file_name": "Daydreamer_SDR_8s_3840x2160_8.yuv"
+        },
+        {
+          "id": 6,
+          "file_name": "fr-041_debris_3840x2160_60p_422_ffvhuff_4_8s.yuv"
+        },
+        {
+          "id": 7,
+          "file_name": "Giftmord-SDR_8s_11_3840x2160.yuv"
+        },
+        {
+          "id": 8,
+          "file_name": "Sparks_cut_13.yuv"
+        },
+        {
+          "id": 9,
+          "file_name": "Sparks_cut_15.yuv"
+        },
+        {
+          "id": 10,
+          "file_name": "vegetables_tuil.yuv"
+        },
+        {
+          "id": 11,
+          "file_name": "water_netflix_8s.yuv"
+        },
+        {
+          "id": 12,
+          "file_name": "water_netflix.yuv"
+        }
+      ],
     "distorted_videos" : [
     {
         "id": 1,
