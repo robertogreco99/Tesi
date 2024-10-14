@@ -36,7 +36,8 @@ RUN curl -L https://github.com/Netflix/vmaf/archive/refs/tags/v3.0.0.zip -o vmaf
     && unzip vmaf.zip \
     && cd vmaf-3.0.0/libvmaf \
     #&& meson build --buildtype release \
-    && meson setup build --buildtype release -Denable_float=true \
+    && meson setup build --buildtype release -Denable_float=true \ 
+    ##option needed to run float models
     && ninja -C build \
     && ninja -C build install
 
