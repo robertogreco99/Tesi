@@ -72,21 +72,32 @@ distorted="$DISTORTED_VIDEO"
 
     #directory where to save hash file
     output_hash="$HASH_DIR/${distorted}_decoded.md5"
+    # Output YUV : file name of decoded file
+    distorted_decoded_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
+    # Output Resized YUV : file name of decoded file resized
+    distorted_decoded_resized_yuv="$OUTPUT_DIR/${distorted}_decoded_resized.yuv"
+
 
     echo "Input distorted file: $distorted"
     echo "Original YUV file: $original"
-
-    # Output YUV : file name of decoded file
-    distorted_decoded_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
-
 
     # Print the name of the decoded file
     echo "Decoded file: $distorted_decoded_yuv"
 
     # Decode the video
-    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv"
+    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv" -loglevel quiet
 
-   
+    # Resize if dimensions are not 1920x1080
+    #if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
+    #echo "Resizing video to 1920x1080..."
+    #echo "distorted_decoded_yuv : $distorted_decoded_yuv"
+    #echo "WIDTH : $WIDTH"
+    #echo "HEIGHT : $HEIGHT"
+    #distorted_decoded_yuv="$distorted_decoded_resized_yuv"
+    #output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+    #else
+    #echo "No resizing needed. Dimensions are already 1920x1080."
+    #fi
 
     # MD5 hash of decoded YUV file
     echo "Hash MD5 for $distorted_decoded_yuv..."
