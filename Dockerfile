@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
    
 
 # Python libraries for analysis and graphs
-RUN pip3 install matplotlib==3.9.2 numpy==2.1.1 pandas==2.2.3
+RUN pip3 install matplotlib==3.9.2 numpy==2.1.1 pandas==2.2.3 scipy
 
 
 # Download the zip of VMAF (version 3.0.0) and install libvmaf
