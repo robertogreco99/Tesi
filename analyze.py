@@ -31,9 +31,9 @@ graph_directory = os.path.join(
 os.makedirs(graph_directory, exist_ok=True)
 
 
-# Create the json filename
+# Create the json  path name
 json_filename = f'/results/result__{dataset}__{width}x{height}__{bitrate}__{video_codec}__{model_version}.json'
-# Read json filename
+# Read the 
 with open(json_filename) as f:
     data = json.load(f)
 
@@ -66,7 +66,7 @@ def calculate_metrics(column_name):
             '20%': np.percentile(dframes[column_name], 20),
         }
         
-        # Print results
+        # Print values
         print(f"{column_name} Mean: {mean_value}")
         print(f"Harmonic mean {column_name}: {harmonic_mean_value}")
         print(f"Geometric mean {column_name}: {geometric_mean_value}")
@@ -105,7 +105,6 @@ metrics_to_evaluate = [
     "vmaf"
 ]
 
-# Store mean values for scatter plots
 metrics_results = {}
 for metric in metrics_to_evaluate:
     results = calculate_metrics(metric)
