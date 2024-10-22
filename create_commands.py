@@ -31,7 +31,7 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("The scripts needs two argument.You need to call it like :  python create_vmaf_cmdlines.py config file")
+        print("The scripts needs two argument.You need to call it like :  python3 create_commands.py Json/config.json ")
         sys.exit(1)
     
     config_file = sys.argv[1]
@@ -92,7 +92,7 @@ with open(os.path.join(output_dir, 'commands.txt'), 'w') as f:
 
 # Gets the name of the original file without the extension (root)
 original_without_extension= os.path.splitext(os.path.basename(original_video))[0]
-# Loop on the files in input_distorted_dir)
+# Loop on the files in input_distorted_dir
 for distorted_file in os.listdir(input_distorted_dir):
     #Save the full name of the distorted file 
     distorted_full_name = distorted_file  
