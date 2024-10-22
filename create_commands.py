@@ -11,8 +11,8 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
 
     #print(f"Properties: {width}x{height}, Bitrate: {bitrate} kbps, Pixel Format: {pixel_format}, Codec: {video_codec}, Bit Depth: {bit_depth}")
     
-    #features are in a list and i create a list in which thery are split by a ',' to pass 
-    #print(model_version)
+    #The features are in a list, and I create a new list where they are split by a comma (',')"    
+    # #print(model_version)
     features = ','.join(features_list)  
     
     command = f"docker run --rm -it \
@@ -90,17 +90,17 @@ with open(os.path.join(output_dir, 'commands.txt'), 'w') as f:
 
 
 # Gets the name of the original file without the extension (root)
-original_base = os.path.splitext(os.path.basename(original_video))[0]
-
-# Gets the name of the original file without the extension (root)
+original_without_extension= os.path.splitext(os.path.basename(original_video))[0]
+# Loop on the files in input_distorted_dir)
 for distorted_file in os.listdir(input_distorted_dir):
-    # Gets the name of the original file without the extension (root)
+    #Save the full name of the distorted file 
     distorted_full_name = distorted_file  
-    distorted_base = os.path.splitext(distorted_full_name)[0]
+    #Save the name of the distorted file without the extension
+    distorted_without_extension = os.path.splitext(distorted_full_name)[0]
     # If the original file name is contained in the distorted file name, generate the command
-    if original_base in distorted_base:
+    if original_without_extension in distorted_without_extension:
+        # Find the distorted video with file_name equal to distorted_full_name 
         # Extract metadata associated with the distorted file
-        # Find the distorted video with file_name equal to distorted_full_name    
         metadata = next((video for video in video_metadata["distorted_videos"] if video["file_name"] == distorted_full_name), None)
    # If the video exists, extract its metadata
         if metadata:
@@ -116,7 +116,6 @@ for distorted_file in os.listdir(input_distorted_dir):
         if model_version_file == 'VMAF_ALL':   
             for model_version  in vmaf_models:
                 command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
-                # Save the command
                 with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
                     f.write(command + '\n')
         else:  

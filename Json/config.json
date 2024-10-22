@@ -8,11 +8,6 @@
     "MODEL_VERSION": "VMAF_ALL",
     "DATASET": "KUGVD",
     "FEATURES": [
-        "cambi",
-         "float_ssim",
-         "psnr",
-         "float_ms_ssim",
-         "ciede",
-         "psnr_hvs"
+        "psnr"
         ]
 }
