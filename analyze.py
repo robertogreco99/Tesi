@@ -7,7 +7,7 @@ from scipy.stats import gmean
 import os  
 
 
-if len(sys.argv) != 9:
+if len(sys.argv) != 11:
     print("Error , format is : python analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video>")
     sys.exit(1)
 
@@ -20,19 +20,32 @@ video_codec = sys.argv[5]
 model_version = sys.argv[6] 
 output_directory = sys.argv[7] 
 original_video = sys.argv[8]  
+width_old = sys.argv[9]
+height_old = sys.argv[10]
 
-
-graph_directory = os.path.join(
+if width_old != 1920 or height_old != 1080:
+ graph_directory = os.path.join(
     output_directory,
     dataset,
     original_video,
-    f"{dataset}__{width}x{height}__{bitrate}_{video_codec}__{model_version}"
+    f"{dataset}__{width_old}x{height_old}__{bitrate}_{video_codec}__{model_version}_resized_{width}x{height}"
 )
+else:
+ graph_directory = os.path.join(
+    output_directory,
+    dataset,
+    original_video,
+    f"{dataset}__{width_old}x{height_old}__{bitrate}_{video_codec}__{model_version}")
+
+
 os.makedirs(graph_directory, exist_ok=True)
 
+# Create the json path name
+if width_old != 1920 or height_old != 1080:
+    json_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+else:
+    json_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 
-# Create the json  path name
-json_filename = f'/results/result__{dataset}__{width}x{height}__{bitrate}__{video_codec}__{model_version}.json'
 # Read the 
 with open(json_filename) as f:
     data = json.load(f)
@@ -156,7 +169,7 @@ for metric, values in metrics_results.items():
 
 # Create a DataFrame and save it as CSV
 df_metrics = pd.DataFrame(rows)
-csv_filename = f'/results/result__{dataset}__{width}x{height}__{bitrate}_{video_codec}__{model_version}.json.csv'
+csv_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json_resized_{width}x{height}.csv'
 df_metrics.to_csv(csv_filename, index=False)
 
 print("Csv ending")

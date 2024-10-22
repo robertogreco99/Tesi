@@ -21,7 +21,8 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
     -v {output_dir}:/results \
     -v {hash_dir}:/hash \
     {image_name} \
-    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {original_video} {distorted_video} {features} && python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'"
+    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {original_video} {distorted_video} {features}'"
+    #&& python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'"
 
     #print("-----------------------------------")
 
@@ -42,7 +43,7 @@ vmaf_models = [
                 "vmaf_float_v0.6.1neg.json", 
                 "vmaf_float_b_v0.6.3.json", 
                 "vmaf_b_v0.6.3.json", 
-                "vmaf_flat_4k_v0.6.1.json", 
+                "vmaf_float_4k_v0.6.1.json", 
                 "vmaf_4k_v0.6.1.json", 
                 "vmaf_4k_v0.6.1neg.json",
           ]

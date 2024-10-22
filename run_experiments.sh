@@ -87,17 +87,37 @@ distorted="$DISTORTED_VIDEO"
     # Decode the video
     ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv" -loglevel quiet
 
+    #Output json 
+    output_json="$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
+    #Width and height
+    width_old="$WIDTH"
+    height_old="$HEIGHT"
+
     # Resize if dimensions are not 1920x1080
-    #if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
-    #echo "Resizing video to 1920x1080..."
-    #echo "distorted_decoded_yuv : $distorted_decoded_yuv"
-    #echo "WIDTH : $WIDTH"
-    #echo "HEIGHT : $HEIGHT"
-    #distorted_decoded_yuv="$distorted_decoded_resized_yuv"
-    #output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
-    #else
-    #echo "No resizing needed. Dimensions are already 1920x1080."
-    #fi
+    if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
+    echo "Resizing video to 1920x1080..."
+    echo "distorted_decoded_yuv : $distorted_decoded_yuv"
+    echo "WIDTH : $WIDTH"
+    echo "HEIGHT : $HEIGHT"
+    #ffmpeg -s "$WIDTH"x"$HEIGHT" -i "$distorted_decoded_yuv"  -vf scale=1920x1080:flags=lanczos:param0=3 -sws_flags lanczos+accurate_rnd+full_chroma_int -pix_fmt yuv420p  "$distorted_decoded_resized_yuv"
+   
+    ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p -r 30 -i "$distorted_decoded_yuv" \
+   -vf scale=1920x1080:flags=lanczos:param0=3 \
+   -sws_flags lanczos+accurate_rnd+full_chroma_int \
+   -pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized_yuv"
+
+    distorted_decoded_yuv="$distorted_decoded_resized_yuv"
+    output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+    width_new=1920
+    height_new=1080
+    output_json="$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+    
+    else
+    echo "No resizing needed. Dimensions are already 1920x1080."
+    width_new="$width_old"
+    height_new="$height_old"
+
+    fi
 
     # MD5 hash of decoded YUV file
     echo "Hash MD5 for $distorted_decoded_yuv..."
@@ -117,15 +137,31 @@ distorted="$DISTORTED_VIDEO"
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \
         --distorted "$distorted_decoded_yuv" \
-        --width "$WIDTH" \
-        --height "$HEIGHT" \
+        --width "$width_new" \
+        --height "$height_new" \
         --pixel_format "$PIXEL_FORMAT" \
         --bitdepth "$BIT_DEPTH" \
         --model path=/vmaf-3.0.0/model/${MODEL_VERSION}\
         $feature_args \
-        --output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
-        --json
+        --output "$output_json" --json 
+        #\
+        #--output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
+        #--json
     
+    #RUN PYTHON ANALYSY
+    #python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'
+    echo "Dataset: $DATASET"
+    echo "Width: $width_new"
+    echo "Height: $height_new"
+    echo "Bitrate: $BITRATE"
+    echo "Video Codec: $VIDEO_CODEC"
+    echo "Model Version: $MODEL_VERSION"
+    echo "Output Directory: $OUTPUT_DIR"
+    echo "Original Video: $ORIGINAL_VIDEO"
+    echo "Old Dimensions : $width_old"
+    echo "Old Dimensions : $height_old"
 
+    
+    python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$width_old" "$height_old"
 
 
