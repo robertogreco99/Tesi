@@ -134,6 +134,22 @@ distorted="$DISTORTED_VIDEO"
         feature_args+="--feature $feature "
     done
 
+   if [[ "${MODEL_VERSION}" == "vmaf_b_v0.6.3.json" ]]; then
+     model_version="vmaf_b_v0.6.3"
+     path="version=${model_version}"
+     echo "Path : $path"
+   elif [[ "${MODEL_VERSION}" == "vmaf_float_b_v0.6.3.json" ]]; then
+     model_version="vmaf_float_b_v0.6.3"
+     path="version=${model_version}"
+     echo "Path : $path"
+   else
+    path="path=/vmaf-3.0.0/model/${MODEL_VERSION}"
+    echo "Path : $path"
+   fi
+
+       # --model path=/vmaf-3.0.0/model/${MODEL_VERSION}\
+
+    
     # VMAF evaluation
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \
@@ -142,7 +158,7 @@ distorted="$DISTORTED_VIDEO"
         --height "$height_new" \
         --pixel_format "$PIXEL_FORMAT" \
         --bitdepth "$BIT_DEPTH" \
-        --model path=/vmaf-3.0.0/model/${MODEL_VERSION}\
+        --model "$path"\
         $feature_args \
         --output "$output_json" --json 
         #\
