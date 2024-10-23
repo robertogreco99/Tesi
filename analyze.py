@@ -8,7 +8,7 @@ import os
 
 
 if len(sys.argv) != 11:
-    print("Error , format is : python analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video>")
+    print("Error , format is : python3 analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video> <width_old> <height_old>")
     sys.exit(1)
 
 # Parameters
@@ -23,7 +23,10 @@ original_video = sys.argv[8]
 width_old = sys.argv[9]
 height_old = sys.argv[10]
 
-if width_old != 1920 or height_old != 1080:
+print(f"width_old: {width_old}, height_old: {height_old}")
+
+
+if width_old != '1920' or height_old != '1080':
  graph_directory = os.path.join(
     output_directory,
     dataset,
@@ -35,22 +38,32 @@ else:
     output_directory,
     dataset,
     original_video,
-    f"{dataset}__{width_old}x{height_old}__{bitrate}_{video_codec}__{model_version}")
+    f"{dataset}__{width_old}x{height_old}__{bitrate}_{video_codec}__{model_version}"
+ )
 
 
 os.makedirs(graph_directory, exist_ok=True)
 
 # Create the json path name
-if width_old != 1920 or height_old != 1080:
+
+if width_old != '1920' or height_old != '1080':
     json_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
 else:
     json_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+
+# Stampa il nome del file per debug
+print(f"Json file path: {json_filename}")
+
+
+
+
+print(json_filename)
 
 # Read the 
 with open(json_filename) as f:
     data = json.load(f)
 
-# Take data from pooled frames
+# Take data from the frames
 frames_list = data["frames"]
 frames_rows = []
 
@@ -123,6 +136,9 @@ for metric in metrics_to_evaluate:
     results = calculate_metrics(metric)
     if results:
         metrics_results[metric] = results
+
+print("METRICS RESULTS")
+print(metrics_results)
 
 # Create scatter plots for each metric
 def create_scatter_plot(x, y, x_label, y_label, title, output_img):

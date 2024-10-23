@@ -24,7 +24,17 @@
                 "VMAF_ALL"
             ]
         },
-        "DATASET": { "type": "string", "description": "The name of the dataset" },
+        "DATASET": { "type": "string", "description": "The name of the dataset" ,
+        "enum": [
+            "KUGVD",
+            "AVT-VQDB-UHD-1_1",
+            "AVT-VQDB-UHD-1_2",
+            "AVT-VQDB-UHD-1_3",
+            "AVT-VQDB-UHD-1_4",
+            "GamingVideoSet1",
+            "GamingVideoSet2"
+        ]
+    },
         "FEATURES": {
             "type": "array",
             "description": "The different metrics that vmaf will calculate",

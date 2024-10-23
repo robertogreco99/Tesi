@@ -35,7 +35,8 @@ if __name__ == '__main__':
         sys.exit(1)
     
     config_file = sys.argv[1]
-    
+
+#9 possible models
 vmaf_models = [
                 "vmaf_v0.6.1.json", 
                 "vmaf_v0.6.1neg.json", 
@@ -48,14 +49,14 @@ vmaf_models = [
                 "vmaf_4k_v0.6.1neg.json",
           ]
 
-    # Read the JSON configuration file
+# Read the JSON configuration file
 with open(config_file, 'r') as f:
         config = json.load(f)
-    # Read the json schema file
+ # Read the json schema file
 with open('Json/configschema.json') as schema_file:
     schema = json.load(schema_file)
     
-    # Get parameters from the config file
+    # Get data from the config file
     image_name = config['IMAGE_NAME']
     input_reference_dir = config['INPUT_REF_DIR']
     input_distorted_dir = config['INPUT_DIST_DIR']
@@ -102,7 +103,12 @@ for distorted_file in os.listdir(input_distorted_dir):
     if original_without_extension in distorted_without_extension:
         # Find the distorted video with file_name equal to distorted_full_name 
         # Extract metadata associated with the distorted file
-        metadata = next((video for video in video_metadata["distorted_videos"] if video["file_name"] == distorted_full_name), None)
+        metadata = None
+        for video in video_metadata["distorted_videos"]:
+            if video["file_name"] == distorted_full_name:
+               metadata = video
+               break
+
    # If the video exists, extract its metadata
         if metadata:
             width = metadata["width"]

@@ -125,6 +125,7 @@ distorted="$DISTORTED_VIDEO"
     echo "Hash saved in $output_hash."
 
     # Convert FEATURES string to an array
+    # sep is ','; read from FEATURES and push into the feature_array the elmemnents
     IFS=',' read -r -a feature_array <<< "$FEATURES"
 
     # Prepare features argument for VMAF command
@@ -148,7 +149,7 @@ distorted="$DISTORTED_VIDEO"
         #--output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
         #--json
     
-    #RUN PYTHON ANALYSY
+    #RUN PYTHON 
     #python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'
     echo "Dataset: $DATASET"
     echo "Width: $width_new"
@@ -158,8 +159,8 @@ distorted="$DISTORTED_VIDEO"
     echo "Model Version: $MODEL_VERSION"
     echo "Output Directory: $OUTPUT_DIR"
     echo "Original Video: $ORIGINAL_VIDEO"
-    echo "Old Dimensions : $width_old"
-    echo "Old Dimensions : $height_old"
+    echo "Old WIDTH : $width_old"
+    echo "Old HEIGHT : $height_old"
 
     
     python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$width_old" "$height_old"
