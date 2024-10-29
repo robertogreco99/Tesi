@@ -113,10 +113,11 @@ def calculate_metrics(column_name):
         return mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3
     else:
         print(f"Metric '{column_name}' not found in the DataFrame.")
-        return None
+        return (None, None, None, None, None, None, None)
 
 # List of metrics to evaluate
 metrics_to_evaluate = [
+    "vmaf",
     "cambi",
     "float_ssim",
     "psnr_y",
@@ -126,10 +127,22 @@ metrics_to_evaluate = [
     "ciede2000",
     "psnr_hvs_y",
     "psnr_hvs_cb",
-    "psnr_hvs_cr",
-    "psnr_hvs",
-    "vmaf"
+    "vmaf_bagging",      
+    "vmaf_stddev",       
+    "vmaf_ci_p95_lo",    
+    "vmaf_ci_p95_hi" 
 ]
+vmaf_models=[
+                "vmaf_v0.6.1.json", 
+                "vmaf_v0.6.1neg.json", 
+                "vmaf_float_v0.6.1.json", 
+                "vmaf_float_v0.6.1neg.json", 
+                "vmaf_float_b_v0.6.3.json", 
+                "vmaf_b_v0.6.3.json", 
+                "vmaf_float_4k_v0.6.1.json", 
+                "vmaf_4k_v0.6.1.json", 
+                "vmaf_4k_v0.6.1neg.json"
+            ]
 
 metrics_results = {}
 for metric in metrics_to_evaluate:
@@ -140,39 +153,67 @@ for metric in metrics_to_evaluate:
 print("METRICS RESULTS")
 print(metrics_results)
 
-# Save metrics results for the current file into the global list
-for metric, values in metrics_results.items():
-    mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
-    all_metrics_results.append({
-        "Dataset": dataset,
-        "Original file name " : original_video,
-        "Width original" : width_old,
-        "Height original": height_old,
-        "Width": width,
-        "Height": height,
-        "Bitrate": bitrate,
-        "Video Codec": video_codec,
-        "Model Version": model_version,
-        "Metric": metric,  
-        "Mean": mean_value,
-        "Harmonic Mean": harmonic_mean_value,
-        "Geometric Mean": geometric_mean_value,
-        "Total Variation": total_variation,
-        "Norm L_1": norm_lp_1,
-        "Norm L_2": norm_lp_2,
-        "Norm L_3": norm_lp_3
-    })
+all_metrics_results.append({
+    "Dataset": dataset,
+    "Original file name": original_video,
+    "Width original": width_old,
+    "Height original": height_old,
+    "Width": width,
+    "Height": height,
+    "Bitrate": bitrate,
+    "Video Codec": video_codec,
+    "Model Version": model_version,
+})
 
-# Create a DataFrame for all metrics and save it as a CSV
+for metric, values in metrics_results.items():
+    if metric == "vmaf":
+        mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+        
+        # Create columns for every vmaf model
+        for model in vmaf_models:
+            if model == model_version:
+                all_metrics_results[-1].update({
+                    f"{metric}_{model}_mean": mean_value,
+                    f"{metric}_{model}_harmonic_mean": harmonic_mean_value,
+                    f"{metric}_{model}_geometric_mean": geometric_mean_value,
+                    f"{metric}_{model}_total_variation": total_variation,
+                    f"{metric}_{model}_norm_lp_1": norm_lp_1,
+                    f"{metric}_{model}_norm_lp_2": norm_lp_2,
+                    f"{metric}_{model}_norm_lp_3": norm_lp_3,
+                })
+            else:
+                # The value is None if the model is not the current
+                all_metrics_results[-1].update({
+                    f"{metric}_{model}_mean": None,
+                    f"{metric}_{model}_harmonic_mean": None,
+                    f"{metric}_{model}_geometric_mean": None,
+                    f"{metric}_{model}_total_variation": None,
+                    f"{metric}_{model}_norm_lp_1": None,
+                    f"{metric}_{model}_norm_lp_2": None,
+                    f"{metric}_{model}_norm_lp_3": None,
+                })
+    else:
+        mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+        
+        # Creare columns for other metrics
+        all_metrics_results[-1].update({
+            f"{metric}_mean": mean_value,
+            f"{metric}_harmonic_mean": harmonic_mean_value,
+            f"{metric}_geometric_mean": geometric_mean_value,
+            f"{metric}_total_variation": total_variation,
+            f"{metric}_norm_lp_1": norm_lp_1,
+            f"{metric}_norm_lp_2": norm_lp_2,
+            f"{metric}_norm_lp_3": norm_lp_3,
+        })
+
+
 df_all_metrics = pd.DataFrame(all_metrics_results)
 csv_filename = f'/results/combined_results.csv'
 
-# Append to CSV without writing the header if the file already exists
+# Append to CSV 
 if os.path.isfile(csv_filename):
-    # If the file exists, append the new data
     df_all_metrics.to_csv(csv_filename, mode='a', header=False, index=False)
 else:
-    # If the file does not exist, create it with header
     df_all_metrics.to_csv(csv_filename, mode='w', header=True, index=False)
 
 print("Combined CSV updated.")
