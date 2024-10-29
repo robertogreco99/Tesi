@@ -126,17 +126,41 @@ else
     echo "Path : $path"
 fi
 
-    # VMAF evaluation
+# VMAF evaluation
+if [[ "${MODEL_VERSION}" == "vmaf_v0.6.1.json" ]]; then
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \
-        --distorted "$final_decoded_file" \
-        --width "$width_new" \
-        --height "$height_new" \
-        --pixel_format "$PIXEL_FORMAT" \
-        --bitdepth "$BIT_DEPTH" \
-        --model "$path"\
-        $feature_args \
-        --output "$output_json" --json 
+       --distorted "$final_decoded_file" \
+       --width "$width_new" \
+       --height "$height_new" \
+       --pixel_format "$PIXEL_FORMAT" \
+       --bitdepth "$BIT_DEPTH" \
+       --model "$path" \
+       $feature_args \
+       --output "$output_json" --json 
+else
+    /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+       --reference "$INPUT_REFERENCE_DIR/$original" \
+       --distorted "$final_decoded_file" \
+       --width "$width_new" \
+       --height "$height_new" \
+       --pixel_format "$PIXEL_FORMAT" \
+       --bitdepth "$BIT_DEPTH" \
+       --model "$path" \
+       --output "$output_json" --json 
+fi
+
+    # VMAF evaluation
+   # /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+    #   --reference "$INPUT_REFERENCE_DIR/$original" \
+     #   --distorted "$final_decoded_file" \
+      #  --width "$width_new" \
+      #  --height "$height_new" \
+       # --pixel_format "$PIXEL_FORMAT" \
+        #--bitdepth "$BIT_DEPTH" \
+        #--model "$path"\
+        #$feature_args \
+        #--output "$output_json" --json 
 
     if [ -f "$distorted_decoded_yuv" ]; then
     rm "$distorted_decoded_yuv"
