@@ -195,7 +195,7 @@ for metric, values in metrics_results.items():
     else:
         mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
         
-        # Creare columns for other metrics
+        # Create columns for other metrics
         all_metrics_results[-1].update({
             f"{metric}_mean": mean_value,
             f"{metric}_harmonic_mean": harmonic_mean_value,
