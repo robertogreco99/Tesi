@@ -51,13 +51,8 @@ if width_old != '1920' or height_old != '1080':
 else:
     json_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 
-# Stampa il nome del file per debug
+# Print json filename
 print(f"Json file path: {json_filename}")
-
-
-
-
-print(json_filename)
 
 # Read the 
 with open(json_filename) as f:
@@ -105,12 +100,17 @@ def calculate_metrics(column_name):
         total_variation = np.mean(abs_diff_scores)
         print(f"Total variation {column_name}: {total_variation}")
 
-        # Lp norm
-        p = 2
-        norm_lp = np.power(np.mean(np.power(dframes[column_name], p)), 1.0 / p)
-        print(f"Norm L_{p} of {column_name} values is: {norm_lp}")
-        
-        return mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp
+        #norms
+        norm_lp_1 = np.power(np.mean(np.power(np.array(dframes[column_name]), 1)), 1.0 / 1)  # Norm L_1
+        print(f"Norm L_1 of {column_name} values is: {norm_lp_1}")
+
+        norm_lp_2 = np.power(np.mean(np.power(np.array(dframes[column_name]), 2)), 1.0 / 2)  # Norm L_2
+        print(f"Norm L_2 of {column_name} values is: {norm_lp_2}")
+
+        norm_lp_3 = np.power(np.mean(np.power(np.array(dframes[column_name]), 3)), 1.0 / 3)  # Norm L_3
+        print(f"Norm L_3 of {column_name} values is: {norm_lp_3}")
+
+        return mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1,norm_lp_2,norm_lp_3
     else:
         print(f"Metric '{column_name}' not found in the DataFrame.")
         return None
@@ -153,7 +153,7 @@ def create_scatter_plot(x, y, x_label, y_label, title, output_img):
 
 # Scatter plots for metrics
 for metric, values in metrics_results.items():
-    mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp = values
+    mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1,norm_lp_2,norm_lp_3 = values
     create_scatter_plot(mean_value, harmonic_mean_value, 'Mean', 'Harmonic Mean',
                      f'{metric} Mean vs {metric} Harmonic Mean',
                      os.path.join(graph_directory, f'{metric}_mean_vs_harmonic_mean.png'))
@@ -165,22 +165,29 @@ for metric, values in metrics_results.items():
     create_scatter_plot(mean_value, total_variation, 'Mean', 'Total Variation',
                      f'{metric} Mean vs {metric} Total Variation',
                      os.path.join(graph_directory, f'{metric}_mean_vs_total_variation.png'))
-
-    create_scatter_plot(mean_value, norm_lp, 'Mean', f'Norm L_{2}',
-                     f'{metric} Mean vs Norm L_{2}',
+    create_scatter_plot(mean_value, norm_lp_1, 'Mean', f'Norm L_{1}',
+                     f'{metric} Mean vs Norm L_{1}',
                      os.path.join(graph_directory, f'{metric}_mean_vs_lp_norm.png'))    
+    create_scatter_plot(mean_value, norm_lp_2, 'Mean', f'Norm L_{2}',
+                     f'{metric} Mean vs Norm L_{2}',
+                     os.path.join(graph_directory, f'{metric}_mean_vs_lp_norm_2.png'))
+    create_scatter_plot(mean_value, norm_lp_3, 'Mean', f'Norm L_{3}',
+                     f'{metric} Mean vs Norm L_{3}',
+                     os.path.join(graph_directory, f'{metric}_mean_vs_lp_norm_3.png'))        
 
 # Save the metrics to CSV
 rows = []
 for metric, values in metrics_results.items():
-    mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp = values
+    mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1,norm_lp_2,norm_lp_3 = values
     rows.append({
         "Metric": metric,  
         "Mean": mean_value,
         "Harmonic Mean": harmonic_mean_value,
         "Geometric Mean": geometric_mean_value,
         "Total Variation": total_variation,
-        "Norm L_2": norm_lp
+        "Norm L_1": norm_lp_1,
+        "Norm L_2": norm_lp_2,
+        "Norm L_3": norm_lp_3
     })
 
 # Create a DataFrame and save it as CSV
