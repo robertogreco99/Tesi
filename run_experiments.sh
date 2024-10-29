@@ -87,6 +87,8 @@ distorted="$DISTORTED_VIDEO"
     # Decode the video
     ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv" -loglevel quiet
 
+    final_decoded_file="$distorted_decoded_yuv"
+
     #Output json 
     output_json="$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
     #Width and height
@@ -106,7 +108,8 @@ distorted="$DISTORTED_VIDEO"
    -sws_flags lanczos+accurate_rnd+full_chroma_int \
    -pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized_yuv"
 
-    distorted_decoded_yuv="$distorted_decoded_resized_yuv"
+    final_decoded_file="$distorted_decoded_yuv"
+    #distorted_decoded_yuv="$distorted_decoded_resized_yuv"
     output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
     width_new=1920
     height_new=1080
@@ -116,12 +119,13 @@ distorted="$DISTORTED_VIDEO"
     echo "No resizing needed. Dimensions are already 1920x1080."
     width_new="$width_old"
     height_new="$height_old"
-
     fi
 
     # MD5 hash of decoded YUV file
-    echo "Hash MD5 for $distorted_decoded_yuv..."
-    md5sum "$distorted_decoded_yuv" > "$output_hash"
+    #echo "Hash MD5 for $distorted_decoded_yuv..."
+    echo "Hash MD5 for $final_decoded_file..."
+    md5sum "$final_decoded_file" > "$output_hash"
+    #md5sum "$distorted_decoded_yuv" > "$output_hash"
     echo "Hash saved in $output_hash."
 
     # Convert FEATURES string to an array
@@ -149,11 +153,12 @@ distorted="$DISTORTED_VIDEO"
 
        # --model path=/vmaf-3.0.0/model/${MODEL_VERSION}\
 
-    
+    #--distorted "$distorted_decoded_yuv" \
+
     # VMAF evaluation
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \
-        --distorted "$distorted_decoded_yuv" \
+        --distorted "$final_decoded_file" \
         --width "$width_new" \
         --height "$height_new" \
         --pixel_format "$PIXEL_FORMAT" \
@@ -164,7 +169,17 @@ distorted="$DISTORTED_VIDEO"
         #\
         #--output "$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json" \
         #--json
-    
+        
+    if [ -f "$distorted_decoded_yuv" ]; then
+    rm "$distorted_decoded_yuv"
+    echo "Decoded file removed: $distorted_decoded_yuv"
+    fi
+
+    if [ -f "$distorted_decoded_resized_yuv" ]; then
+    rm "$distorted_decoded_resized_yuv"
+    echo "Decoded resized file removed: $distorted_decoded_resized_yuv"
+    fi
+
     #RUN PYTHON 
     #python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'
     echo "Dataset: $DATASET"
