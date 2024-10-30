@@ -1,9 +1,9 @@
 # Tesi
-
+r
 Per fare girare  
 1. specificare  nel json config.json : 
     - nome immagine docker 
-    - cartella dove trovare i video di input di riferimento
+    - cartella dove trovare i video di inputf di riferimento
     - cartella dove trovare i video distorted
     - cartella dove salvare i risultati
     - cartella dove salvare i file di hash
