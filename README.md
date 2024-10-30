@@ -1,5 +1,5 @@
 # Tesi
-r
+ryu
 Per fare girare  
 1. specificare  nel json config.json : 
     - nome immagine docker 
