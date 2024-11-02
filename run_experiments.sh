@@ -1,25 +1,28 @@
 #!/bin/bash
 
-if [ "$#" -ne 15 ]; then
-    echo "Error: Expected 15 arguments, but got $#."
+if [ "$#" -ne 18 ]; then
+    echo "Error: Expected 18 arguments, but got $#."
     exit 1
 fi
 
 INPUT_REFERENCE_DIR="$1"   
 INPUT_DISTORTED_DIR="$2"    
 OUTPUT_DIR="$3"    
-HASH_DIR="$4"       
-MODEL_VERSION="$5"  
-DATASET="$6"        
-WIDTH="$7"          
-HEIGHT="$8"         
-BITRATE="$9"        
-VIDEO_CODEC="${10}"    
-PIXEL_FORMAT="${11}" 
-BIT_DEPTH="${12}"
-ORIGINAL_VIDEO="${13}"
-DISTORTED_VIDEO="${14}"    
-FEATURES="${15}" 
+HASH_DIR="$4"  
+MOS_DIR="$5"     
+MODEL_VERSION="$6"  
+DATASET="$7"        
+WIDTH="$8"          
+HEIGHT="$9"         
+BITRATE="${10}"        
+VIDEO_CODEC="${11}"    
+PIXEL_FORMAT="${12}" 
+BIT_DEPTH="${13}"
+FPS="${14}"
+DURATION="${15}"
+ORIGINAL_VIDEO="${16}"
+DISTORTED_VIDEO="${17}"    
+FEATURES="${18}" 
 
 
 echo "---------------------------"
@@ -27,6 +30,7 @@ echo "Input Reference Directory: $INPUT_REFERENCE_DIR"
 echo "Input Distorted Directory: $INPUT_DISTORTED_DIR"
 echo "Output Directory: $OUTPUT_DIR"
 echo "Hash Directory: $HASH_DIR"
+echo "MOS Directory: $MOS_DIR"
 echo "Model Version: $MODEL_VERSION"
 echo "Dataset: $DATASET"
 echo "Width: $WIDTH"
@@ -35,6 +39,8 @@ echo "Bitrate: $BITRATE"
 echo "Video Codec: $VIDEO_CODEC"
 echo "Pixel Format: $PIXEL_FORMAT"
 echo "Bit Depth: $BIT_DEPTH"
+echo "FPS : $FPS"
+echo "Duration : $DURATION"
 echo "Original Video : $ORIGINAL_VIDEO"
 echo "Distorted Video : $DISTORTED_VIDEO"
 echo "Features: $FEATURES"
@@ -181,11 +187,15 @@ fi
     echo "Video Codec: $VIDEO_CODEC"
     echo "Model Version: $MODEL_VERSION"
     echo "Output Directory: $OUTPUT_DIR"
+    echo "MOS Directory: $MOS_DIR"
     echo "Original Video: $ORIGINAL_VIDEO"
+    echo "Distorted Video : $DISTORTED_VIDEO"
     echo "Old WIDTH : $width_old"
     echo "Old HEIGHT : $height_old"
+    echo "FPS : $FPS"
+    echo "Duration : $DURATION"
 
     
-    python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$width_old" "$height_old"
+    python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
 
 

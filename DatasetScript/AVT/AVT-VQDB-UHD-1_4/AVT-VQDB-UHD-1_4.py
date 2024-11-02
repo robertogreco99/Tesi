@@ -37,7 +37,7 @@ def parse_video_files(file_path, output_file):
                 resolution = parts[-3].replace('p', '')
                 if resolution == '360':
                     width, height = 640, 360
-                elif resolution == '480':  # Aggiunta per 480p
+                elif resolution == '480':  
                     width, height = 854, 480
                 elif resolution == '720':
                     width, height = 1280, 720
@@ -48,7 +48,7 @@ def parse_video_files(file_path, output_file):
                 elif resolution == '2160':
                     width, height = 3840, 2160
                 else:
-                    raise ValueError("Risoluzione non riconosciuta")
+                    raise ValueError("Resolution not found")
                 
                 bitrate = int(parts[-4].replace('kbps', ''))
                 video_codec = parts[-1].split('.')[0]
@@ -59,7 +59,7 @@ def parse_video_files(file_path, output_file):
                 resolution = parts[-3].replace('p', '')
                 if resolution == '360':
                     width, height = 640, 360
-                elif resolution == '480':  # Aggiunta per 480p
+                elif resolution == '480':  
                     width, height = 854, 480
                 elif resolution == '720':
                     width, height = 1280, 720
@@ -70,7 +70,7 @@ def parse_video_files(file_path, output_file):
                 elif resolution == '2160':
                     width, height = 3840, 2160
                 else:
-                    raise ValueError("Risoluzione non riconosciuta")
+                    raise ValueError("Resolution not found")
 
                 bitrate = int(parts[-4].replace('kbps', ''))
                 video_codec = parts[-1].split('.')[0]
@@ -81,7 +81,7 @@ def parse_video_files(file_path, output_file):
                 resolution = parts[-3].replace('p', '')
                 if resolution == '360':
                     width, height = 640, 360
-                elif resolution == '480':  # Aggiunta per 480p
+                elif resolution == '480':  
                     width, height = 854, 480
                 elif resolution == '720':
                     width, height = 1280, 720
@@ -92,7 +92,7 @@ def parse_video_files(file_path, output_file):
                 elif resolution == '2160':
                     width, height = 3840, 2160
                 else:
-                    raise ValueError("Risoluzione non riconosciuta")
+                    raise ValueError("Resolution not found")
 
                 bitrate = int(parts[-4].replace('kbps', ''))
                 video_codec = parts[-1].split('.')[0]
@@ -103,7 +103,7 @@ def parse_video_files(file_path, output_file):
                 resolution = parts[-3].replace('p', '')
                 if resolution == '360':
                     width, height = 640, 360
-                elif resolution == '480':  # Aggiunta per 480p
+                elif resolution == '480':  
                     width, height = 854, 480
                 elif resolution == '720':
                     width, height = 1280, 720
@@ -114,7 +114,7 @@ def parse_video_files(file_path, output_file):
                 elif resolution == '2160':
                     width, height = 3840, 2160
                 else:
-                    raise ValueError("Risoluzione non riconosciuta")
+                    raise ValueError("Resolution not found")
 
                 bitrate = int(parts[-4].replace('kbps', ''))
                 video_codec = parts[-1].split('.')[0]
@@ -136,14 +136,13 @@ def parse_video_files(file_path, output_file):
             })
         
         except (IndexError, ValueError) as e:
-            print(f"Errore nella riga '{video}': {e}")
+            print(f"Error in line '{video}': {e}")
 
     with open(output_file, 'w') as json_file:
         json.dump(result, json_file, indent=2)
 
-# Percorso del file di input e nome del file di output
 file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/AVT/AVT-VQDB-UHD-1_4/AVT-VQDB-UHD-1_4description.txt'
 output_file = 'AVT-VQDB-UHD-4_4json.json'
 parse_video_files(file_path, output_file)
 
-print(f"File JSON salvato come {output_file}")
+print(f"Json saved as {output_file}")

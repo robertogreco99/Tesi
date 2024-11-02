@@ -9,8 +9,8 @@ import os
 # Initialize an empty list to hold all metrics results
 all_metrics_results = []
 
-if len(sys.argv) != 11:
-    print("Error, format is : python3 analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video> <width_old> <height_old>")
+if len(sys.argv) != 15:
+    print("Error, format is : python3 analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video> <distorted_video> <width_old> <height_old> <fps> <duration> <mos_dir>")
     sys.exit(1)
 
 # Parameters
@@ -22,8 +22,12 @@ video_codec = sys.argv[5]
 model_version = sys.argv[6] 
 output_directory = sys.argv[7] 
 original_video = sys.argv[8]  
-width_old = sys.argv[9]
-height_old = sys.argv[10]
+distorted_video = sys.argv[9]
+width_old = sys.argv[10]
+height_old = sys.argv[11]
+fps=sys.argv[12]
+duration=sys.argv[13]
+mos_dir=sys.argv[14]
 
 print(f"width_old: {width_old}, height_old: {height_old}")
 
@@ -162,8 +166,51 @@ all_metrics_results.append({
     "Height": height,
     "Bitrate": bitrate,
     "Video Codec": video_codec,
+    "FPS" : fps,
+    "Duration" : duration,
     "Model Version": model_version,
 })
+
+print(dataset)
+ # Read the database  mos file name 
+mos_dataset = f"/mos/Scores{dataset}.json"
+print(mos_dataset)
+
+# Read the JSON file
+with open(mos_dataset) as f:
+    data_mos = json.load(f)
+
+mos = None
+os_values = [None] * 17
+
+distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]  
+
+
+for score in data_mos["scores"]:
+    if score["PVS"]["PVS_ID"] == distorted_file_name_no_extension:
+        print(score["PVS"]["PVS_ID"])  
+        print(distorted_file_name_no_extension)
+        
+        mos = score["MOS"]  
+        for i in range(1,18):  
+            mos_value = score["OS"][str(i)]
+            if mos_value is not None:  
+                os_values[i-1] = mos_value
+            else:
+                os_values[i-1] = None  
+        break  
+else:
+    print("No mos found")
+
+print(mos)
+print(os_values)
+all_metrics_results[-1].update({
+                    f"MOS": {mos},
+                })
+for i in range(1, 18):
+    all_metrics_results[-1][f"OS_{i}"] = os_values[i-1]
+
+
 
 for metric, values in metrics_results.items():
     if metric == "vmaf":

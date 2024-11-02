@@ -19,7 +19,6 @@ def parse_video_files(file_path, output_file):
         if line and current_list is not None:
             current_list.append(line)
 
-    # Genera la struttura richiesta
     result = {
         "database": "GamingVideoSet1",
         "reference_videos": [{"id": i + 1, "file_name": video} for i, video in enumerate(reference_videos)],
@@ -29,21 +28,18 @@ def parse_video_files(file_path, output_file):
     for i, video in enumerate(distorted_videos):
         parts = video.split('_')
         try:
-            # Ottieni le dimensioni dall'elemento corrispondente
-            resolution = parts[-3].split('x')  # Splitta '1280x720'
+            resolution = parts[-3].split('x')  
             width = int(resolution[0])
             height = int(resolution[1])
-            bitrate = int(parts[-2])  # bitrate è ora l'elemento giusto
+            bitrate = int(parts[-2])  
             
-            # Estrazione del codec video (x264, x265, ecc.)
-            video_codec = parts[-1].split('.')[0]  # Cambiato per estrarre il codec
+            video_codec = parts[-1].split('.')[0]  
             
-            # Estrazione di fps e durata dal nome
-            fps = int(parts[1][:-3])  # Rimuove 'FPS' e converte in int
-            duration = int(parts[2][:-3])  # Rimuove 'Sec' e converte in int
+            fps = int(parts[1][:-3])  
+            duration = int(parts[2][:-3])  
 
             result["distorted_videos"].append({
-                "id": i + 1,  # ID parte da 1
+                "id": i + 1,  
                 "file_name": video,
                 "width": width,
                 "height": height,
@@ -55,15 +51,13 @@ def parse_video_files(file_path, output_file):
                 "duration": duration
             })
         except (IndexError, ValueError) as e:
-            print(f"Errore nella riga '{video}': {e}")
+            print(f"Error in line '{video}': {e}")
 
-    # Salva il risultato in un file JSON
     with open(output_file, 'w') as json_file:
         json.dump(result, json_file, indent=2)
 
-# Percorso del file di input e nome del file di output
 file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/GamingVideoSet/GamingVideoSet1/GamingVideoSet1description.txt'
 output_file = 'GamingVideoSet1json.json'
 parse_video_files(file_path, output_file)
 
-print(f"File JSON salvato come {output_file}")
+print(f"Json saved as {output_file}")

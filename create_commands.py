@@ -4,7 +4,7 @@ import json
 from jsonschema import validate, ValidationError
 
 
-def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, features_list):
+def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , output_dir, hash_dir, mos_dir,original_video, distorted_video,  model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,fps,duration,features_list):
   
     #print(f"Original Video: {original_video}")
     #print(f"Distorted Video: {distorted_video}")
@@ -20,8 +20,9 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
     -v {input_distorted_dir}:/distorted \
     -v {output_dir}:/results \
     -v {hash_dir}:/hash \
+    -v {mos_dir}:/mos \
     {image_name} \
-    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {original_video} {distorted_video} {features}'"
+    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {features}'"
     #&& python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'"
 
     #print("-----------------------------------")
@@ -62,6 +63,7 @@ with open('Json/configschema.json') as schema_file:
     input_distorted_dir = config['INPUT_DIST_DIR']
     output_dir = config['OUTPUT_DIR']
     hash_dir = config['HASH_DIR']
+    mos_dir = config['MOS_DIR']
     original_video=config['ORIGINAL_VIDEO']
     model_version_file = config['MODEL_VERSION']
     dataset = config['DATASET']
@@ -82,7 +84,7 @@ except ValidationError as e:
     sys.exit(1) 
     
     
-   
+print(dataset_file)
 
 with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
@@ -117,16 +119,18 @@ for distorted_file in os.listdir(input_distorted_dir):
             video_codec = metadata["video_codec"]
             pixel_format=metadata["pixel_format"]
             bit_depth = metadata["bitdepth"]
+            fps=metadata["fps"]
+            duration=metadata["duration"]
         else:
             print(f"{distorted_full_name} was not found.")
             
         if model_version_file == 'VMAF_ALL':   
             for model_version  in vmaf_models:
-                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
+                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,fps, duration,features_list)
                 with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
                     f.write(command + '\n')
         else:  
-            command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,features_list)
+            command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,fps, duration,features_list)
             with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
                f.write(command + '\n')
     

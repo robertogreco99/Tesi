@@ -54,7 +54,7 @@ RUN curl -L https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n7.0.2.zip -o ffm
     
 
 # Create a directory for videos,results and hash
-RUN mkdir -p /reference /distorted /results /hash
+RUN mkdir -p /reference /distorted /results /hash /mos
 
 # Set the working directory
 WORKDIR /app
@@ -62,6 +62,7 @@ WORKDIR /app
 # Copy scripts
 COPY analyze.py .
 COPY run_experiments.sh .
+COPY Mos/ScoresKUGVD.json /mos
 
 # Make scripts executable
 RUN chmod +x run_experiments.sh analyze.py

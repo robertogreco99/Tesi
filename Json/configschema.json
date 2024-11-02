@@ -7,6 +7,7 @@
         "INPUT_DIST_DIR": { "type": "string" , "description": "The path where the distorted videos can be found"},
         "OUTPUT_DIR": { "type": "string" , "description": "The path where the results are saved"},
         "HASH_DIR": { "type": "string" , "description": "The path where the hash files will be saved"},
+        "MOS_DIR": { "type": "string" , "description": "The path where MOS description file can be found"},
         "ORIGINAL_VIDEO": { "type": "string", "description": "The video chosen to be analyzed" },
         "MODEL_VERSION": { 
             "type": "string",
@@ -28,9 +29,9 @@
         "enum": [
             "KUGVD",
             "AVT-VQDB-UHD-1_1",
-            "AVT-VQDB-UHD-1_2",
-            "AVT-VQDB-UHD-1_3",
-            "AVT-VQDB-UHD-1_4",
+            "AVT-VQDB-UHD-2_2",
+            "AVT-VQDB-UHD-3_3",
+            "AVT-VQDB-UHD-4_4",
             "GamingVideoSet1",
             "GamingVideoSet2"
         ]
