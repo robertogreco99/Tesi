@@ -208,7 +208,7 @@ all_metrics_results[-1].update({
                     f"MOS": {mos},
                 })
 for i in range(1, 18):
-    all_metrics_results[-1][f"OS_{i}"] = os_values[i-1]
+    all_metrics_results[-1].update({f"MOS_{i}": os_values[i-1]})
 
 
 
