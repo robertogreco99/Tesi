@@ -15,7 +15,7 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
     # #print(model_version)
     features = ','.join(features_list)  
     
-    command = f"docker run --rm -it \
+    command = f"podman run --rm -it \
     -v {input_reference_dir}:/reference \
     -v {input_distorted_dir}:/distorted \
     -v {output_dir}:/results \

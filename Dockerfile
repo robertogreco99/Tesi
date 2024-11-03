@@ -62,6 +62,12 @@ WORKDIR /app
 # Copy scripts
 COPY analyze.py .
 COPY run_experiments.sh .
+COPY Mos/ScoresAVT-VQDB-UHD-1_1.json /mos
+COPY Mos/ScoresAVT-VQDB-UHD-2_2.json /mos
+COPY Mos/ScoresAVT-VQDB-UHD-3_3.json /mos
+COPY Mos/ScoresAVT-VQDB-UHD-4_4.json /mos
+COPY Mos/ScoresGamingVideoSet1.json /mos
+COPY Mos/ScoresGamingVideoSet2.json /mos
 COPY Mos/ScoresKUGVD.json /mos
 
 # Make scripts executable

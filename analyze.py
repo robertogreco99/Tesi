@@ -31,23 +31,6 @@ mos_dir=sys.argv[14]
 
 print(f"width_old: {width_old}, height_old: {height_old}")
 
-# Directory for graph results
-if width_old != '1920' or height_old != '1080':
-    graph_directory = os.path.join(
-        output_directory,
-        dataset,
-        original_video,
-        f"{dataset}__{width_old}x{height_old}__{bitrate}_{video_codec}__{model_version}_resized_{width}x{height}"
-    )
-else:
-    graph_directory = os.path.join(
-        output_directory,
-        dataset,
-        original_video,
-        f"{dataset}__{width_old}x{height_old}__{bitrate}_{video_codec}__{model_version}"
-    )
-
-os.makedirs(graph_directory, exist_ok=True)
 
 # Create the JSON path name
 if width_old != '1920' or height_old != '1080':
@@ -181,6 +164,7 @@ with open(mos_dataset) as f:
     data_mos = json.load(f)
 
 mos = None
+ci = None
 os_values = [None] * 17
 
 distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]  
@@ -192,7 +176,7 @@ for score in data_mos["scores"]:
         print(distorted_file_name_no_extension)
         
         mos = score["MOS"]
-        ci = score["CI"]  
+        ci = score ["CI"]
         for i in range(1,18):  
             mos_value = score["OS"][str(i)]
             if mos_value is not None:  
@@ -206,11 +190,11 @@ else:
 print(mos)
 print(os_values)
 all_metrics_results[-1].update({
-                    f"MOS": {mos},
-                    f"CI": {ci},
-                })
+                    f"MOS": mos                })
 for i in range(1, 18):
     all_metrics_results[-1].update({f"MOS_{i}": os_values[i-1]})
+all_metrics_results[-1].update({
+                    f"CI": ci                })
 
 
 
