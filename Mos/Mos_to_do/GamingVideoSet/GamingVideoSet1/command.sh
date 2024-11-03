@@ -1,3 +1,0 @@
-
-python3 convert_MOS_dataset_GamingVideoSet1_to_json.py GamingVideoSet1_Summaryofallresults.csv  > Scores_GamingVideoSet1.json
-

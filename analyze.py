@@ -191,7 +191,8 @@ for score in data_mos["scores"]:
         print(score["PVS"]["PVS_ID"])  
         print(distorted_file_name_no_extension)
         
-        mos = score["MOS"]  
+        mos = score["MOS"]
+        ci = score["CI"]  
         for i in range(1,18):  
             mos_value = score["OS"][str(i)]
             if mos_value is not None:  
@@ -206,6 +207,7 @@ print(mos)
 print(os_values)
 all_metrics_results[-1].update({
                     f"MOS": {mos},
+                    f"CI": {ci},
                 })
 for i in range(1, 18):
     all_metrics_results[-1].update({f"MOS_{i}": os_values[i-1]})

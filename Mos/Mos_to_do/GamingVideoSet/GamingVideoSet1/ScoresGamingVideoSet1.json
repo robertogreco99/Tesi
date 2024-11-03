@@ -1,12 +1,10 @@
 {
-    "dataset_name": "GamingVideoSET",
+    "dataset_name": "GamingVideoSet1",
     "SRC_names": [
-        "FIFA17",
+        "Hearthstone",
         "CSGO",
-        "H1Z1",
-        "LoL",
-        "ProjectCar",
-        "Hearthstone"
+        "FIFA17",
+        "H1Z1"
     ],
     "PVS_bitrates": [
         300.0,
@@ -21,9 +19,9 @@
         "x264.yuv"
     ],
     "PVS_resolutions": [
-        "1280x720",
+        "1920x1080",
         "640x480",
-        "1920x1080"
+        "1280x720"
     ],
     "scores": [
         {
@@ -32,7 +30,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -61,7 +58,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -69,7 +67,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -98,7 +95,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -106,7 +104,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -135,7 +132,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -143,7 +141,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -172,7 +169,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -180,7 +178,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -209,7 +206,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -217,7 +215,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -246,7 +243,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -254,7 +252,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -283,7 +280,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -291,7 +289,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -320,7 +317,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -328,7 +326,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -357,7 +354,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -365,7 +363,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -394,7 +391,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -402,7 +400,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -431,7 +428,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -439,7 +437,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -468,7 +465,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -476,7 +474,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -505,7 +502,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -513,7 +511,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -542,7 +539,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -550,7 +548,6 @@
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -579,7 +576,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -587,7 +585,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -616,7 +613,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -624,7 +622,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -653,7 +650,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -661,7 +659,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -690,7 +687,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -698,7 +696,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -727,7 +724,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -735,7 +733,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -764,7 +761,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -772,7 +770,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -801,7 +798,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -809,7 +807,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -838,7 +835,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -846,7 +844,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -875,7 +872,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -883,7 +881,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -912,7 +909,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -920,7 +918,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -949,7 +946,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -957,7 +955,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -986,7 +983,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -994,7 +992,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1023,7 +1020,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1031,7 +1029,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1060,7 +1057,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1068,7 +1066,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1097,7 +1094,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1105,7 +1103,6 @@
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1134,7 +1131,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1142,7 +1140,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -1171,7 +1168,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1179,7 +1177,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -1208,7 +1205,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1216,7 +1214,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -1245,7 +1242,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1253,7 +1251,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -1282,7 +1279,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1290,7 +1288,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1280,
                 "height": 720,
@@ -1319,7 +1316,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1327,7 +1325,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -1356,7 +1353,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1364,7 +1362,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -1393,7 +1390,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1401,7 +1399,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -1430,7 +1427,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1438,7 +1436,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -1467,7 +1464,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1475,7 +1473,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 1920,
                 "height": 1080,
@@ -1504,7 +1501,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1512,7 +1510,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1541,7 +1538,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1549,7 +1547,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1578,7 +1575,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1586,7 +1584,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1615,7 +1612,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1623,7 +1621,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1652,7 +1649,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1660,7 +1658,6 @@
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part2",
                 "width": 640,
                 "height": 480,
@@ -1689,7 +1686,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1697,7 +1695,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1280,
                 "height": 720,
@@ -1726,7 +1723,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1734,7 +1732,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1280,
                 "height": 720,
@@ -1763,7 +1760,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1771,7 +1769,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1280,
                 "height": 720,
@@ -1800,7 +1797,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1808,7 +1806,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1280,
                 "height": 720,
@@ -1837,7 +1834,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1845,7 +1843,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1280,
                 "height": 720,
@@ -1874,7 +1871,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1882,7 +1880,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1920,
                 "height": 1080,
@@ -1911,7 +1908,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1919,7 +1917,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1920,
                 "height": 1080,
@@ -1948,7 +1945,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1956,7 +1954,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1920,
                 "height": 1080,
@@ -1985,7 +1982,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -1993,7 +1991,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1920,
                 "height": 1080,
@@ -2022,7 +2019,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -2030,7 +2028,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 1920,
                 "height": 1080,
@@ -2059,7 +2056,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -2067,7 +2065,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 640,
                 "height": 480,
@@ -2096,7 +2093,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -2104,7 +2102,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 640,
                 "height": 480,
@@ -2133,7 +2130,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -2141,7 +2139,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 640,
                 "height": 480,
@@ -2170,7 +2167,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -2178,7 +2176,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 640,
                 "height": 480,
@@ -2207,7 +2204,8 @@
                 null,
                 null,
                 null
-            ]
+            ],
+            "CI": null
         },
         {
             "PVS": {
@@ -2215,7 +2213,6 @@
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
-                "frames_tot": 900,
                 "parts": "Part1",
                 "width": 640,
                 "height": 480,
@@ -2244,1117 +2241,8 @@
                 null,
                 null,
                 null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1280x720_1200_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 1200.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.4,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1280x720_2000_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 2000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 4.0,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1280x720_4000_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 4000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 4.0,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1280x720_500_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 500.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.0,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1280x720_600_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 600.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.52,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1920x1080_1200_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 1200.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.29,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1920x1080_2000_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 2000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 4.1,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1920x1080_4000_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 4000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 4.48,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1920x1080_600_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 600.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 1.56,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_1920x1080_750_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 750.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 1.9,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_640x480_1200_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 1200.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.62,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_640x480_2000_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 2000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.92,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_640x480_300_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 300.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 1.72,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_640x480_4000_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 4000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.84,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "LoL_30fps_30sec_Part2_640x480_600_x264.yuv",
-                "SRC": "LoL",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 600.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.52,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1280x720_1200_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 1200.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.28,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1280x720_2000_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 2000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.72,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1280x720_4000_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 4000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 4.0,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1280x720_500_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 500.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.16,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1280x720_600_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1280,
-                "height": 720,
-                "bitrate": 600.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.36,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1920x1080_1200_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 1200.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.72,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1920x1080_2000_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 2000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.44,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1920x1080_4000_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 4000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 4.16,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1920x1080_600_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 600.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 1.52,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_1920x1080_750_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 1920,
-                "height": 1080,
-                "bitrate": 750.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 1.96,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_640x480_1200_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 1200.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.16,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_640x480_2000_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 2000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.52,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_640x480_300_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 300.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.0,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_640x480_4000_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 4000.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 3.52,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "PVS": {
-                "PVS_ID": "ProjectCar_30FPS_30Sec_Part2_640x480_600_x264.yuv",
-                "SRC": "ProjectCar",
-                "fps": 30,
-                "duration": 30,
-                "frames_tot": 900,
-                "parts": "Part2",
-                "width": 640,
-                "height": 480,
-                "bitrate": 600.0,
-                "encoder": "x264.yuv",
-                "yuv_fmt": "yuv420p"
-            },
-            "MOS": 2.76,
-            "computed_MOS": null,
-            "OS:": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
+            ],
+            "CI": null
         }
     ]
 }
