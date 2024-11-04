@@ -27,6 +27,7 @@ def parse_video_files(file_path, output_file):
 
     for video in distorted_videos:
         parts = video.split('_')
+        print(parts)
           
         for i in range(-1, -len(parts)-1, -1):
            print(f"Indice {i}: {parts[i]}")
@@ -119,7 +120,7 @@ def parse_video_files(file_path, output_file):
                 bitrate = int(parts[-4].replace('kbps', ''))
                 video_codec = parts[-1].split('.')[0]
                 fps = float(parts[-2].replace('fps', ''))
-                duration = None
+                duration = float(8)
 
 
             result["distorted_videos"].append({

@@ -27,11 +27,12 @@ def parse_video_files(file_path, output_file):
 
 
     for video in distorted_videos:
-        parts = video.split('_')
         
+        parts = video.split('_')
 
         try:
-            # Estrazione della risoluzione
+            duration=float(parts[0].replace('s',''))
+            parts = parts[1:]
             resolution = parts[-3].replace('p', '')
             if resolution == '360':
                 width, height = 640, 360
@@ -47,14 +48,13 @@ def parse_video_files(file_path, output_file):
             bitrate = int(parts[-4].replace('kbps', ''))
             video_codec = parts[-1].split('.')[0]
 
-           
             fps = float(parts[-2].replace('fps', ''))
-            
+            file_name = '_'.join(parts[0:])
             
 
             result["distorted_videos"].append({
                 "id": len(result["distorted_videos"]) + 1,
-                "file_name": video,
+                "file_name": file_name,
                 "width": width,
                 "height": height,
                 "bitrate": bitrate,
@@ -62,7 +62,7 @@ def parse_video_files(file_path, output_file):
                 "bitdepth": 8,
                 "pixel_format": "422",
                 "fps": fps,  
-                "duration": None
+                "duration": duration
             })
         except (IndexError, ValueError) as e:
             print(f"Error in Line '{video}': {e}")
@@ -71,7 +71,7 @@ def parse_video_files(file_path, output_file):
         json.dump(result, json_file, indent=2)
 
 file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/AVT/AVT-VQDB-UHD-1_1/AVT-VQDB-UHD-1_1description.txt'
-output_file = 'AVT-VQDB-UHD-1_1json.json'
+output_file = 'AVT-VQDB-UHD-1_1jsonprovatempo.json'
 parse_video_files(file_path, output_file)
 
 print(f"Json saved as {output_file}")

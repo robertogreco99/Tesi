@@ -30,7 +30,6 @@ def parse_video_files(file_path, output_file):
         parts = video.split('_')
         
         try:
-            # Estrazione della risoluzione
             resolution = parts[-3].replace('p', '')
             if resolution == '360':
                 width, height = 640, 360

@@ -30,7 +30,8 @@ def parse_video_files(file_path, output_file):
         parts = video.split('_')
         
         try:
-            # Estrazione della risoluzione
+            duration=float(parts[0].replace('s',''))
+            parts = parts[1:]
             resolution = parts[-3].replace('p', '')
             if resolution == '360':
                 width, height = 640, 360
@@ -48,7 +49,6 @@ def parse_video_files(file_path, output_file):
 
            
             fps = float(parts[-2].replace('fps', ''))
-            duration=float(parts[-5].replace('s',''))
 
             result["distorted_videos"].append({
                 "id": len(result["distorted_videos"]) + 1,
