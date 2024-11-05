@@ -68,7 +68,7 @@ def parse_video_files(file_path, output_file):
         json.dump(result, json_file, indent=2)
 
 file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/AVT/AVT-VQDB-UHD-1_2/AVT-VQDB-UHD-1_2description.txt'
-output_file = 'AVT-VQDB-UHD-2_2json.json'
+output_file = 'AVT-VQDB-UHD-1_2.json'
 parse_video_files(file_path, output_file)
 
 print(f"Json saved as {output_file}")

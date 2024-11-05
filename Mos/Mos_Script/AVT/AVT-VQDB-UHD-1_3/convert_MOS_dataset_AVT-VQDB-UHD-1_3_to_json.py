@@ -135,7 +135,7 @@ while line:
     line = f.readline()
 f.close()
 
-csv_information['dataset_name'] = 'AVT-VQDB-UHD-3_3'
+csv_information['dataset_name'] = 'AVT-VQDB-UHD-1_3'
 csv_information['SRC_names'] = list(set([x['PVS']['SRC'] for x in file_line_information]))
 # csv_information['SRC_num'] = len(csv_information['SRC_names'])
 csv_information['PVS_bitrates'] = sorted(list(set([x['PVS']['bitrate'] for x in file_line_information])))
@@ -144,7 +144,7 @@ csv_information['PVS_resolutions'] = list(set(["%sx%s" % (x['PVS']['width'], x['
 csv_information['scores'] = file_line_information
 
 # Save to JSON file
-json_file_path = "ScoresAVT-VQDB-UHD-3_3.json"  
+json_file_path = "ScoresAVT-VQDB-UHD-1_3.json"  
 with open(json_file_path, 'w') as json_file:
     json.dump(csv_information, json_file, indent=4)
 

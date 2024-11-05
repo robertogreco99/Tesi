@@ -8,16 +8,12 @@ import json
 
 def decode_line(line):
     v_line = line.split(',')
-    #print(f"vline: {v_line}")
-    # first element of the line
     PVS_params={}
     PVS_ID = v_line[0].strip().replace('.avi','')
-    #print(f"PVS_ID: {PVS_ID}")
     PVS_params['SRC']=PVS_ID
     subject_right=v_line[1]
     print(v_line)
     total = 0
-    MOS=0
     OS={}
 
     computed_MOS=0
