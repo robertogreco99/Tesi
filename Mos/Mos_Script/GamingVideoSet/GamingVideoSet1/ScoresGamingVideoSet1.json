@@ -1,9 +1,9 @@
 {
     "dataset_name": "GamingVideoSet1",
     "SRC_names": [
+        "H1Z1",
         "CSGO",
         "Hearthstone",
-        "H1Z1",
         "FIFA17"
     ],
     "PVS_bitrates": [
@@ -20,8 +20,8 @@
     ],
     "PVS_resolutions": [
         "640x480",
-        "1920x1080",
-        "1280x720"
+        "1280x720",
+        "1920x1080"
     ],
     "scores": [
         {
@@ -37,29 +37,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.88,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.88
         },
         {
             "PVS": {
@@ -74,29 +52,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.56,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.56
         },
         {
             "PVS": {
@@ -111,29 +67,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 4.08,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 4.08
         },
         {
             "PVS": {
@@ -148,29 +82,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.44,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.44
         },
         {
             "PVS": {
@@ -185,29 +97,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.76,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.76
         },
         {
             "PVS": {
@@ -222,29 +112,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.78,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.78
         },
         {
             "PVS": {
@@ -259,29 +127,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.71,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.71
         },
         {
             "PVS": {
@@ -296,29 +142,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 4.13,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 4.13
         },
         {
             "PVS": {
@@ -333,29 +157,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.0
         },
         {
             "PVS": {
@@ -370,29 +172,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.0
         },
         {
             "PVS": {
@@ -407,29 +187,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.6,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.6
         },
         {
             "PVS": {
@@ -444,29 +202,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.28,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.28
         },
         {
             "PVS": {
@@ -481,29 +217,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.8,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.8
         },
         {
             "PVS": {
@@ -518,29 +232,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.0
         },
         {
             "PVS": {
@@ -555,29 +247,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.0
         },
         {
             "PVS": {
@@ -592,29 +262,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.16,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.16
         },
         {
             "PVS": {
@@ -629,29 +277,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.6,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.6
         },
         {
             "PVS": {
@@ -666,29 +292,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 4.12,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 4.12
         },
         {
             "PVS": {
@@ -703,29 +307,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.72,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.72
         },
         {
             "PVS": {
@@ -740,29 +322,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.0
         },
         {
             "PVS": {
@@ -777,29 +337,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.44,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.44
         },
         {
             "PVS": {
@@ -814,29 +352,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.36,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.36
         },
         {
             "PVS": {
@@ -851,29 +367,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 4.43,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 4.43
         },
         {
             "PVS": {
@@ -888,29 +382,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.28,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.28
         },
         {
             "PVS": {
@@ -925,29 +397,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.0
         },
         {
             "PVS": {
@@ -962,29 +412,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.0
         },
         {
             "PVS": {
@@ -999,29 +427,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.76,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.76
         },
         {
             "PVS": {
@@ -1036,29 +442,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.68,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.68
         },
         {
             "PVS": {
@@ -1073,29 +457,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.0
         },
         {
             "PVS": {
@@ -1110,29 +472,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.16,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.16
         },
         {
             "PVS": {
@@ -1147,29 +487,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.44,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.44
         },
         {
             "PVS": {
@@ -1184,29 +502,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.28,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.28
         },
         {
             "PVS": {
@@ -1221,29 +517,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.52,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.52
         },
         {
             "PVS": {
@@ -1258,29 +532,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.56,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.56
         },
         {
             "PVS": {
@@ -1295,29 +547,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.56,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.56
         },
         {
             "PVS": {
@@ -1332,29 +562,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.83,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.83
         },
         {
             "PVS": {
@@ -1369,29 +577,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.52,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.52
         },
         {
             "PVS": {
@@ -1406,29 +592,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.52,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.52
         },
         {
             "PVS": {
@@ -1443,29 +607,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.0
         },
         {
             "PVS": {
@@ -1480,29 +622,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.0
         },
         {
             "PVS": {
@@ -1517,29 +637,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.58,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.58
         },
         {
             "PVS": {
@@ -1554,29 +652,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.0
         },
         {
             "PVS": {
@@ -1591,29 +667,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 1.32,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 1.32
         },
         {
             "PVS": {
@@ -1628,29 +682,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.0
         },
         {
             "PVS": {
@@ -1665,29 +697,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.2,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.2
         },
         {
             "PVS": {
@@ -1702,29 +712,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.52,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.52
         },
         {
             "PVS": {
@@ -1739,29 +727,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.8,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.8
         },
         {
             "PVS": {
@@ -1776,29 +742,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.76,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.76
         },
         {
             "PVS": {
@@ -1813,29 +757,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.0
         },
         {
             "PVS": {
@@ -1850,29 +772,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.32,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.32
         },
         {
             "PVS": {
@@ -1887,29 +787,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 4.21,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 4.21
         },
         {
             "PVS": {
@@ -1924,29 +802,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 4.32,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 4.32
         },
         {
             "PVS": {
@@ -1961,29 +817,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 4.72,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 4.72
         },
         {
             "PVS": {
@@ -1998,29 +832,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.36,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.36
         },
         {
             "PVS": {
@@ -2035,29 +847,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 3.72,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 3.72
         },
         {
             "PVS": {
@@ -2072,29 +862,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.48,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.48
         },
         {
             "PVS": {
@@ -2109,29 +877,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.36,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.36
         },
         {
             "PVS": {
@@ -2146,29 +892,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.08,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.08
         },
         {
             "PVS": {
@@ -2183,29 +907,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.44,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.44
         },
         {
             "PVS": {
@@ -2220,29 +922,7 @@
                 "encoder": "x264.yuv",
                 "yuv_fmt": "yuv420p"
             },
-            "MOS": 2.32,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "CI": null
+            "MOS": 2.32
         }
     ]
 }

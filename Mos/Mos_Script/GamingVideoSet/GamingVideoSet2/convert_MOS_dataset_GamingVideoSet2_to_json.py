@@ -34,13 +34,14 @@ def decode_line(line):
     PVS_params['yuv_fmt'] = 'yuv420p'
 
     MOS = float(v_line[8])
-    computed_MOS = None
-    OS = [0] * 18 	
-    for i in range(len(v_line)-2):
-            OS[i] = None
+    #computed_MOS = None
+    #OS = [0] * 18 	
+    #for i in range(len(v_line)-2):
+    #       OS[i] = None
+    #    return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS, 'computed_MOS': computed_MOS, 'OS': OS,'CI': None}
 
     
-    return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS, 'computed_MOS': computed_MOS, 'OS': OS,'CI': None}
+    return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS}
 
 ## __main__ ##
 

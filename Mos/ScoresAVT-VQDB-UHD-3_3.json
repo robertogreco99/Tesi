@@ -1,11 +1,11 @@
 {
     "dataset_name": "AVT-VQDB-UHD-3_3",
     "SRC_names": [
-        "Dancers_8s",
         "american_football_harmonic_8s",
         "LeagueOfLegends-1_8s",
-        "water_netflix_8s",
+        "Dancers_8s",
         "cutting_orange_tuil_8s",
+        "water_netflix_8s",
         "Moment_of_Intensity_8s"
     ],
     "PVS_bitrates": [
@@ -27,15 +27,15 @@
         59720.0
     ],
     "PVS_encoders": [
+        "vp9",
         "hevc",
-        "h264",
-        "vp9"
+        "h264"
     ],
     "PVS_resolutions": [
-        "3840x2160",
+        "1920x1080",
         "640x360",
         "1280x720",
-        "1920x1080"
+        "3840x2160"
     ],
     "scores": [
         {
@@ -51,27 +51,6 @@
                 "duration": 8
             },
             "MOS": 1.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.0
         },
         {
@@ -87,27 +66,6 @@
                 "duration": 8
             },
             "MOS": 2.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.21743848136375
         },
         {
@@ -123,27 +81,6 @@
                 "duration": 8
             },
             "MOS": 2.3846153846153797,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.21951927979205701
         },
         {
@@ -159,27 +96,6 @@
                 "duration": 8
             },
             "MOS": 2.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.223622799029353
         },
         {
@@ -195,27 +111,6 @@
                 "duration": 8
             },
             "MOS": 1.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.186487812246118
         },
         {
@@ -231,27 +126,6 @@
                 "duration": 8
             },
             "MOS": 3.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19599639845400504
         },
         {
@@ -267,27 +141,6 @@
                 "duration": 8
             },
             "MOS": 3.73076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.23210201548453305
         },
         {
@@ -303,27 +156,6 @@
                 "duration": 8
             },
             "MOS": 4.19230769230769,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24357067091068202
         },
         {
@@ -339,27 +171,6 @@
                 "duration": 8
             },
             "MOS": 1.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.141431476334969
         },
         {
@@ -375,27 +186,6 @@
                 "duration": 8
             },
             "MOS": 4.11538461538461,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.31372468137175297
         },
         {
@@ -411,27 +201,6 @@
                 "duration": 8
             },
             "MOS": 4.26923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2784081395736649
         },
         {
@@ -447,27 +216,6 @@
                 "duration": 8
             },
             "MOS": 4.6153846153846105,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19070616378601896
         },
         {
@@ -483,27 +231,6 @@
                 "duration": 8
             },
             "MOS": 1.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.223622799029353
         },
         {
@@ -519,27 +246,6 @@
                 "duration": 8
             },
             "MOS": 4.653846153846152,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.21586472016238892
         },
         {
@@ -555,27 +261,6 @@
                 "duration": 8
             },
             "MOS": 4.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.271798101704687
         },
         {
@@ -591,27 +276,6 @@
                 "duration": 8
             },
             "MOS": 4.730769230769232,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.17387236411545
         },
         {
@@ -627,27 +291,6 @@
                 "duration": 8
             },
             "MOS": 1.23076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.165156382496968
         },
         {
@@ -663,27 +306,6 @@
                 "duration": 8
             },
             "MOS": 2.1153846153846203,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19830231776152
         },
         {
@@ -699,27 +321,6 @@
                 "duration": 8
             },
             "MOS": 2.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19366302482480202
         },
         {
@@ -735,27 +336,6 @@
                 "duration": 8
             },
             "MOS": 2.65384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24169702254109401
         },
         {
@@ -771,27 +351,6 @@
                 "duration": 8
             },
             "MOS": 1.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.18587737587097802
         },
         {
@@ -807,27 +366,6 @@
                 "duration": 8
             },
             "MOS": 3.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19366302482480202
         },
         {
@@ -843,27 +381,6 @@
                 "duration": 8
             },
             "MOS": 3.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.241226336558776
         },
         {
@@ -879,27 +396,6 @@
                 "duration": 8
             },
             "MOS": 4.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.235504739616041
         },
         {
@@ -915,27 +411,6 @@
                 "duration": 8
             },
             "MOS": 2.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.271379628628623
         },
         {
@@ -951,27 +426,6 @@
                 "duration": 8
             },
             "MOS": 4.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24169702254109401
         },
         {
@@ -987,27 +441,6 @@
                 "duration": 8
             },
             "MOS": 4.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.265023251809485
         },
         {
@@ -1023,27 +456,6 @@
                 "duration": 8
             },
             "MOS": 4.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.271379628628623
         },
         {
@@ -1059,27 +471,6 @@
                 "duration": 8
             },
             "MOS": 3.80769230769231,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24357067091068202
         },
         {
@@ -1095,27 +486,6 @@
                 "duration": 8
             },
             "MOS": 4.730769230769232,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.17387236411545
         },
         {
@@ -1131,27 +501,6 @@
                 "duration": 8
             },
             "MOS": 4.730769230769232,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.256302982593699
         },
         {
@@ -1167,27 +516,6 @@
                 "duration": 8
             },
             "MOS": 4.730769230769232,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.256302982593699
         },
         {
@@ -1202,27 +530,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.0753832301746174
         },
         {
@@ -1237,27 +544,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.13229703203777
         },
         {
@@ -1272,27 +558,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.7692307692307698,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.197728359053345
         },
         {
@@ -1307,27 +572,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.265023251809485
         },
         {
@@ -1342,27 +586,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.88461538461538,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19830231776152
         },
         {
@@ -1377,27 +600,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.22413045643416
         },
         {
@@ -1412,27 +614,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.222092864538092
         },
         {
@@ -1447,27 +628,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.76923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.250472055452929
         },
         {
@@ -1482,27 +642,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.235504739616041
         },
         {
@@ -1517,27 +656,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.30769230769231,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.211073044488929
         },
         {
@@ -1552,27 +670,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.11538461538461,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.226149690523852
         },
         {
@@ -1587,27 +684,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.23076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.250472055452929
         },
         {
@@ -1622,27 +698,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.306022491547432
         },
         {
@@ -1657,27 +712,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.8461538461538485,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.17838928160832
         },
         {
@@ -1692,27 +726,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.730769230769232,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.205064556414655
         },
         {
@@ -1727,27 +740,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.769230769230768,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.165156382496968
         },
         {
@@ -1762,27 +754,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.1923076923076898,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.217960543294965
         },
         {
@@ -1797,27 +768,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.96153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.23013501378393802
         },
         {
@@ -1832,27 +782,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.235504739616041
         },
         {
@@ -1867,27 +796,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.235504739616041
         },
         {
@@ -1902,27 +810,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.26459406407554104
         },
         {
@@ -1937,27 +824,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.5384615384615397,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.292347013203578
         },
         {
@@ -1972,27 +838,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.80769230769231,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.26673309697583997
         },
         {
@@ -2007,27 +852,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.73076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.298882862465068
         },
         {
@@ -2042,27 +866,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.65384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.265023251809485
         },
         {
@@ -2077,27 +880,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.26923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.232102015484534
         },
         {
@@ -2112,27 +894,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.265023251809485
         },
         {
@@ -2147,27 +908,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.23076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.273049672875209
         },
         {
@@ -2182,27 +922,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -2217,27 +936,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.653846153846152,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24169702254109401
         },
         {
@@ -2252,27 +950,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.807692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.154489649635661
         },
         {
@@ -2287,27 +964,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.8461538461538485,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.141431476334969
         },
         {
@@ -2323,27 +979,6 @@
                 "duration": 8
             },
             "MOS": 1.1923076923076898,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.154489649635661
         },
         {
@@ -2359,27 +994,6 @@
                 "duration": 8
             },
             "MOS": 2.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -2395,27 +1009,6 @@
                 "duration": 8
             },
             "MOS": 2.76923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.293897936623758
         },
         {
@@ -2431,27 +1024,6 @@
                 "duration": 8
             },
             "MOS": 2.76923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.31336220328263203
         },
         {
@@ -2467,27 +1039,6 @@
                 "duration": 8
             },
             "MOS": 2.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -2503,27 +1054,6 @@
                 "duration": 8
             },
             "MOS": 4.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.27677043042604804
         },
         {
@@ -2539,27 +1069,6 @@
                 "duration": 8
             },
             "MOS": 4.23076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.250472055452929
         },
         {
@@ -2575,27 +1084,6 @@
                 "duration": 8
             },
             "MOS": 4.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.249107074961407
         },
         {
@@ -2611,27 +1099,6 @@
                 "duration": 8
             },
             "MOS": 2.3076923076923097,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.23742725918535296
         },
         {
@@ -2647,27 +1114,6 @@
                 "duration": 8
             },
             "MOS": 4.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19599639845400504
         },
         {
@@ -2683,27 +1129,6 @@
                 "duration": 8
             },
             "MOS": 4.53846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.223622799029353
         },
         {
@@ -2719,27 +1144,6 @@
                 "duration": 8
             },
             "MOS": 4.53846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.195415667108036
         },
         {
@@ -2755,27 +1159,6 @@
                 "duration": 8
             },
             "MOS": 3.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.40929692574361
         },
         {
@@ -2791,27 +1174,6 @@
                 "duration": 8
             },
             "MOS": 4.6153846153846105,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19070616378601896
         },
         {
@@ -2827,27 +1189,6 @@
                 "duration": 8
             },
             "MOS": 4.769230769230768,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.197728359053345
         },
         {
@@ -2863,27 +1204,6 @@
                 "duration": 8
             },
             "MOS": 4.769230769230768,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.165156382496968
         },
         {
@@ -2899,27 +1219,6 @@
                 "duration": 8
             },
             "MOS": 1.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.223622799029353
         },
         {
@@ -2935,27 +1234,6 @@
                 "duration": 8
             },
             "MOS": 2.53846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.271379628628623
         },
         {
@@ -2971,27 +1249,6 @@
                 "duration": 8
             },
             "MOS": 2.69230769230769,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.32194905898611104
         },
         {
@@ -3007,27 +1264,6 @@
                 "duration": 8
             },
             "MOS": 2.76923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.331686212768317
         },
         {
@@ -3043,27 +1279,6 @@
                 "duration": 8
             },
             "MOS": 2.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.265023251809485
         },
         {
@@ -3079,27 +1294,6 @@
                 "duration": 8
             },
             "MOS": 4.19230769230769,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24357067091068202
         },
         {
@@ -3115,27 +1309,6 @@
                 "duration": 8
             },
             "MOS": 4.30769230769231,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.261135169402193
         },
         {
@@ -3151,27 +1324,6 @@
                 "duration": 8
             },
             "MOS": 4.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.22413045643416
         },
         {
@@ -3187,27 +1339,6 @@
                 "duration": 8
             },
             "MOS": 3.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -3223,27 +1354,6 @@
                 "duration": 8
             },
             "MOS": 4.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.19366302482480202
         },
         {
@@ -3259,27 +1369,6 @@
                 "duration": 8
             },
             "MOS": 4.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.223622799029353
         },
         {
@@ -3295,27 +1384,6 @@
                 "duration": 8
             },
             "MOS": 4.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.249107074961407
         },
         {
@@ -3331,27 +1399,6 @@
                 "duration": 8
             },
             "MOS": 4.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.249107074961407
         },
         {
@@ -3367,27 +1414,6 @@
                 "duration": 8
             },
             "MOS": 4.8846153846153895,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.125236027726465
         },
         {
@@ -3403,27 +1429,6 @@
                 "duration": 8
             },
             "MOS": 4.653846153846152,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.265023251809485
         },
         {
@@ -3439,27 +1444,6 @@
                 "duration": 8
             },
             "MOS": 4.807692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.154489649635661
         },
         {
@@ -3474,27 +1458,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.23076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.165156382496968
         },
         {
@@ -3509,27 +1472,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.28125118483396
         },
         {
@@ -3544,27 +1486,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.23013501378393802
         },
         {
@@ -3579,27 +1500,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.3846153846153797,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2680083222389
         },
         {
@@ -3614,27 +1514,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.73076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.298882862465068
         },
         {
@@ -3649,27 +1528,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -3684,27 +1542,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.61538461538462,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.345120202200746
         },
         {
@@ -3719,27 +1556,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.65384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.286456274663546
         },
         {
@@ -3754,27 +1570,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.26459406407554104
         },
         {
@@ -3789,27 +1584,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.88461538461538,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.250925398910668
         },
         {
@@ -3824,27 +1598,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.73076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.298882862465068
         },
         {
@@ -3859,27 +1612,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.76923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.22564657601739
         },
         {
@@ -3894,27 +1626,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.320533891436449
         },
         {
@@ -3929,27 +1640,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.07692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.306022491547432
         },
         {
@@ -3964,27 +1654,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.19230769230769,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24357067091068202
         },
         {
@@ -3999,27 +1668,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.28125118483396
         },
         {
@@ -4034,27 +1682,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.3076923076923102,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.180919752419082
         },
         {
@@ -4069,27 +1696,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.3076923076923097,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.282862952669938
         },
         {
@@ -4104,27 +1710,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.3076923076923097,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.282862952669938
         },
         {
@@ -4139,27 +1724,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.222092864538092
         },
         {
@@ -4174,27 +1738,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.292347013203578
         },
         {
@@ -4209,27 +1752,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.5,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.29273551438920903
         },
         {
@@ -4244,27 +1766,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.5384615384615397,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.271379628628623
         },
         {
@@ -4279,27 +1780,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.73076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.298882862465068
         },
         {
@@ -4314,27 +1794,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.26923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.31804219652391497
         },
         {
@@ -4349,27 +1808,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.88461538461538,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.250925398910668
         },
         {
@@ -4384,27 +1822,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.88461538461538,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.332028687007993
         },
         {
@@ -4419,27 +1836,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.316609566733393
         },
         {
@@ -4454,27 +1850,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.84615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.208908135521755
         },
         {
@@ -4489,27 +1864,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.26923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.232102015484534
         },
         {
@@ -4524,27 +1878,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.19230769230769,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.26673309697583997
         },
         {
@@ -4559,27 +1892,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.07692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.306022491547432
         },
         {
@@ -4595,27 +1907,6 @@
                 "duration": 8
             },
             "MOS": 1.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.141431476334969
         },
         {
@@ -4631,27 +1922,6 @@
                 "duration": 8
             },
             "MOS": 2.1923076923076903,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.217960543294965
         },
         {
@@ -4667,27 +1937,6 @@
                 "duration": 8
             },
             "MOS": 2.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24169702254109401
         },
         {
@@ -4703,27 +1952,6 @@
                 "duration": 8
             },
             "MOS": 2.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.292347013203578
         },
         {
@@ -4739,27 +1967,6 @@
                 "duration": 8
             },
             "MOS": 2.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.21743848136375
         },
         {
@@ -4775,27 +1982,6 @@
                 "duration": 8
             },
             "MOS": 3.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -4811,27 +1997,6 @@
                 "duration": 8
             },
             "MOS": 3.80769230769231,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24357067091068202
         },
         {
@@ -4847,27 +2012,6 @@
                 "duration": 8
             },
             "MOS": 3.76923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.273049672875209
         },
         {
@@ -4883,27 +2027,6 @@
                 "duration": 8
             },
             "MOS": 1.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.215337577201761
         },
         {
@@ -4919,27 +2042,6 @@
                 "duration": 8
             },
             "MOS": 4.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2876440735720169
         },
         {
@@ -4955,27 +2057,6 @@
                 "duration": 8
             },
             "MOS": 4.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.27677043042604804
         },
         {
@@ -4991,27 +2072,6 @@
                 "duration": 8
             },
             "MOS": 4.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.28125118483396
         },
         {
@@ -5027,27 +2087,6 @@
                 "duration": 8
             },
             "MOS": 2.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.266306664893428
         },
         {
@@ -5063,27 +2102,6 @@
                 "duration": 8
             },
             "MOS": 4.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.286456274663546
         },
         {
@@ -5099,27 +2117,6 @@
                 "duration": 8
             },
             "MOS": 4.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.270120319612617
         },
         {
@@ -5135,27 +2132,6 @@
                 "duration": 8
             },
             "MOS": 4.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.292347013203578
         },
         {
@@ -5171,27 +2147,6 @@
                 "duration": 8
             },
             "MOS": 1.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.141431476334969
         },
         {
@@ -5207,27 +2162,6 @@
                 "duration": 8
             },
             "MOS": 2.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.30639365298347904
         },
         {
@@ -5243,27 +2177,6 @@
                 "duration": 8
             },
             "MOS": 2.3846153846153797,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.244966502801642
         },
         {
@@ -5279,27 +2192,6 @@
                 "duration": 8
             },
             "MOS": 2.6153846153846203,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.308979299271322
         },
         {
@@ -5315,27 +2207,6 @@
                 "duration": 8
             },
             "MOS": 2.07692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.241226336558776
         },
         {
@@ -5351,27 +2222,6 @@
                 "duration": 8
             },
             "MOS": 3.65384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.286456274663546
         },
         {
@@ -5387,27 +2237,6 @@
                 "duration": 8
             },
             "MOS": 3.76923076923077,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.31336220328263203
         },
         {
@@ -5423,27 +2252,6 @@
                 "duration": 8
             },
             "MOS": 3.61538461538462,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.244966502801642
         },
         {
@@ -5459,27 +2267,6 @@
                 "duration": 8
             },
             "MOS": 2.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.32476089454757595
         },
         {
@@ -5495,27 +2282,6 @@
                 "duration": 8
             },
             "MOS": 4.11538461538461,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.250925398910668
         },
         {
@@ -5531,27 +2297,6 @@
                 "duration": 8
             },
             "MOS": 4.30769230769231,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.23742725918535296
         },
         {
@@ -5567,27 +2312,6 @@
                 "duration": 8
             },
             "MOS": 4.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.29735793995228005
         },
         {
@@ -5603,27 +2327,6 @@
                 "duration": 8
             },
             "MOS": 4.23076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.273049672875209
         },
         {
@@ -5639,27 +2342,6 @@
                 "duration": 8
             },
             "MOS": 4.53846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.248650416328157
         },
         {
@@ -5675,27 +2357,6 @@
                 "duration": 8
             },
             "MOS": 4.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.271379628628623
         },
         {
@@ -5711,27 +2372,6 @@
                 "duration": 8
             },
             "MOS": 4.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.247275380442895
         },
         {
@@ -5746,27 +2386,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.0,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.0
         },
         {
@@ -5781,27 +2400,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.7307692307692302,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.256302982593699
         },
         {
@@ -5816,27 +2414,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.3076923076923097,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.261135169402193
         },
         {
@@ -5851,27 +2428,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.248650416328157
         },
         {
@@ -5886,27 +2442,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.11538461538462,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.125236027726465
         },
         {
@@ -5921,27 +2456,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.84615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.35550207052601
         },
         {
@@ -5956,27 +2470,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.11538461538462,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.294284390356275
         },
         {
@@ -5991,27 +2484,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.61538461538462,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.289220217280455
         },
         {
@@ -6026,27 +2498,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.03846153846154,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.0753832301746174
         },
         {
@@ -6061,27 +2512,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.38461538461538,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2680083222389
         },
         {
@@ -6096,27 +2526,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.69230769230769,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.23742725918535296
         },
         {
@@ -6131,27 +2540,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.92307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.306022491547432
         },
         {
@@ -6166,27 +2554,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.11538461538462,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.125236027726465
         },
         {
@@ -6201,27 +2568,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.5384615384615397,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.330312764993937
         },
         {
@@ -6236,27 +2582,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.46153846153846,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.271379628628623
         },
         {
@@ -6271,27 +2596,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.31081302041019604
         },
         {
@@ -6306,27 +2610,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.15384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.17838928160832
         },
         {
@@ -6341,27 +2624,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.7692307692307698,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.197728359053345
         },
         {
@@ -6376,27 +2638,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.23076923076923,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.331686212768317
         },
         {
@@ -6411,27 +2652,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.3846153846153797,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.21951927979205701
         },
         {
@@ -6446,27 +2666,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 1.65384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.24169702254109401
         },
         {
@@ -6481,27 +2680,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.65384615384615,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.325110664056109
         },
         {
@@ -6516,27 +2694,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -6551,27 +2708,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.4615384615384603,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.330312764993937
         },
         {
@@ -6586,27 +2722,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 2.42307692307692,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.2911783995458211
         },
         {
@@ -6621,27 +2736,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.342807259516842
         },
         {
@@ -6656,27 +2750,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.84615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.30153292069847
         },
         {
@@ -6691,27 +2764,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.07692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.286059245679028
         },
         {
@@ -6726,27 +2778,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 3.34615384615385,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.375708083179394
         },
         {
@@ -6761,27 +2792,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.57692307692308,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.247275380442895
         },
         {
@@ -6796,27 +2806,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.6153846153846105,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.21951927979205701
         },
         {
@@ -6831,27 +2820,6 @@
                 "yuv_fmt": "yuv422p10le"
             },
             "MOS": 4.653846153846152,
-            "computed_MOS": null,
-            "OS": [
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
             "CI": 0.21586472016238892
         }
     ]

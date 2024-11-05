@@ -42,10 +42,10 @@ def decode_line(line):
 
      MOS = float(v_line[2])
      CI = float(v_line[3])
-     computed_MOS = None
-     OS = [0] * 18 	
-     for i in range(1, 18):  
-        OS[i] = None
+     #computed_MOS = None
+     #OS = [0] * 18 	
+     #for i in range(1, 18):  
+      #  OS[i] = None
     elif len(v_pvs) == 7:
      PVS_params['SRC'] = f"{v_pvs[0]}_{v_pvs[1]}_{v_pvs[2]}"
      PVS_params['bitrate'] = float(v_pvs[3].replace('kbps', ''))
@@ -73,10 +73,10 @@ def decode_line(line):
      PVS_params['yuv_fmt'] = 'yuv422p10le'
      MOS = float(v_line[2])
      CI = float(v_line[3])
-     computed_MOS = None
-     OS = [0] * 18 	
-     for i in range(1, 18):  
-        OS[i] = None
+     #computed_MOS = None
+     #OS = [0] * 18 	
+     #for i in range(1, 18):  
+      #  OS[i] = None
     elif len(v_pvs) == 6: 
      PVS_params['SRC'] = f"{v_pvs[0]}_{v_pvs[1]}"
      PVS_params['bitrate'] = float(v_pvs[2].replace('kbps', ''))
@@ -104,12 +104,13 @@ def decode_line(line):
      PVS_params['yuv_fmt'] = 'yuv422p10le'
      MOS = float(v_line[2])
      CI = float(v_line[3])
-     computed_MOS = None
-     OS = [0] * 18 	
-     for i in range(1, 18):  
-        OS[i] = None
+     #computed_MOS = None
+     #OS = [0] * 18 	
+     #for i in range(1, 18):  
+      #  OS[i] = None
+    #return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS, 'computed_MOS': computed_MOS, 'OS': OS,'CI' : CI}
 
-    return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS, 'computed_MOS': computed_MOS, 'OS': OS,'CI' : CI}
+    return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS,'CI' : CI}
 
 
 ## __main__ ##

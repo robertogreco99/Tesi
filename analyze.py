@@ -164,8 +164,8 @@ with open(mos_dataset) as f:
     data_mos = json.load(f)
 
 mos = None
-ci = None
-os_values = [None] * 17
+#ci = None
+#os_values = [None] * 17
 
 distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]  
 
@@ -174,27 +174,27 @@ for score in data_mos["scores"]:
     if score["PVS"]["PVS_ID"] == distorted_file_name_no_extension:
         print(score["PVS"]["PVS_ID"])  
         print(distorted_file_name_no_extension)
-        
         mos = score["MOS"]
-        ci = score ["CI"]
-        for i in range(1,18):  
-            mos_value = score["OS"][str(i)]
-            if mos_value is not None:  
-                os_values[i-1] = mos_value
-            else:
-                os_values[i-1] = None  
-        break  
+        break
+        #ci = score ["CI"]
+        #for i in range(1,18):  
+         #   mos_value = score["OS"][str(i)]
+          #  if mos_value is not None:  
+           #     os_values[i-1] = mos_value
+            #else:
+             #   os_values[i-1] = None  
+          
 else:
     print("No mos found")
 
 print(mos)
-print(os_values)
+#print(os_values)
 all_metrics_results[-1].update({
                     f"MOS": mos                })
-for i in range(1, 18):
-    all_metrics_results[-1].update({f"MOS_{i}": os_values[i-1]})
-all_metrics_results[-1].update({
-                    f"CI": ci                })
+#for i in range(1, 18):
+#   all_metrics_results[-1].update({f"MOS_{i}": os_values[i-1]})
+#all_metrics_results[-1].update({
+#                   f"CI": ci                })
 
 
 
