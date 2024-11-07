@@ -69,6 +69,8 @@ with open('Json/configschema.json') as schema_file:
     dataset = config['DATASET']
     features_list= config['FEATURES']
     print(model_version_file)
+    print(original_video)
+    
 
     # Read the database file name 
     dataset_file = f"{dataset}.json"  
@@ -95,6 +97,11 @@ with open(os.path.join(output_dir, 'commands.txt'), 'w') as f:
 
 # Gets the name of the original file without the extension (root)
 original_without_extension= os.path.splitext(os.path.basename(original_video))[0]
+print(original_without_extension)
+print(dataset)
+if(dataset=="ITS4S"):
+ original_without_extension=original_without_extension.replace("_SRC","")
+print(original_without_extension)
 # Loop on the files in input_distorted_dir
 for distorted_file in os.listdir(input_distorted_dir):
     #Save the full name of the distorted file 
