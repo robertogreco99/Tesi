@@ -14,17 +14,25 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
     #The features are in a list, and I create a new list where they are split by a comma (',')"    
     # #print(model_version)
     features = ','.join(features_list)  
-    
-    command = f"podman run --rm -it \
-    -v {input_reference_dir}:/reference \
-    -v {input_distorted_dir}:/distorted \
-    -v {output_dir}:/results \
-    -v {hash_dir}:/hash \
-    -v {mos_dir}:/mos \
-    {image_name} \
-    /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {features}'"
+    if model_version == "vmaf_v0.6.1.json":
+        command = f"podman run --rm -it \
+        -v {input_reference_dir}:/reference \
+        -v {input_distorted_dir}:/distorted \
+        -v {output_dir}:/results \
+        -v {hash_dir}:/hash \
+        -v {mos_dir}:/mos \
+        {image_name} \
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {features}'"
     #&& python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'"
-
+    else:
+        command = f"podman run --rm -it \
+        -v {input_reference_dir}:/reference \
+        -v {input_distorted_dir}:/distorted \
+        -v {output_dir}:/results \
+        -v {hash_dir}:/hash \
+        -v {mos_dir}:/mos \
+        {image_name} \
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {""}'"
     #print("-----------------------------------")
 
 
@@ -91,8 +99,8 @@ print(dataset_file)
 with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
     
-with open(os.path.join(output_dir, 'commands.txt'), 'w') as f:
-    pass  
+#with open(os.path.join(output_dir, 'commands.txt'), 'w') as f:
+#    pass  
 
 
 # Gets the name of the original file without the extension (root)
