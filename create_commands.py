@@ -101,6 +101,9 @@ print(original_without_extension)
 print(dataset)
 if(dataset=="ITS4S"):
  original_without_extension=original_without_extension.replace("_SRC","")
+if(dataset=="AGH_NTIA_Dolby"):
+    original_without_extension=original_without_extension.replace("_original","") 
+
 print(original_without_extension)
 # Loop on the files in input_distorted_dir
 for distorted_file in os.listdir(input_distorted_dir):
