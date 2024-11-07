@@ -39,7 +39,7 @@ def decode_line(line):
     
     computed_MOS=sum(OS.values())/float(len(OS))
     
-    return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS, 'computed_MOS': computed_MOS, 'OS': OS}
+    return {'PVS': {'PVS_ID': PVS_ID} | PVS_params, 'MOS': MOS, 'Computed_MOS': computed_MOS, 'OS': OS}
 
 ## __main__ ##
 
