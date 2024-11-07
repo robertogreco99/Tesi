@@ -20,7 +20,7 @@ def parse_video_files(file_path, output_file):
             current_list.append(line)
 
     result = {
-        "database": "AVT-VQDB-UHD-1",
+        "database": "AVT-VQDB-UHD-1_1",
         "reference_videos": [{"id": i + 1, "file_name": video} for i, video in enumerate(reference_videos)],
         "distorted_videos": []
     }
