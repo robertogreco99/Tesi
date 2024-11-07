@@ -70,7 +70,7 @@ COPY Mos/ScoresGamingVideoSet1.json /mos
 COPY Mos/ScoresGamingVideoSet2.json /mos
 COPY Mos/ScoresKUGVD.json /mos
 COPY Mos/ScoresITS4S.json /mos
-COPY Mos/ScoresAGH_NTIA_Dolby.json /MOS
+COPY Mos/ScoresAGH_NTIA_Dolby.json /mos
 
 # Make scripts executable
 RUN chmod +x run_experiments.sh analyze.py
