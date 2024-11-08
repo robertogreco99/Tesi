@@ -175,6 +175,15 @@ for score in data_mos["scores"]:
         print(score["PVS"]["PVS_ID"])  
         print(distorted_file_name_no_extension)
         mos = score["MOS"]
+        if "CI" in score:
+         ci = score["CI"]
+        else:
+         ci = None
+        if "Computed_MOS" in score:
+         computed_mos = score["Computed_MOS"]
+        else:
+         computed_mos = None
+        
         break
         #ci = score ["CI"]
         #for i in range(1,18):  
@@ -193,8 +202,11 @@ all_metrics_results[-1].update({
                     f"MOS": mos                })
 #for i in range(1, 18):
 #   all_metrics_results[-1].update({f"MOS_{i}": os_values[i-1]})
-#all_metrics_results[-1].update({
-#                   f"CI": ci                })
+all_metrics_results[-1].update({
+                   f"CI": ci                })
+all_metrics_results[-1].update({
+                   f"ComputedMos": computed_mos                })
+
 
 
 
