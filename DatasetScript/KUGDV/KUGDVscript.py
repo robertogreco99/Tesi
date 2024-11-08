@@ -56,8 +56,8 @@ def parse_video_files(file_path, output_file):
     with open(output_file, 'w') as json_file:
         json.dump(result, json_file, indent=2)
 
-file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/KUGDV/KUGDVdescription.txt'
-output_file = 'KUGDVjson.json'
+file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/KUGDV/AllKUGDVwithScores.txt'
+output_file = 'KUGDV.json'
 parse_video_files(file_path, output_file)
 
 print(f"Json saved as {output_file}")
