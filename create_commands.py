@@ -25,7 +25,7 @@ def create_vmaf_command(image_name,input_reference_dir, input_distorted_dir , ou
         /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {features}'"
     #&& python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'"
     else:
-        command = f"podman run --rm -it \
+        command = f"podman run --rm -it\
         -v {input_reference_dir}:/reference \
         -v {input_distorted_dir}:/distorted \
         -v {output_dir}:/results \
@@ -76,8 +76,6 @@ with open('Json/configschema.json') as schema_file:
     model_version_file = config['MODEL_VERSION']
     dataset = config['DATASET']
     features_list= config['FEATURES']
-    print(model_version_file)
-    print(original_video)
     
 
     # Read the database file name 
@@ -94,7 +92,6 @@ except ValidationError as e:
     sys.exit(1) 
     
     
-print(dataset_file)
 
 with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
@@ -105,11 +102,9 @@ with open(dataset_file, 'r') as f:
 
 # Gets the name of the original file without the extension (root)
 original_without_extension= os.path.splitext(os.path.basename(original_video))[0]
-print(original_without_extension)
-print(dataset)
 if(dataset=="ITS4S"):
  original_without_extension=original_without_extension.replace("_SRC","")
-if(dataset=="AGH_NTIA_Dolby"):
+elif(dataset=="AGH_NTIA_Dolby"):
     original_without_extension=original_without_extension.replace("_original","") 
 
 print(original_without_extension)
@@ -139,18 +134,18 @@ for distorted_file in os.listdir(input_distorted_dir):
             bit_depth = metadata["bitdepth"]
             fps=metadata["fps"]
             duration=metadata["duration"]
+        
+            if model_version_file == 'VMAF_ALL':   
+               for model_version  in vmaf_models:
+                 command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,fps, duration,features_list)
+                 with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                     f.write(command + '\n')
+            else:  
+                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,fps, duration,features_list)
+                with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                 f.write(command + '\n')
         else:
             print(f"{distorted_full_name} was not found.")
             
-        if model_version_file == 'VMAF_ALL':   
-            for model_version  in vmaf_models:
-                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,fps, duration,features_list)
-                with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
-                    f.write(command + '\n')
-        else:  
-            command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth,fps, duration,features_list)
-            with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
-               f.write(command + '\n')
-    
 
 print(f"VMAF comands saved in {output_dir}/commands.txt")
