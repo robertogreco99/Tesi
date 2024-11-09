@@ -34,9 +34,9 @@ print(f"width_old: {width_old}, height_old: {height_old}")
 
 # Create the JSON path name
 if width_old != '1920' or height_old != '1080':
-    json_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+    json_filename = f'/results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
 else:
-    json_filename = f'/results/result__{dataset}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+    json_filename = f'/results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 
 # Print json filename
 print(f"Json file path: {json_filename}")
@@ -143,6 +143,7 @@ print(metrics_results)
 all_metrics_results.append({
     "Dataset": dataset,
     "Original file name": original_video,
+    "Distorted file name" : distorted_video,
     "Width original": width_old,
     "Height original": height_old,
     "Width": width,
@@ -253,7 +254,8 @@ for metric, values in metrics_results.items():
 
 
 df_all_metrics = pd.DataFrame(all_metrics_results)
-csv_filename = f'/results/combined_results.csv'
+#csv_filename = f'/results/combined_results.csv'
+csv_filename = f'/results/combined_results_{dataset}.csv'
 
 # Append to CSV 
 if os.path.isfile(csv_filename):
