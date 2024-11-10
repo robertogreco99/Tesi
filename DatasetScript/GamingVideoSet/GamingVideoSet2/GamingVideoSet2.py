@@ -56,7 +56,7 @@ def parse_video_files(file_path, output_file):
     with open(output_file, 'w') as json_file:
         json.dump(result, json_file, indent=2)
 
-file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/GamingVideoSet/GamingVideoSet2/GamingVideoSet2description.txt'
+file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/DatasetScript/GamingVideoSet/GamingVideoSet2/AllGamingVideoSet2withScores.txt'
 output_file = 'GamingVideoSet2.json'
 parse_video_files(file_path, output_file)
 
