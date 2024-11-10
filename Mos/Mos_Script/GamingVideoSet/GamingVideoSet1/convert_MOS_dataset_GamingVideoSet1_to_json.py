@@ -9,7 +9,7 @@ def decode_line(line):
     v_line = line.split(',')
     #print(f"vline: {v_line}")
     # first element of the line
-    PVS_ID = v_line[0].strip()
+    PVS_ID = v_line[0].strip().replace('.yuv', '')
     #print(f"PVS_ID: {PVS_ID}")
     PVS_params = {}
     v_pvs = PVS_ID.split('_')

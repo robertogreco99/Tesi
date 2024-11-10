@@ -2,8 +2,8 @@
     "dataset_name": "GamingVideoSet1",
     "SRC_names": [
         "H1Z1",
-        "CSGO",
         "Hearthstone",
+        "CSGO",
         "FIFA17"
     ],
     "PVS_bitrates": [
@@ -16,17 +16,17 @@
         4000.0
     ],
     "PVS_encoders": [
-        "x264.yuv"
+        "x264"
     ],
     "PVS_resolutions": [
+        "1920x1080",
         "640x480",
-        "1280x720",
-        "1920x1080"
+        "1280x720"
     ],
     "scores": [
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_1200_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_1200_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -34,14 +34,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.88
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_2000_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_2000_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -49,14 +49,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.56
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_4000_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_4000_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -64,14 +64,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 4.08
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_500_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_500_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -79,14 +79,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 500.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.44
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_600_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1280x720_600_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -94,14 +94,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.76
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_1200_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_1200_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -109,14 +109,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.78
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_2000_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_2000_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -124,14 +124,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.71
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_4000_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_4000_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -139,14 +139,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 4.13
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_600_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_600_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -154,14 +154,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.0
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_750_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_1920x1080_750_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -169,14 +169,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 750.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.0
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_1200_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_1200_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -184,14 +184,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.6
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_2000_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_2000_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -199,14 +199,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.28
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_300_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_300_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -214,14 +214,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 300.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.8
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_4000_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_4000_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -229,14 +229,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.0
         },
         {
             "PVS": {
-                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_600_x264.yuv",
+                "PVS_ID": "CSGO_30fps_30sec_Part2_640x480_600_x264",
                 "SRC": "CSGO",
                 "fps": 30,
                 "duration": 30,
@@ -244,14 +244,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.0
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_1200_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_1200_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -259,14 +259,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.16
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_2000_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_2000_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -274,14 +274,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.6
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_4000_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_4000_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -289,14 +289,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 4.12
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_500_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_500_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -304,14 +304,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 500.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.72
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_600_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1280x720_600_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -319,14 +319,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.0
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_1200_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_1200_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -334,14 +334,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.44
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_2000_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_2000_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -349,14 +349,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.36
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_4000_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_4000_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -364,14 +364,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 4.43
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_600_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_600_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -379,14 +379,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.28
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_750_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_1920x1080_750_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -394,14 +394,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 750.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.0
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_1200_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_1200_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -409,14 +409,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.0
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_2000_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_2000_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -424,14 +424,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.76
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_300_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_300_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -439,14 +439,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 300.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.68
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_4000_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_4000_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -454,14 +454,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.0
         },
         {
             "PVS": {
-                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_600_x264.yuv",
+                "PVS_ID": "FIFA17_30fps_30sec_Part2_640x480_600_x264",
                 "SRC": "FIFA17",
                 "fps": 30,
                 "duration": 30,
@@ -469,14 +469,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.16
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_1200_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_1200_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -484,14 +484,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.44
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_2000_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_2000_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -499,14 +499,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.28
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_4000_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_4000_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -514,14 +514,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.52
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_500_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_500_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -529,14 +529,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 500.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.56
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_600_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1280x720_600_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -544,14 +544,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.56
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_1200_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_1200_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -559,14 +559,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.83
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_2000_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_2000_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -574,14 +574,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.52
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_4000_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_4000_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -589,14 +589,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.52
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_600_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_600_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -604,14 +604,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.0
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_750_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_1920x1080_750_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -619,14 +619,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 750.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.0
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_1200_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_1200_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -634,14 +634,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.58
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_2000_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_2000_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -649,14 +649,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.0
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_300_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_300_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -664,14 +664,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 300.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 1.32
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_4000_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_4000_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -679,14 +679,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.0
         },
         {
             "PVS": {
-                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_600_x264.yuv",
+                "PVS_ID": "H1Z1_30fps_30sec_Part2_640x480_600_x264",
                 "SRC": "H1Z1",
                 "fps": 30,
                 "duration": 30,
@@ -694,14 +694,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.2
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_1200_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_1200_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -709,14 +709,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.52
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_2000_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_2000_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -724,14 +724,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.8
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_4000_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_4000_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -739,14 +739,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.76
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_500_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_500_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -754,14 +754,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 500.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.0
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_600_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1280x720_600_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -769,14 +769,14 @@
                 "width": 1280,
                 "height": 720,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.32
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_1200_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_1200_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -784,14 +784,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 4.21
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_2000_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_2000_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -799,14 +799,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 4.32
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_4000_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_4000_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -814,14 +814,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 4.72
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_600_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_600_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -829,14 +829,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.36
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_750_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_1920x1080_750_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -844,14 +844,14 @@
                 "width": 1920,
                 "height": 1080,
                 "bitrate": 750.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 3.72
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_1200_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_1200_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -859,14 +859,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 1200.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.48
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_2000_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_2000_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -874,14 +874,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 2000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.36
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_300_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_300_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -889,14 +889,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 300.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.08
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_4000_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_4000_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -904,14 +904,14 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 4000.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.44
         },
         {
             "PVS": {
-                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_600_x264.yuv",
+                "PVS_ID": "Hearthstone_30fps_30sec_Part1_640x480_600_x264",
                 "SRC": "Hearthstone",
                 "fps": 30,
                 "duration": 30,
@@ -919,7 +919,7 @@
                 "width": 640,
                 "height": 480,
                 "bitrate": 600.0,
-                "encoder": "x264.yuv",
+                "encoder": "x264",
                 "yuv_fmt": "yuv420p"
             },
             "MOS": 2.32
