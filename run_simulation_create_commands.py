@@ -2,8 +2,8 @@ import json
 import os
 import subprocess
 
-yuv_list_file = "/home/greco/home/docker/Simulations/KUGDV/KUGDV_reference_video_list.txt"  
-json_config_path = "/home/greco/home/docker/Json/config.json"  
+yuv_list_file = "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Simulation/KUGDV/KUGDV_reference_video_list.txt"  
+json_config_path = "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Json/config.json"  
 
 def process_yuv_file(yuv_file):
     with open(json_config_path, 'r') as json_file:
