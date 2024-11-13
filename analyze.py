@@ -1,19 +1,15 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import json
 import sys
 from scipy.stats import gmean
-import os  
-
-# Initialize an empty list to hold all metrics results
-all_metrics_results = []
 
 if len(sys.argv) != 15:
     print("Error, format is : python3 analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video> <distorted_video> <width_old> <height_old> <fps> <duration> <mos_dir>")
     sys.exit(1)
 
-# Parameters
 dataset = sys.argv[1]        
 width = int(sys.argv[2])     
 height = int(sys.argv[3])    
@@ -25,12 +21,160 @@ original_video = sys.argv[8]
 distorted_video = sys.argv[9]
 width_old = sys.argv[10]
 height_old = sys.argv[11]
-fps=sys.argv[12]
-duration=sys.argv[13]
-mos_dir=sys.argv[14]
+fps = sys.argv[12]
+duration = sys.argv[13]
+mos_dir = sys.argv[14]
+
+mos = -1
+ci = -1
+computed_mos = -1
+
+temporal_pooling_count = 7 
 
 print(f"width_old: {width_old}, height_old: {height_old}")
 
+temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean', 'total_variation', 'norm_lp1', 'norm_lp2', 'norm_lp3']
+
+vmaf_models = [
+    "vmaf_v0.6.1", 
+    "vmaf_v0.6.1neg", 
+    "vmaf_float_v0.6.1", 
+    "vmaf_float_v0.6.1neg", 
+    "vmaf_float_b_v0.6.3", 
+    "vmaf_b_v0.6.3", 
+    "vmaf_float_4k_v0.6.1", 
+    "vmaf_4k_v0.6.1", 
+    "vmaf_4k_v0.6.1neg"
+]
+
+features = ["cambi",
+    "float_ssim",
+    "psnr_y",
+    "psnr_cb",
+    "psnr_cr",
+    "float_ms_ssim",
+    "ciede2000",
+    "psnr_hvs_y",
+    "psnr_hvs_cb",
+    "vmaf_float_b_v0.6.3_bagging",      
+    "vmaf_float_b_v0.6.3_stddev",       
+    "vmaf_float_b_v0.6.3_ci_p95_lo",    
+    "vmaf_float_b_v0.6.3_ci_p95_hi",
+    "vmaf_b_v0.6.3_bagging",      
+    "vmaf_b_v0.6.3_stddev",       
+    "vmaf_b_v0.6.3_ci_p95_lo",    
+    "vmaf_b_v0.6.3_ci_p95_hi" 
+    ]
+mos_dataset = f"/mos/Scores{dataset}.json"
+
+with open(mos_dataset) as f:
+    data_mos = json.load(f)
+
+distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]  
+for score in data_mos["scores"]:
+    if score["PVS"]["PVS_ID"] == distorted_file_name_no_extension:
+        print(score["PVS"]["PVS_ID"])  
+        print(distorted_file_name_no_extension)
+        mos = score["MOS"]
+        if "CI" in score:
+         ci = score["CI"]
+        else:
+         ci = -1
+        if "Computed_MOS" in score:
+         computed_mos = score["Computed_MOS"]
+        else:
+         computed_mos = -1
+        
+        break          
+else:
+    print("No mos found")
+
+csv_filename = f'/results/combined_results_{dataset}.csv'
+
+# if csv does not exits create with temporal_pooling_count entries
+if not os.path.isfile(csv_filename):
+    print("Csv does not exist")
+    
+    # rows to add
+    new_rows = []
+    for temporal_pooling_value in temporal_pooling_values:
+        row = {
+            "Dataset": dataset,
+            "Original_file_name": original_video,
+            "Distorted_file_name": distorted_video,
+            "Width_original": width_old,
+            "Height_original": height_old,
+            "Width": width,
+            "Height": height,
+            "Bitrate": bitrate,
+            "Video_codec": video_codec,
+            "FPS": fps,
+            "Duration": duration,
+            "MOS": mos,
+            "CI": ci,
+            "Computed_Mos": computed_mos,
+            "temporal_pooling": temporal_pooling_value
+        }
+        
+       #add void columns for models and features
+        for model in vmaf_models:
+            row[model] = ""  
+        
+        for feature in features:
+            row[feature] = ""  
+        
+        new_rows.append(row)
+    
+    
+    new_df = pd.DataFrame(new_rows)
+    new_df.to_csv(csv_filename, mode='w', header=True, index=False)
+    print("CSV created")
+else:
+    # If csv already exists , verify if distorted_video is present
+    print("Csv already exists, check if distorted_video already exists : ")
+    
+    df_existing = pd.read_csv(csv_filename)
+    
+    if distorted_video not in df_existing['Distorted file name'].values:
+        print(f"{distorted_video} not found in the csv, adds rows")
+        
+        new_rows = []
+        for temporal_pooling_value in temporal_pooling_values:
+            row = {
+                "Dataset": dataset,
+                "Original_file_name": original_video,
+                "Distorted_file_name": distorted_video,
+                "Width_original": width_old,
+                "Height_original": height_old,
+                "Width": width,
+                "Height": height,
+                "Bitrate": bitrate,
+                "Video_codec": video_codec,
+                "FPS": fps,
+                "Duration": duration,
+                "MOS": mos,
+                "CI": ci,
+                "Computed_Mos": computed_mos,
+                "temporal_pooling": temporal_pooling_value
+            }
+            
+            # Add void columns for models and features
+            for model in vmaf_models:
+                row[model] = ""  
+                for feature in features:
+                    row[feature] = ""  
+            
+            new_rows.append(row)
+        
+        # Add new rows to already existing dataframe
+        new_df = pd.DataFrame(new_rows)
+        df_existing = pd.concat([df_existing, new_df], ignore_index=True)
+        
+        # update csv with new dataframe
+        df_existing.to_csv(csv_filename, mode='w', header=True, index=False)
+        print("temporal_pooling_count rows added to csv.")
+    else:
+        print(f"{distorted_video} is already present in the csv")
 
 # Create the JSON path name
 if width_old != '1920' or height_old != '1080':
@@ -60,7 +204,6 @@ for frame in frames_list:
 dframes = pd.DataFrame(frames_rows)
 print(dframes)
 
-# Function to calculate metrics
 def calculate_metrics(column_name):
     if column_name in dframes.columns:
         mean_value = dframes[column_name].mean()
@@ -100,36 +243,31 @@ def calculate_metrics(column_name):
         return mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3
     else:
         print(f"Metric '{column_name}' not found in the DataFrame.")
-        return (None, None, None, None, None, None, None)
+        return (-1,-1,-1,-1,-1,-1,-1)
 
-# List of metrics to evaluate
-metrics_to_evaluate = [
-    "vmaf",
-    "cambi",
-    "float_ssim",
-    "psnr_y",
-    "psnr_cb",
-    "psnr_cr",
-    "float_ms_ssim",
-    "ciede2000",
-    "psnr_hvs_y",
-    "psnr_hvs_cb",
-    "vmaf_bagging",      
-    "vmaf_stddev",       
-    "vmaf_ci_p95_lo",    
-    "vmaf_ci_p95_hi" 
-]
-vmaf_models=[
-                "vmaf_v0.6.1.json", 
-                "vmaf_v0.6.1neg.json", 
-                "vmaf_float_v0.6.1.json", 
-                "vmaf_float_v0.6.1neg.json", 
-                "vmaf_float_b_v0.6.3.json", 
-                "vmaf_b_v0.6.3.json", 
-                "vmaf_float_4k_v0.6.1.json", 
-                "vmaf_4k_v0.6.1.json", 
-                "vmaf_4k_v0.6.1neg.json"
-            ]
+if model_version == "vmaf_v0.6.1.json":
+    metrics_to_evaluate = [
+        "vmaf",
+        "cambi",
+        "float_ssim",
+        "psnr_y",
+        "psnr_cb",
+        "psnr_cr",
+        "float_ms_ssim",
+        "ciede2000",
+        "psnr_hvs_y",
+        "psnr_hvs_cb",
+    ]
+elif model_version in ["vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
+    metrics_to_evaluate = [
+        "vmaf",
+        "vmaf_bagging",
+        "vmaf_stddev",
+        "vmaf_ci_p95_lo",
+        "vmaf_ci_p95_hi",
+    ]
+else:
+    metrics_to_evaluate = ["vmaf"]
 
 metrics_results = {}
 for metric in metrics_to_evaluate:
@@ -137,130 +275,211 @@ for metric in metrics_to_evaluate:
     if results:
         metrics_results[metric] = results
 
-print("METRICS RESULTS")
+
 print(metrics_results)
+df_existing = pd.read_csv(csv_filename)
 
-all_metrics_results.append({
-    "Dataset": dataset,
-    "Original file name": original_video,
-    "Distorted file name" : distorted_video,
-    "Width original": width_old,
-    "Height original": height_old,
-    "Width": width,
-    "Height": height,
-    "Bitrate": bitrate,
-    "Video Codec": video_codec,
-    "FPS" : fps,
-    "Duration" : duration,
-    "Model Version": model_version,
-})
-
-print(dataset)
- # Read the database  mos file name 
-mos_dataset = f"/mos/Scores{dataset}.json"
-print(mos_dataset)
-
-# Read the JSON file
-with open(mos_dataset) as f:
-    data_mos = json.load(f)
-
-mos = None
-#ci = None
-#os_values = [None] * 17
-
-distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]  
-
-
-for score in data_mos["scores"]:
-    if score["PVS"]["PVS_ID"] == distorted_file_name_no_extension:
-        print(score["PVS"]["PVS_ID"])  
-        print(distorted_file_name_no_extension)
-        mos = score["MOS"]
-        if "CI" in score:
-         ci = score["CI"]
-        else:
-         ci = None
-        if "Computed_MOS" in score:
-         computed_mos = score["Computed_MOS"]
-        else:
-         computed_mos = None
-        
-        break
-        #ci = score ["CI"]
-        #for i in range(1,18):  
-         #   mos_value = score["OS"][str(i)]
-          #  if mos_value is not None:  
-           #     os_values[i-1] = mos_value
-            #else:
-             #   os_values[i-1] = None  
-          
+if model_version == 'vmaf_v0.6.1.json':
+    for metric, values in metrics_results.items():
+     mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+     if metric == "vmaf":
+            model_version=model_version.replace(".json","")
+            rows_filled = df_existing[model_version].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_version] =[            
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+     else:
+        rows_filled = df_existing[metric].notna().sum()
+        start_row = rows_filled 
+        end_row = start_row + temporal_pooling_count
+        df_existing.loc[start_row:end_row-1, metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+elif model_version == "vmaf_b_v0.6.3.json":
+     for metric, values in metrics_results.items():
+         mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+         if metric == "vmaf":
+            model_version=model_version.replace(".json","")
+            rows_filled = df_existing[model_version].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_version] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]    
+         if metric == "vmaf_bagging":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_bagging"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_stddev":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_stddev"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]        
+         if metric == "vmaf_ci_p95_hi":
+             model_version=model_version.replace(".json","")
+             model_metric = f"{model_version}_ci_p95_hi"
+             rows_filled = df_existing[model_metric].notna().sum()
+             start_row = rows_filled 
+             end_row = start_row + temporal_pooling_count
+             df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_ci_p95_lo":
+             model_version=model_version.replace(".json","")
+             model_metric = f"{model_version}_ci_p95_lo"
+             rows_filled = df_existing[model_metric].notna().sum()
+             start_row = rows_filled 
+             end_row = start_row + temporal_pooling_count
+             df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]          
+elif model_version == "vmaf_float_b_v0.6.3.json":
+     for metric, values in metrics_results.items():
+         mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+         if metric == "vmaf":
+            model_version=model_version.replace(".json","")
+            rows_filled = df_existing[model_version].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_version] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_bagging":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_bagging"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[            
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_stddev":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_stddev"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]        
+         if metric == "vmaf_ci_p95_hi":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_ci_p95_hi"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_ci_p95_lo":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_ci_p95_lo"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                total_variation,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
 else:
-    print("No mos found")
+    if "vmaf" in metrics_results:
+        mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
+        model_version=model_version.replace(".json","")
+        rows_filled = df_existing[model_version].notna().sum()
+        start_row = rows_filled 
+        end_row = start_row + temporal_pooling_count
+        df_existing.loc[start_row:end_row-1, model_version] =[
+        mean,
+        harmonic_mean,
+        geometric_mean,
+        total_variation,
+        norm_lp_1,
+        norm_lp_2,
+        norm_lp_3,
+]
+# Update the csv with the new dataframe
+df_existing.to_csv(csv_filename, mode='w', header=True, index=False)
 
-print(mos)
-#print(os_values)
-all_metrics_results[-1].update({
-                    f"MOS": mos                })
-#for i in range(1, 18):
-#   all_metrics_results[-1].update({f"MOS_{i}": os_values[i-1]})
-all_metrics_results[-1].update({
-                   f"CI": ci                })
-all_metrics_results[-1].update({
-                   f"ComputedMos": computed_mos                })
-
-
-
-
-for metric, values in metrics_results.items():
-    if metric == "vmaf":
-        mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
-        
-        # Create columns for every vmaf model
-        for model in vmaf_models:
-            if model == model_version:
-                all_metrics_results[-1].update({
-                    f"{metric}_{model}_mean": mean_value,
-                    f"{metric}_{model}_harmonic_mean": harmonic_mean_value,
-                    f"{metric}_{model}_geometric_mean": geometric_mean_value,
-                    f"{metric}_{model}_total_variation": total_variation,
-                    f"{metric}_{model}_norm_lp_1": norm_lp_1,
-                    f"{metric}_{model}_norm_lp_2": norm_lp_2,
-                    f"{metric}_{model}_norm_lp_3": norm_lp_3,
-                })
-            else:
-                # The value is None if the model is not the current
-                all_metrics_results[-1].update({
-                    f"{metric}_{model}_mean": None,
-                    f"{metric}_{model}_harmonic_mean": None,
-                    f"{metric}_{model}_geometric_mean": None,
-                    f"{metric}_{model}_total_variation": None,
-                    f"{metric}_{model}_norm_lp_1": None,
-                    f"{metric}_{model}_norm_lp_2": None,
-                    f"{metric}_{model}_norm_lp_3": None,
-                })
-    else:
-        mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
-        
-        # Create columns for other metrics
-        all_metrics_results[-1].update({
-            f"{metric}_mean": mean_value,
-            f"{metric}_harmonic_mean": harmonic_mean_value,
-            f"{metric}_geometric_mean": geometric_mean_value,
-            f"{metric}_total_variation": total_variation,
-            f"{metric}_norm_lp_1": norm_lp_1,
-            f"{metric}_norm_lp_2": norm_lp_2,
-            f"{metric}_norm_lp_3": norm_lp_3,
-        })
-
-
-df_all_metrics = pd.DataFrame(all_metrics_results)
-#csv_filename = f'/results/combined_results.csv'
-csv_filename = f'/results/combined_results_{dataset}.csv'
-
-# Append to CSV 
-if os.path.isfile(csv_filename):
-    df_all_metrics.to_csv(csv_filename, mode='a', header=False, index=False)
-else:
-    df_all_metrics.to_csv(csv_filename, mode='w', header=True, index=False)
-
-print("Combined CSV updated.")
+print(f"Column for {model_version} added")

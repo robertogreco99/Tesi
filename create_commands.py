@@ -8,7 +8,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
     features = ','.join(features_list)  
     
     if model_version == "vmaf_v0.6.1.json":
-        command = f"podman run --rm -it \
+        command = f"docker run --rm -it \
         -v {input_reference_dir}:/reference \
         -v {input_distorted_dir}:/distorted \
         -v {output_dir}:/results \
@@ -17,7 +17,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
         {image_name} \
         /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {features}'"
     else:
-        command = f"podman run --rm -it\
+        command = f"docker run --rm -it\
         -v {input_reference_dir}:/reference \
         -v {input_distorted_dir}:/distorted \
         -v {output_dir}:/results \

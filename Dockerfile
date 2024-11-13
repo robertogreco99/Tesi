@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpng-dev=1.6.39-2\
     libjpeg-dev=1:2.1.5-2\
     zlib1g-dev=1:1.2.13.dfsg-1\
-    linux-headers-amd64=6.1.106-3\  
+    linux-headers-amd64\  
     vim=2:9.0.1378-2\
     nano=7.2-1+deb12u1\
     libx264-dev=2:0.164.3095+gitbaee400-3\
@@ -60,7 +60,7 @@ RUN mkdir -p /reference /distorted /results /hash /mos
 WORKDIR /app
 
 # Copy scripts
-COPY analyze.py .
+COPY analyzenew.py .
 COPY run_experiments.sh .
 COPY Mos/ScoresAVT-VQDB-UHD-1_1.json /mos
 COPY Mos/ScoresAVT-VQDB-UHD-1_2.json /mos

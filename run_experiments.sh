@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ "$#" -ne 18 ]; then
-    echo "Error: Expected 18 arguments, but got $#."
-    exit 1
-fi
+#if [ "$#" -ne 18 ]; then
+#    echo "Error: Expected 18 arguments, but got $#."
+#    exit 1
+#fi
 
 INPUT_REFERENCE_DIR="$1"   
 INPUT_DISTORTED_DIR="$2"    
@@ -53,6 +53,7 @@ for dir in "$INPUT_REFERENCE_DIR" "$INPUT_DISTORTED_DIR" "$OUTPUT_DIR" "$HASH_DI
     fi
 done
 
+FILE_COMMANDS="python_commands.txt"
 #Set filenames :
 
 original="$ORIGINAL_VIDEO"
@@ -62,51 +63,132 @@ echo "Input distorted file: $distorted"
 #directory where to save hash file
 output_hash="$HASH_DIR/${distorted}_decoded.md5"
 # Output YUV : file name of decoded file
-distorted_decoded_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
-# Print the name of the decoded file
-echo "Decoded file: $distorted_decoded_yuv"
-# Output Resized YUV : file name of decoded file resized
-distorted_decoded_resized_yuv="$OUTPUT_DIR/${distorted}_decoded_resized.yuv"
- #Output json 
-output_json="$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
-# Decode the video
-ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded_yuv" -loglevel quiet
+#disto1rted_decoded_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
+if [[ "$DATASET" == "ITS4S" || "$DATASET" == "AGH_NTIA_Dolby" ]]; then
+    # If dataset is ITS4S, set decoded file extension to .y4m
+    distorted_decoded="$OUTPUT_DIR/${distorted}_decoded.y4m"
+else
+    # Default extension is .yuv
+    distorted_decoded="$OUTPUT_DIR/${distorted}_decoded.yuv"
+fi
 
+# Print the name of the decoded file
+echo "Decoded file: $distorted_decoded"
+# Output Resized YUV : file name of decoded file resized
+if [[ "$DATASET" == "ITS4S" || "$DATASET" == "AGH_NTIA_Dolby" ]]; then
+ distorted_decoded_resized="$OUTPUT_DIR/${distorted}_decoded_resized.y4m"
+else
+ distorted_decoded_resized="$OUTPUT_DIR/${distorted}_decoded_resized.yuv"
+fi
+ #Output json 
+output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
+
+if [[ "$DATASET" == "ITS4S" ]]; then
+    # Use y4m format for ITS4S or AGH_NTIA_Dolby datasets
+    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
+    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+#TODO 422p10ple
+elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" || "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then    
+    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+else
+    # Use rawvideo format for other datasets
+    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded" -loglevel quiet
+fi
 
    
 # Save Width and height in two variables : they are needed for naming
 width_old="$WIDTH"
 height_old="$HEIGHT"
 
-# Resize if dimensions are not 1920x1080
-if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
-    echo "Resizing video to 1920x1080..."
-    echo "distorted_decoded_yuv : $distorted_decoded_yuv"
-    echo "WIDTH : $WIDTH"
-    echo "HEIGHT : $HEIGHT"
-   
-    ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p -r 30 -i "$distorted_decoded_yuv" \
-   -vf scale=1920x1080:flags=lanczos:param0=3 \
-   -sws_flags lanczos+accurate_rnd+full_chroma_int \
-   -pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized_yuv"
+# Resize if dimensions are not 1920x1080--> to re do
 
-    final_decoded_file="$distorted_decoded_resized_yuv"
-    output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
-    width_new=1920
-    height_new=1080
-    output_json="$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
+    if [[ "$DATASET" == "ITS4S" ]]; then
+     echo "DATASET : $DATASET"
+     echo "Resizing video to 1280x720 for ITSDATASET"
+     echo "distorted_decoded : $distorted_decoded"
+     echo "WIDTH : $WIDTH"
+     echo "HEIGHT : $HEIGHT"
+   
+     #ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p -r 30 -i "$distorted_decoded" \
+     #-vf scale=1920x1080:flags=lanczos:param0=3 \
+     #-sws_flags lanczos+accurate_rnd+full_chroma_int \
+     #-pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized"
     
- else
+     ffmpeg -i "$distorted_decoded" \
+     -vf "scale=1280x720:flags=lanczos" \
+     -sws_flags lanczos+accurate_rnd+full_chroma_int \
+     -pix_fmt yuv422p -r 30 "$distorted_decoded_resized"
+
+     final_decoded_file="$distorted_decoded_resized"
+     output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+     width_new=1920
+     height_new=1080
+     output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+    elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
+        echo "DATASET : $DATASET"
+        echo "Resizing video to 1280x720 for AGH_NTIA_Dolby dataset..."
+        echo "distorted_decoded : $distorted_decoded"
+        echo "WIDTH : $WIDTH"
+        echo "HEIGHT : $HEIGHT"
+       
+        ffmpeg -i "$distorted_decoded" \
+        -vf "scale=1280x720:flags=lanczos" \
+        -sws_flags lanczos+accurate_rnd+full_chroma_int \
+        -pix_fmt yuv422p -r 30 "$distorted_decoded_resized"
+
+        final_decoded_file="$distorted_decoded_resized"
+        output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+        width_new=1920
+        height_new=1080
+        output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+    #elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" || "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then    
+    #   echo "DATASET : $DATASET"
+    #   echo "Resizing video to 1280x720 for AGH_NTIA_Dolby dataset..."
+    #    echo "distorted_decoded : $distorted_decoded"
+    #    echo "WIDTH : $WIDTH"
+    #    echo "HEIGHT : $HEIGHT"
+    #   
+    #     ffmpeg -i "$distorted_decoded" \
+    #     -vf "scale=1280x720:flags=lanczos" \
+    #     -sws_flags lanczos+accurate_rnd+full_chroma_int \
+    #     -pix_fmt yuv422p -r 30 "$distorted_decoded_resized"
+    #
+    #    final_decoded_file="$distorted_decoded_resized"
+    #    output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+    #    width_new=1920
+    #    height_new=1080
+    #    output_json="$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+   
+    else
+     echo "Resizing video to 1920x1080..."
+     echo "distorted_decoded : $distorted_decoded"
+     echo "WIDTH : $WIDTH"
+     echo "HEIGHT : $HEIGHT"
+   
+     ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p -r 30 -i "$distorted_decoded" \
+     -vf scale=1920x1080:flags=lanczos:param0=3 \
+     -sws_flags lanczos+accurate_rnd+full_chroma_int \
+     -pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized"
+
+     final_decoded_file="$distorted_decoded_resized"
+     output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+     width_new=1920
+     height_new=1080
+     output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+    fi
+else
     echo "No resizing needed. Dimensions are already 1920x1080."
-    final_decoded_file="$distorted_decoded_yuv"
+    final_decoded_file="$distorted_decoded"
     width_new="$width_old"
     height_new="$height_old"
 fi
 
 # Compute MD5 hash of decoded YUV file
- echo "Hash MD5 for $final_decoded_file..."
- md5sum "$final_decoded_file" > "$output_hash"
- echo "Hash saved in $output_hash."
+echo "Hash MD5 for $final_decoded_file..."
+md5sum "$final_decoded_file" > "$output_hash"
+echo "Hash saved in $output_hash."
 
 # Convert FEATURES string to an array
 # sep is ','; read from FEATURES and push into the feature_array the elmemnents
@@ -132,18 +214,31 @@ else
     echo "Path : $path"
 fi
 
+echo "Final decoded file: $final_decoded_file"
+
 # VMAF evaluation
 if [[ "${MODEL_VERSION}" == "vmaf_v0.6.1.json" ]]; then
-    /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-       --reference "$INPUT_REFERENCE_DIR/$original" \
-       --distorted "$final_decoded_file" \
-       --width "$width_new" \
-       --height "$height_new" \
-       --pixel_format "$PIXEL_FORMAT" \
-       --bitdepth "$BIT_DEPTH" \
-       --model "$path" \
-       $feature_args \
-       --output "$output_json" --json 
+    if [[ "${DATASET}" == "ITS4S" || "${DATASET}" == "AGH_NTIA_Dolby" ]]; then
+        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+        --reference "$INPUT_REFERENCE_DIR/$original" \
+        --distorted "$final_decoded_file" \
+        --model "$path" \
+        $feature_args \
+        --output "$output_json" --json \
+        --threads "$(nproc)" 
+    else
+        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+        --reference "$INPUT_REFERENCE_DIR/$original" \
+        --distorted "$final_decoded_file" \
+        --width "$width_new" \
+        --height "$height_new" \
+        --pixel_format "$PIXEL_FORMAT" \
+        --bitdepth "$BIT_DEPTH" \
+        --model "$path" \
+        $feature_args \
+        --output "$output_json" --json \
+        --threads "$(nproc)" 
+    fi     
 else
     /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \
@@ -153,7 +248,8 @@ else
        --pixel_format "$PIXEL_FORMAT" \
        --bitdepth "$BIT_DEPTH" \
        --model "$path" \
-       --output "$output_json" --json 
+       --output "$output_json" --json \
+       --threads "$(nproc)" 
 fi
 
     # VMAF evaluation
@@ -168,14 +264,14 @@ fi
         #$feature_args \
         #--output "$output_json" --json 
 
-    if [ -f "$distorted_decoded_yuv" ]; then
-    rm "$distorted_decoded_yuv"
-    echo "Decoded file removed: $distorted_decoded_yuv"
+    if [ -f "$distorted_decoded" ]; then
+    rm "$distorted_decoded"
+    echo "Decoded file removed: $distorted_decoded"
     fi
 
-    if [ -f "$distorted_decoded_resized_yuv" ]; then
-    rm "$distorted_decoded_resized_yuv"
-    echo "Decoded resized file removed: $distorted_decoded_resized_yuv"
+    if [ -f "$distorted_decoded_resized" ]; then
+    rm "$distorted_decoded_resized"
+    echo "Decoded resized file removed: $distorted_decoded_resized"
     fi
 
     #RUN PYTHON 
@@ -195,7 +291,6 @@ fi
     echo "FPS : $FPS"
     echo "Duration : $DURATION"
 
-    
     python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
 
 
