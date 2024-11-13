@@ -53,7 +53,13 @@ for dir in "$INPUT_REFERENCE_DIR" "$INPUT_DISTORTED_DIR" "$OUTPUT_DIR" "$HASH_DI
     fi
 done
 
-FILE_COMMANDS="python_commands.txt"
+FILE_COMMANDS="$OUTPUT_DIR/analyzescriptcommands_${DATASET}.txt"
+
+
+if [ ! -f "$FILE_COMMANDS" ]; then
+    touch "$FILE_COMMANDS"
+fi
+
 #Set filenames :
 
 original="$ORIGINAL_VIDEO"
@@ -143,23 +149,7 @@ if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
         width_new=1920
         height_new=1080
         output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
-    #elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" || "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then    
-    #   echo "DATASET : $DATASET"
-    #   echo "Resizing video to 1280x720 for AGH_NTIA_Dolby dataset..."
-    #    echo "distorted_decoded : $distorted_decoded"
-    #    echo "WIDTH : $WIDTH"
-    #    echo "HEIGHT : $HEIGHT"
-    #   
-    #     ffmpeg -i "$distorted_decoded" \
-    #     -vf "scale=1280x720:flags=lanczos" \
-    #     -sws_flags lanczos+accurate_rnd+full_chroma_int \
-    #     -pix_fmt yuv422p -r 30 "$distorted_decoded_resized"
-    #
-    #    final_decoded_file="$distorted_decoded_resized"
-    #    output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
-    #    width_new=1920
-    #    height_new=1080
-    #    output_json="$OUTPUT_DIR/result__${DATASET}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+    
    
     else
      echo "Resizing video to 1920x1080..."
@@ -291,6 +281,14 @@ fi
     echo "FPS : $FPS"
     echo "Duration : $DURATION"
 
-    python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
+    #python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
 
+echo "docker run --rm -it -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results \
+                          -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Mos:/mos image \
+                          python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR\"" >> "$FILE_COMMANDS"
 
+#docker run --rm -it -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results \
+#                   -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Mos:/mos image \
+#                   python3 analyze.py "KUGVD" "1920" "1080" "2000" "x264" "vmaf_v0.6.1neg.json" \
+#                   "/results" "FIFA17_30fps_30sec_v2.yuv" "FIFA17_30fps_30sec_v2_1280x720_2000_x264.mp4" \
+#                    "1280" "720" "30" "30" "/mos"

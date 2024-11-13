@@ -60,7 +60,7 @@ RUN mkdir -p /reference /distorted /results /hash /mos
 WORKDIR /app
 
 # Copy scripts
-COPY analyzenew.py .
+COPY analyze.py .
 COPY run_experiments.sh .
 COPY Mos/ScoresAVT-VQDB-UHD-1_1.json /mos
 COPY Mos/ScoresAVT-VQDB-UHD-1_2.json /mos

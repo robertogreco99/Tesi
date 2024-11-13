@@ -135,7 +135,7 @@ else:
     
     df_existing = pd.read_csv(csv_filename)
     
-    if distorted_video not in df_existing['Distorted file name'].values:
+    if distorted_video not in df_existing['Distorted_file_name'].values:
         print(f"{distorted_video} not found in the csv, adds rows")
         
         new_rows = []
