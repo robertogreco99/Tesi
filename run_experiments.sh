@@ -53,7 +53,7 @@ for dir in "$INPUT_REFERENCE_DIR" "$INPUT_DISTORTED_DIR" "$OUTPUT_DIR" "$HASH_DI
     fi
 done
 
-FILE_COMMANDS="$OUTPUT_DIR/analyzescriptcommands_${DATASET}.txt"
+FILE_COMMANDS="$OUTPUT_DIR/$DATASET/analyzescriptcommands_${DATASET}.txt"
 
 
 if [ ! -f "$FILE_COMMANDS" ]; then
@@ -87,7 +87,7 @@ else
  distorted_decoded_resized="$OUTPUT_DIR/${distorted}_decoded_resized.yuv"
 fi
  #Output json 
-output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
+output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
 
 if [[ "$DATASET" == "ITS4S" ]]; then
     # Use y4m format for ITS4S or AGH_NTIA_Dolby datasets
@@ -166,7 +166,7 @@ if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
      output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
      width_new=1920
      height_new=1080
-     output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+     output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
     fi
 else
     echo "No resizing needed. Dimensions are already 1920x1080."
@@ -283,12 +283,8 @@ fi
 
     #python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
 
-echo "docker run --rm -it -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results \
-                          -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Mos:/mos image \
+echo "podman run --rm -it -v /home/greco/home/docker/Result:/results \
+                          -v /home/greco/home/docker/Mos:/mos image \
                           python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR\"" >> "$FILE_COMMANDS"
 
-#docker run --rm -it -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result:/results \
-#                   -v /home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Mos:/mos image \
-#                   python3 analyze.py "KUGVD" "1920" "1080" "2000" "x264" "vmaf_v0.6.1neg.json" \
-#                   "/results" "FIFA17_30fps_30sec_v2.yuv" "FIFA17_30fps_30sec_v2_1280x720_2000_x264.mp4" \
-#                    "1280" "720" "30" "30" "/mos"
+
