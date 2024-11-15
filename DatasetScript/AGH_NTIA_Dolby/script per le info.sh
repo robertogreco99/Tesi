@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DIRECTORY="/home/greco/home/datasets/IGVQM/AGH_NTIA_Dolby/y4m"
-OUTPUT_FILE="/home/greco/home/docker/AGH_NTIA_Dolby.json"
+DIRECTORY="/home/greco/home/datasets/IGVQM/AGH_NTIA_Dolby/y4m/pvs"
+OUTPUT_FILE="/home/greco/home/docker/distorted_updated.json"
 
 echo "[" > "$OUTPUT_FILE"
 
@@ -59,7 +59,7 @@ for file in "$DIRECTORY"/*; do
 done
 
 if [[ $id -eq 1 ]]; then
-    echo "Nessun file trovato da elaborare." 
+    echo "No file found." 
     echo "[]" > "$OUTPUT_FILE" 
 else
     sed -i '$ s/,$//' "$OUTPUT_FILE"
