@@ -91,13 +91,14 @@ if dataset == "ITS4S":
 elif dataset == "AGH_NTIA_Dolby":
     original_without_extension = original_without_extension.replace("_original", "") 
 
+original_without_extension = original_without_extension.strip()
 print(f"Original video name (without extension): {original_without_extension}")
 
 # Loop on the files in input_distorted_dir
 for distorted_file in os.listdir(input_distorted_dir):
     distorted_full_name = distorted_file  
     distorted_without_extension = os.path.splitext(distorted_full_name)[0]
-
+    distorted_without_extension= distorted_without_extension.strip()
     # If the original file name is contained in the distorted file name, generate the command
     if original_without_extension in distorted_without_extension:
         # Find the distorted video with file_name equal to distorted_full_name 

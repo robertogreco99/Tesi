@@ -1,13 +1,13 @@
 {
     "IMAGE_NAME": "image",
-    "INPUT_REF_DIR": "/home/greco/home/datasets/IGVQM/GamingVideoSET/dataset/ReferenceVideos_Part2",
-    "INPUT_DIST_DIR": "/home/greco/home/datasets/IGVQM/GamingVideoSET/dataset/DistortedVideos",
+    "INPUT_REF_DIR": "/home/greco/home/datasets/IGVQM/ITS4S/uncompressed",
+    "INPUT_DIST_DIR": "/home/greco/home/datasets/IGVQM/ITS4S/compressed",
     "OUTPUT_DIR": "/home/greco/home/docker/Result",
     "HASH_DIR": "/home/greco/home/docker/Hash",
     "MOS_DIR": "/home/greco/home/docker/Mos",
     "ORIGINAL_VIDEO": "",
     "MODEL_VERSION": "VMAF_ALL",
-    "DATASET": "GamingVideoSet2",
+    "DATASET": "ITS4S",
     "FEATURES": [
         "cambi",
         "float_ssim",

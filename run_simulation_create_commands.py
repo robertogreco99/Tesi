@@ -2,9 +2,9 @@ import json
 import os
 import subprocess
 
-dataset="GamingVideoSet2"
-yuv_list_file = f"/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Simulation/{dataset}/{dataset}_reference_video_list.txt"
-json_config_path = "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Json/config.json"  
+dataset="ITS4S"
+yuv_list_file = f"/home/greco/home/docker/Simulations/{dataset}/{dataset}_reference_video_list.txt"
+json_config_path = "/home/greco/home/docker/Json/config.json"  
 
 def process_yuv_file(yuv_file):
     with open(json_config_path, 'r') as json_file:
