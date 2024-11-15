@@ -139,7 +139,7 @@ width_old="$WIDTH"
 height_old="$HEIGHT"
 
 echo "width_old : $width_old"
-echo "height_old : $width_old"
+echo "height_old : $height_old"
 
 
 if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
