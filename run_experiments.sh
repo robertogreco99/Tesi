@@ -162,7 +162,7 @@ if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
       output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
       width_new=1280
       height_new=720
-      output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+      output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
     else
         echo "No resizing needed. Dimensions are already 1280x720."
         final_decoded_file="$distorted_decoded"

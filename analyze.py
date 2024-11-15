@@ -176,11 +176,18 @@ else:
     else:
         print(f"{distorted_video} is already present in the csv")
 
-# Create the JSON path name
-if width_old != '1920' or height_old != '1080':
-    json_filename = f'/results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
+    # Create the JSON path name
+    if width_old != '1920' or height_old != '1080':
+        json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+    else:
+        json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 else:
-    json_filename = f'/results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+    if dataset == "ITS4S":
+        if width_old != '1280' or height_old != '720':
+            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+        else:
+            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 
 # Print json filename
 print(f"Json file path: {json_filename}")
