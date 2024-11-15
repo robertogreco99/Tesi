@@ -84,8 +84,11 @@ original_converted_to420p="$OUTPUT_DIR/${original}_420p.y4m"
 
 if [[ "$DATASET" == "ITS4S" ]]; then
     original_converted_to420p="$OUTPUT_DIR/${original}_420p.y4m"
-    ffmpeg -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv420p "$original_converted_to420p" -loglevel quiet
+    if [[ ! -f "$original_converted_to420p" ]]; then
+        ffmpeg -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv420p "$original_converted_to420p" -loglevel quiet
+    fi
 fi
+
 
 
 # Print the name of the decoded file
@@ -103,15 +106,31 @@ mkdir -p "$OUTPUT_DIR/${DATASET}/vmaf_results"
 output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
 
 if [[ "$DATASET" == "ITS4S" ]]; then
-    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p "$distorted_decoded" -loglevel quiet
+    if [ ! -f "$distorted_decoded" ]; then
+        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p "$distorted_decoded" -loglevel quiet
+    else
+        echo "File already exists: $distorted_decoded"
+    fi
 elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
-    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+    if [ ! -f "$distorted_decoded" ]; then
+        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+    else
+        echo "File already exists: $distorted_decoded"
+    fi
 #TODO 422p10ple
-elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" || "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then    
-    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" || "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
+    if [ ! -f "$distorted_decoded" ]; then
+        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+    else
+        echo "File already exists: $distorted_decoded"
+    fi
 else
     # Use rawvideo format for other datasets
-    ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded" -loglevel quiet
+    if [ ! -f "$distorted_decoded" ]; then
+        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv420p -f rawvideo "$distorted_decoded" -loglevel quiet
+    else
+        echo "File already exists: $distorted_decoded"
+    fi
 fi
 
    
@@ -119,55 +138,65 @@ fi
 width_old="$WIDTH"
 height_old="$HEIGHT"
 
-## TO DO TEMPO E FRAMERATE + conversione originale
+echo "width_old : $width_old"
+echo "height_old : $width_old"
+
+
 if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
-  echo "DATASET : $DATASET"
+    echo "DATASET : $DATASET"
     if [ "$WIDTH" -ne 1280 ] || [ "$HEIGHT" -ne 720 ]; then
-        echo "Resizing video to 1280x720 for $DATASET"
-        echo "distorted_decoded : $distorted_decoded"
-        echo "WIDTH : $WIDTH"
-        echo "HEIGHT : $HEIGHT"
-    
-        ffmpeg -i "$distorted_decoded" \
-        -vf "scale=1280x720:flags=lanczos" \
-        -sws_flags lanczos+accurate_rnd+full_chroma_int \
-        -pix_fmt yuv420p -r $FPS -t $DURATION "$distorted_decoded_resized"
-
-        final_decoded_file="$distorted_decoded_resized"
-        output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
-        width_new=1280
-        height_new=720
-        output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+        if [ ! -f "$distorted_decoded_resized" ]; then
+            echo "Resized video does not exist"
+            echo "Resizing video to 1280x720 for $DATASET"
+            echo "distorted_decoded : $distorted_decoded"
+            echo "WIDTH : $WIDTH"
+            echo "HEIGHT : $HEIGHT"
+            ffmpeg -i "$distorted_decoded" \
+            -vf "scale=1280x720:flags=lanczos" \
+            -sws_flags lanczos+accurate_rnd+full_chroma_int \
+            -pix_fmt yuv420p -r $FPS -t $DURATION "$distorted_decoded_resized"
+        else 
+          echo "Resized video already exists"
+        fi
+      final_decoded_file="$distorted_decoded_resized"
+      output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+      width_new=1280
+      height_new=720
+      output_json="$OUTPUT_DIR/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
     else
-         echo "No resizing needed. Dimensions are already 1280x720."
-         final_decoded_file="$distorted_decoded"
-         width_new="$width_old"
-         height_new="$height_old"
+        echo "No resizing needed. Dimensions are already 1280x720."
+        final_decoded_file="$distorted_decoded"
+        width_new="$width_old"
+        height_new="$height_old"
     fi
-elif [[ "$DATASET" == "KUGDV" ]] || [[ "$DATASET" == "GamingVideoSet1" ]] || [[ "$DATASET" == "GamingVideoSet2" ]]; then    
-   echo "DATASET : $DATASET"
-     if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
-        echo "Resizing video to 1920x1080..."
-        echo "distorted_decoded : $distorted_decoded"
-        echo "WIDTH : $WIDTH"
-        echo "HEIGHT : $HEIGHT"
+elif [[ "$DATASET" == "KUGVD" ]] || [[ "$DATASET" == "GamingVideoSet1" ]] || [[ "$DATASET" == "GamingVideoSet2" ]]; then    
+    echo "DATASET : $DATASET"
+    if [ "$WIDTH" -ne 1920 ] || [ "$HEIGHT" -ne 1080 ]; then
+         if [ ! -f "$distorted_decoded_resized" ]; then
+           echo "Resized video does not exist"
+           echo "Resizing video to 1920x1080..."
+           echo "distorted_decoded : $distorted_decoded"
+           echo "WIDTH : $WIDTH"
+           echo "HEIGHT : $HEIGHT"
    
-        ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p -r 30 -i "$distorted_decoded" \
-        -vf scale=1920x1080:flags=lanczos:param0=3 \
-        -sws_flags lanczos+accurate_rnd+full_chroma_int \
-        -pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized"
-
+           ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p -r 30 -i "$distorted_decoded" \
+           -vf scale=1920x1080:flags=lanczos:param0=3 \
+           -sws_flags lanczos+accurate_rnd+full_chroma_int \
+           -pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized"
+         else
+           echo "Resized video already exists"
+         fi
         final_decoded_file="$distorted_decoded_resized"
         output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
         width_new=1920
         height_new=1080
         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
-     else
+    else
         echo "No resizing needed. Dimensions are already 1920x1080."
         final_decoded_file="$distorted_decoded"
         width_new="$width_old"
         height_new="$height_old"
-     fi
+    fi
 fi
 
 # Compute MD5 hash of decoded YUV file
@@ -237,7 +266,7 @@ else
        --output "$output_json" --json \
        --threads "$(nproc)" 
     else
-       vmaf-3.0.0/libvmaf/build/tools/vmaf \
+       /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \
        --distorted "$final_decoded_file" \
        --width "$width_new" \
@@ -250,19 +279,23 @@ else
     fi
 fi
 
-if [ -f "$distorted_decoded" ]; then
-    rm "$distorted_decoded"
-    echo "Decoded file removed: $distorted_decoded"
-fi
+if [[ "$MODEL_VERSION" == "vmaf_4k_v0.6.1neg.json" ]]; then
+    if [ -f "$distorted_decoded" ]; then
+        rm "$distorted_decoded"
+        echo "Decoded file removed: $distorted_decoded"
+    fi
 
-if [ -f "$distorted_decoded_resized" ]; then
-    rm "$distorted_decoded_resized"
-    echo "Decoded resized file removed: $distorted_decoded_resized"
-fi
+    if [ -f "$distorted_decoded_resized" ]; then
+        rm "$distorted_decoded_resized"
+        echo "Decoded resized file removed: $distorted_decoded_resized"
+    fi
 
-if [ -f "$original_converted_to420p" ]; then
-    rm "$original_converted_to420p"
-    echo "Decoded resized file removed: $original_converted_to420p"
+    if [ -f "$original_converted_to420p" ]; then
+        rm "$original_converted_to420p"
+        echo "Decoded resized file removed: $original_converted_to420p"
+    fi
+else
+    echo "Model version is not 'vmaf_4k_v0.6.1neg.json', skipping file removal."
 fi
 
 
