@@ -4,6 +4,9 @@ import json
 from jsonschema import validate, ValidationError
 
 def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_video, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list):
+    
+    original_video = f'"{original_video}"'
+    distorted_video = f'"{distorted_video}"'
     # The features are in a list, and I create a new list where they are split by a comma (',')
     features = ','.join(features_list)  
     
@@ -88,6 +91,7 @@ with open(dataset_file, 'r') as f:
 original_without_extension = os.path.splitext(os.path.basename(original_video))[0]
 if dataset == "ITS4S":
     original_without_extension = original_without_extension.replace("_SRC", "")
+    print(original_without_extension)
 elif dataset == "AGH_NTIA_Dolby":
     original_without_extension = original_without_extension.replace("_original", "") 
 

@@ -80,12 +80,11 @@ else
     distorted_decoded="$OUTPUT_DIR/${distorted}_decoded.yuv"
 fi
 
-original_converted_to420p="$OUTPUT_DIR/${original}_420p.y4m"
-
 if [[ "$DATASET" == "ITS4S" ]]; then
     original_converted_to420p="$OUTPUT_DIR/${original}_420p.y4m"
     if [[ ! -f "$original_converted_to420p" ]]; then
         ffmpeg -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv420p "$original_converted_to420p" -loglevel quiet
+        echo "OriginalConvertedtoy4m: $original_converted_to420p"
     fi
 fi
 
@@ -113,7 +112,8 @@ if [[ "$DATASET" == "ITS4S" ]]; then
     fi
 elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
     if [ ! -f "$distorted_decoded" ]; then
-        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+        cp "$INPUT_DISTORTED_DIR/$distorted" "$distorted_decoded"
+        #ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p "$distorted_decoded" -loglevel quiet
     else
         echo "File already exists: $distorted_decoded"
     fi
@@ -154,7 +154,7 @@ if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
             ffmpeg -i "$distorted_decoded" \
             -vf "scale=1280x720:flags=lanczos" \
             -sws_flags lanczos+accurate_rnd+full_chroma_int \
-            -pix_fmt yuv420p -r $FPS -t $DURATION "$distorted_decoded_resized"
+            -pix_fmt yuv420p "$distorted_decoded_resized"
         else 
           echo "Resized video already exists"
         fi
@@ -240,6 +240,14 @@ if [[ "${MODEL_VERSION}" == "vmaf_v0.6.1.json" ]]; then
         $feature_args \
         --output "$output_json" --json \
         --threads "$(nproc)" 
+    elif [[ "${DATASET}" == "AGH_NTIA_Dolby" ]]; then
+        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+        --reference "$INPUT_REFERENCE_DIR/$original" \
+        --distorted "$final_decoded_file" \
+        --model "$path" \
+        $feature_args \
+        --output "$output_json" --json \
+        --threads "$(nproc)" 
     else
         /vmaf-3.0.0/libvmaf/build/tools/vmaf \
         --reference "$INPUT_REFERENCE_DIR/$original" \
@@ -258,13 +266,16 @@ else
         /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$original_converted_to420p" \
        --distorted "$final_decoded_file" \
-       --width "$width_new" \
-       --height "$height_new" \
-       --pixel_format "$PIXEL_FORMAT" \
-       --bitdepth "$BIT_DEPTH" \
        --model "$path" \
        --output "$output_json" --json \
        --threads "$(nproc)" 
+    elif [[ "${DATASET}" == "AGH_NTIA_Dolby" ]]; then
+        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+        --reference "$INPUT_REFERENCE_DIR/$original" \
+        --distorted "$final_decoded_file" \
+        --model "$path" \
+        --output "$output_json" --json \
+        --threads "$(nproc)" 
     else
        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
        --reference "$INPUT_REFERENCE_DIR/$original" \

@@ -8,6 +8,7 @@ import json
 
 def decode_line(line):
     v_line = line.split(';')
+    print(v_line)
     PVS_ID=v_line[0].strip()
     PVS_params = {}
     # first element of the line
