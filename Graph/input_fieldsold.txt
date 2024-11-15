@@ -1,0 +1,21 @@
+# Comment starting with # at beginning of line
+# pos  defaultrole  name  plotname  type  [size]
+# pos: column position in the file
+# defaultrole: IN or OUT (OUT means it will not be used as input condition unless explicity added)
+# name: name given to the column (. just copies the plotname or viceversa)
+# plotname: name to give in the plot
+# type: str or int or float
+# [size]: optional, size of int or float (to make aligned names)
+#
+# First non-comment line must be the format version
+: format do_csv_graph 1
+1  IN . namePVS  string
+2  IN . nameSRC  string
+3  IN . codec  string
+4  IN . rate  int
+5  OUT . mos  float
+6  OUT . vmaf  float
+7  OUT . vmaf_bagging  float
+8  OUT . vmaf_stddev  float
+9  OUT . vmaf_ci_p95_lo  float
+10 OUT . vmaf_ci_p95_hi  float

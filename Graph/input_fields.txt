@@ -1,0 +1,51 @@
+# pos  defaultrole  name                plotname                type   [size]
+# pos: column position in the file
+# defaultrole: IN or OUT (OUT means it will not be used as input condition unless explicitly added)
+# name: name given to the column (. just copies the plotname or viceversa)
+# plotname: name to give in the plot
+# type: str or int or float
+# [size]: optional, size of int or float (to make aligned names)
+#
+# First non-comment line must be the format version
+: format do_csv_graph 1
+1   IN   Dataset            Dataset               string
+2   IN   Original_file_name Original_file_name    string
+3   IN   Distorted_file_name Distorted_file_name  string
+4   IN   Width_original     Width_original        int
+5   IN   Height_original    Height_original       int
+6   IN   Width              Width                 int
+7   IN   Height             Height                int
+8   IN   Bitrate            Bitrate               string
+9   IN   Video_codec        Video_codec           string
+10  IN   FPS                FPS                   float
+11  IN   Duration           Duration              float
+12  OUT  MOS                MOS                   float
+13  OUT  CI                 CI                    float
+14  OUT  Computed_Mos       Computed_Mos          float
+15  OUT  temporal_pooling   temporal_pooling      string
+16  OUT  vmaf_v0.6.1        vmaf_v0.6.1           float
+17  OUT  vmaf_v0.6.1neg     vmaf_v0.6.1neg        float
+18  OUT  vmaf_float_v0.6.1  vmaf_float_v0.6.1     float
+19  OUT  vmaf_float_v0.6.1neg vmaf_float_v0.6.1neg float
+20  OUT  vmaf_float_b_v0.6.3 vmaf_float_b_v0.6.3  float
+21  OUT  vmaf_b_v0.6.3      vmaf_b_v0.6.3         float
+22  OUT  vmaf_float_4k_v0.6.1 vmaf_float_4k_v0.6.1 float
+23  OUT  vmaf_4k_v0.6.1     vmaf_4k_v0.6.1        float
+24  OUT  vmaf_4k_v0.6.1neg  vmaf_4k_v0.6.1neg     float
+25  OUT  cambi              cambi                 float
+26  OUT  float_ssim         float_ssim            float
+27  OUT  psnr_y             psnr_y                float
+28  OUT  psnr_cb            psnr_cb               float
+29  OUT  psnr_cr            psnr_cr               float
+30  OUT  float_ms_ssim      float_ms_ssim         float
+31  OUT  ciede2000          ciede2000             float
+32  OUT  psnr_hvs_y         psnr_hvs_y            float
+33  OUT  psnr_hvs_cb        psnr_hvs_cb           float
+34  OUT  vmaf_float_b_v0.6.3_bagging vmaf_float_b_v0.6.3_bagging float
+35  OUT  vmaf_float_b_v0.6.3_stddev vmaf_float_b_v0.6.3_stddev float
+36  OUT  vmaf_float_b_v0.6.3_ci_p95_lo vmaf_float_b_v0.6.3_ci_p95_lo float
+37  OUT  vmaf_float_b_v0.6.3_ci_p95_hi vmaf_float_b_v0.6.3_ci_p95_hi float
+38  OUT  vmaf_b_v0.6.3_bagging vmaf_b_v0.6.3_bagging float
+39  OUT  vmaf_b_v0.6.3_stddev vmaf_b_v0.6.3_stddev float
+40  OUT  vmaf_b_v0.6.3_ci_p95_lo vmaf_b_v0.6.3_ci_p95_lo float
+41  OUT  vmaf_b_v0.6.3_ci_p95_hi vmaf_b_v0.6.3_ci_p95_hi float
