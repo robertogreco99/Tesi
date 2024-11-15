@@ -13,7 +13,7 @@ if len(sys.argv) != 15:
 dataset = sys.argv[1]        
 width = int(sys.argv[2])     
 height = int(sys.argv[3])    
-bitrate = int(sys.argv[4])   
+bitrate = sys.argv[4]   
 video_codec = sys.argv[5]   
 model_version = sys.argv[6] 
 output_directory = sys.argv[7] 
@@ -74,7 +74,6 @@ distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]
 for score in data_mos["scores"]:
     if score["PVS"]["PVS_ID"] == distorted_file_name_no_extension:
         print(score["PVS"]["PVS_ID"])  
-        print(distorted_file_name_no_extension)
         mos = score["MOS"]
         if "CI" in score:
          ci = score["CI"]
@@ -209,7 +208,7 @@ for frame in frames_list:
 
 # Create a DataFrame for current file's metrics
 dframes = pd.DataFrame(frames_rows)
-print(dframes)
+#print(dframes)
 
 def calculate_metrics(column_name):
     if column_name in dframes.columns:
