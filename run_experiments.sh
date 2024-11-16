@@ -117,10 +117,19 @@ elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
     else
         echo "File already exists: $distorted_decoded"
     fi
-#TODO 422p10ple
-elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" || "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
+elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
     if [ ! -f "$distorted_decoded" ]; then
-        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f yuv4mpegpipe "$distorted_decoded" -loglevel quiet
+        if [[ "$original" == "bigbuck_bunny_8bit.yuv" ]]; then
+            ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p -f rawvideo "$distorted_decoded" -loglevel quiet
+        else
+            ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p10le -f rawvideo "$distorted_decoded" -loglevel quiet
+        fi
+    else
+        echo "File already exists: $distorted_decoded"
+    fi
+elif [[ "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
+    if [ ! -f "$distorted_decoded" ]; then
+        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p10le  "$distorted_decoded" -loglevel quiet
     else
         echo "File already exists: $distorted_decoded"
     fi
@@ -197,6 +206,60 @@ elif [[ "$DATASET" == "KUGVD" ]] || [[ "$DATASET" == "GamingVideoSet1" ]] || [[ 
         width_new="$width_old"
         height_new="$height_old"
     fi
+elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_2" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_3" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
+     echo "DATASET : $DATASET"
+     if [ "$original" == "bigbuck_bunny_8bit.yuv" ]; then
+        if [ "$WIDTH" -ne 4000 ] || [ "$HEIGHT" -ne 2250 ]; then
+         if [ ! -f "$distorted_decoded_resized" ]; then
+           echo "Resized video does not exist"
+           echo "Resizing video to 4000x2250..."
+           echo "distorted_decoded : $distorted_decoded"
+           echo "WIDTH : $WIDTH"
+           echo "HEIGHT : $HEIGHT"
+           ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p -i "$distorted_decoded" \
+           -vf scale=4000x2250:flags=lanczos:param0=3 \
+           -sws_flags lanczos+accurate_rnd+full_chroma_int \
+           -pix_fmt yuv422p -f rawvideo "$distorted_decoded_resized"
+         else
+           echo "Resized video already exists"
+         fi
+         final_decoded_file="$distorted_decoded_resized"
+         output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+         width_new=4000
+         height_new=2250
+         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+        else
+           echo "No resizing needed. Dimensions are already 4000x2250."
+           final_decoded_file="$distorted_decoded"
+           width_new="$width_old"
+           height_new="$height_old"
+        fi
+     else
+        if [ "$WIDTH" -ne 3840 ] || [ "$HEIGHT" -ne 2160 ]; then
+         if [ ! -f "$distorted_decoded_resized" ]; then
+           echo "Resized video does not exist"
+           echo "Resizing video to 3840x2160..."
+           echo "distorted_decoded : $distorted_decoded"
+           echo "WIDTH : $WIDTH"
+           echo "HEIGHT : $HEIGHT"
+           ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le  -i "$distorted_decoded" \
+           -vf scale=3840x2160:flags=lanczos:param0=3 \
+           -sws_flags lanczos+accurate_rnd+full_chroma_int \
+           -pix_fmt yuv422p10le -f rawvideo "$distorted_decoded_resized"
+         else
+           echo "Resized video already exists"
+         fi
+         final_decoded_file="$distorted_decoded_resized"
+         output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+         width_new=3840
+         height_new=2160
+         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+        else
+           echo "No resizing needed. Dimensions are already 3840x2160."
+           final_decoded_file="$distorted_decoded"
+           width_new="$width_old"
+        fi
+     fi
 fi
 
 # Compute MD5 hash of decoded YUV file
