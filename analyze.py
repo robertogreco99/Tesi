@@ -182,7 +182,7 @@ if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
     else:
         json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 else:
-    if dataset == "ITS4S":
+    if dataset in [ "ITS4S" , "AGH_NTIA_Dolby"]:
         if width_old != '1280' or height_old != '720':
             json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
         else:
