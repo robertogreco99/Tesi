@@ -98,6 +98,8 @@ elif dataset == "AGH_NTIA_Dolby":
 original_without_extension = original_without_extension.strip()
 print(f"Original video name (without extension): {original_without_extension}")
 
+commands_file = os.path.join(output_dir, f'commands_{dataset}.txt')
+
 # Loop on the files in input_distorted_dir
 for distorted_file in os.listdir(input_distorted_dir):
     distorted_full_name = distorted_file  
@@ -131,14 +133,14 @@ for distorted_file in os.listdir(input_distorted_dir):
             if model_version_file == 'VMAF_ALL':   
                 for model_version in vmaf_models:
                     command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
-                    print(f"Generated command: {command}")  # Debug output
-                    with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                    print(f"Generated command: {command}")  
+                    with open(commands_file, 'a') as f:
                         f.write(command + '\n')
                         print(f"Command written to {os.path.join(output_dir, 'commands.txt')}")
             else:  
                 command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
-                print(f"Generated command: {command}")  # Debug output
-                with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                print(f"Generated command: {command}")  
+                with open(commands_file, 'a') as f:
                     f.write(command + '\n')
                     print(f"Command written to {os.path.join(output_dir, 'commands.txt')}")
         else:
