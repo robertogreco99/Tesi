@@ -83,7 +83,6 @@ for score in data_mos["scores"]:
          computed_mos = score["Computed_MOS"]
         else:
          computed_mos = -1
-        
         break          
 else:
     print("No mos found")
@@ -181,6 +180,17 @@ if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
         json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
     else:
         json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3"]:
+    if original_video == "bigbuck_bunny_8bit.yuv":
+        if width_old != '4000' or height_old != '2250':
+            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+        else:
+            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+    else:
+        if width_old != '3840' or height_old != '2160':
+            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+        else:
+            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 else:
     if dataset in [ "ITS4S" , "AGH_NTIA_Dolby"]:
         if width_old != '1280' or height_old != '720':
