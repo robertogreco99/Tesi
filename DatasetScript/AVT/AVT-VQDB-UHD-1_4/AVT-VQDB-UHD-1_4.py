@@ -131,7 +131,7 @@ def parse_video_files(file_path, output_file):
                 "bitrate": bitrate,
                 "video_codec": video_codec,
                 "bitdepth": 10,
-                "pixel_format": "422p10le",
+                "pixel_format": "422",
                 "fps": fps,  
                 "duration": duration
             })

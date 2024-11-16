@@ -49,16 +49,16 @@ def parse_video_files(file_path, output_file):
 
            
             fps = float(parts[-2].replace('fps', ''))
-
+            file_name = "_".join(parts) 
             result["distorted_videos"].append({
                 "id": len(result["distorted_videos"]) + 1,
-                "file_name": video,
+                "file_name": file_name,
                 "width": width,
                 "height": height,
                 "bitrate": bitrate,
                 "video_codec": video_codec,
                 "bitdepth": 10,
-                "pixel_format": "422p10le",
+                "pixel_format": "422",
                 "fps": fps,  
                 "duration": duration
             })
