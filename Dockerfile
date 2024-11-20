@@ -71,8 +71,8 @@ COPY Mos/ScoresGamingVideoSet2.json /mos
 COPY Mos/ScoresKUGVD.json /mos
 COPY Mos/ScoresITS4S.json /mos
 COPY Mos/ScoresAGH_NTIA_Dolby.json /mos
-
+COPY graphscript.py .
 # Make scripts executable
-RUN chmod +x run_experiments.sh analyze.py
+RUN chmod +x run_experiments.sh analyze.py graphscript.py
 
 CMD ["/bin/sh"]

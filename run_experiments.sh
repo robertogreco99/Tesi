@@ -258,6 +258,7 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_
            echo "No resizing needed. Dimensions are already 3840x2160."
            final_decoded_file="$distorted_decoded"
            width_new="$width_old"
+           height_new="$height_old"
         fi
      fi
 fi

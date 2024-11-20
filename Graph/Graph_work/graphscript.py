@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import numpy as np
 
-dataset = "KUGVD"
+dataset = "AGH_NTIA_Dolby"
 
 csv_file = f'/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/combined_results_{dataset}.csv'
 
@@ -13,22 +13,28 @@ else:
     data = pd.read_csv(csv_file)
 
     x_column = "MOS"
-    columns = [
+    vmaf_models = [
         "vmaf_v0.6.1", "vmaf_v0.6.1neg", "vmaf_float_v0.6.1", "vmaf_float_v0.6.1neg",
         "vmaf_float_b_v0.6.3", "vmaf_b_v0.6.3", "vmaf_float_4k_v0.6.1", 
-        "vmaf_4k_v0.6.1", "vmaf_4k_v0.6.1neg","cambi","float_ssim","psnr_y",
-        "psnr_cb","psnr_cr","float_ms_ssim","ciede2000","psnr_hvs_y",
-        "psnr_hvs_cb","vmaf_float_b_v0.6.3_bagging",
-        "vmaf_float_b_v0.6.3_stddev","vmaf_float_b_v0.6.3_ci_p95_lo",
-        "vmaf_float_b_v0.6.3_ci_p95_hi","vmaf_b_v0.6.3_bagging","vmaf_b_v0.6.3_stddev",
-        "vmaf_b_v0.6.3_ci_p95_lo","vmaf_b_v0.6.3_ci_p95_hi"
+        "vmaf_4k_v0.6.1", "vmaf_4k_v0.6.1neg",
     ]
+    features = ["cambi", "float_ssim", "psnr_y",
+        "psnr_cb", "psnr_cr", "float_ms_ssim", "ciede2000", "psnr_hvs_y",
+        "psnr_hvs_cb", "vmaf_float_b_v0.6.3_bagging",
+        "vmaf_float_b_v0.6.3_stddev", "vmaf_float_b_v0.6.3_ci_p95_lo",
+        "vmaf_float_b_v0.6.3_ci_p95_hi", "vmaf_b_v0.6.3_bagging", "vmaf_b_v0.6.3_stddev",
+        "vmaf_b_v0.6.3_ci_p95_lo", "vmaf_b_v0.6.3_ci_p95_hi"]
 
     if x_column not in data.columns:
         raise ValueError(f"Columns {x_column} not found in the csv for {dataset}.")
 
-    output_path = f"/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Graph/Graph_work/Graph_results/Scatter_{dataset}/Different_Video_codec_FPS_Duration"
+    output_path = f"/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Graph_results/Scatter_{dataset}"
     os.makedirs(output_path, exist_ok=True)
+
+    vmaf_output_path = os.path.join(output_path, "VMAF_Models")
+    features_output_path = os.path.join(output_path, "Features")
+    os.makedirs(vmaf_output_path, exist_ok=True)
+    os.makedirs(features_output_path, exist_ok=True)
 
     # Extract unique values for the graphs
     video_codecs = data['Video_codec'].unique()
@@ -54,11 +60,11 @@ else:
         filtered_data = data[data['temporal_pooling'] == temporal_pooling_value]
 
         if filtered_data.empty:
-            print(f"No data found for the  temporal pooling: {temporal_pooling_value} in dataset {dataset}")
+            print(f"No data found for the temporal pooling: {temporal_pooling_value} in dataset {dataset}")
             continue
         
         # Video Codec
-        for y_column in columns:
+        for y_column in vmaf_models + features:
             if y_column not in filtered_data.columns:
                 print(f"Columns {y_column} not found in {dataset}")
                 continue
@@ -78,13 +84,17 @@ else:
             plt.legend(title='Video Codec', bbox_to_anchor=(1.05, 1), loc='upper left')
             plt.grid(True)
 
-            output_file = f"{output_path}/scatter_{y_column}_temporal_pooling_{temporal_pooling_value}_video_codec.png"
+            if y_column in vmaf_models:
+                output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_video_codec.png"
+            else:
+                output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_video_codec.png"
+
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
 
         # FPS
-        for y_column in columns:
+        for y_column in vmaf_models + features:
             if y_column not in filtered_data.columns:
                 print(f"Columns {y_column} not found in {dataset}")
                 continue
@@ -104,13 +114,17 @@ else:
             plt.legend(title='FPS', bbox_to_anchor=(1.05, 1), loc='upper left')
             plt.grid(True)
 
-            output_file = f"{output_path}/scatter_{y_column}_temporal_pooling_{temporal_pooling_value}_FPS.png"
+            if y_column in vmaf_models:
+                output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_FPS.png"
+            else:
+                output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_FPS.png"
+
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
 
         # Duration
-        for y_column in columns:
+        for y_column in vmaf_models + features:
             if y_column not in filtered_data.columns:
                 print(f"Columns {y_column} not found in {dataset}")
                 continue
@@ -130,13 +144,17 @@ else:
             plt.legend(title='Duration', bbox_to_anchor=(1.05, 1), loc='upper left')
             plt.grid(True)
 
-            output_file = f"{output_path}/scatter_{y_column}_temporal_pooling_{temporal_pooling_value}_Duration.png"
+            if y_column in vmaf_models:
+                output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_Duration.png"
+            else:
+                output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_Duration.png"
+
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
 
         # Bitrate
-        for y_column in columns:
+        for y_column in vmaf_models + features:
             if y_column not in filtered_data.columns:
                 print(f"Columns {y_column} not found in {dataset}")
                 continue
@@ -156,7 +174,11 @@ else:
             plt.legend(title='Bitrate (kbps)', bbox_to_anchor=(1.05, 1), loc='upper left')
             plt.grid(True)
 
-            output_file = f"{output_path}/scatter_{y_column}_temporal_pooling_{temporal_pooling_value}_bitrate.png"
+            if y_column in vmaf_models:
+                output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_bitrate.png"
+            else:
+                output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_bitrate.png"
+
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
