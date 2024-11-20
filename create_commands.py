@@ -2,6 +2,7 @@ import os
 import sys
 import json
 from jsonschema import validate, ValidationError
+import re
 
 def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_video, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list):
     
@@ -98,13 +99,18 @@ elif dataset == "AGH_NTIA_Dolby":
 original_without_extension = original_without_extension.strip()
 print(f"Original video name (without extension): {original_without_extension}")
 
+# Create the regex pattern to match the exact original_without_extension
+pattern_original = re.compile(f"^{re.escape(original_without_extension)}(_|$)")
+
+
 # Loop on the files in input_distorted_dir
 for distorted_file in os.listdir(input_distorted_dir):
     distorted_full_name = distorted_file  
     distorted_without_extension = os.path.splitext(distorted_full_name)[0]
     distorted_without_extension= distorted_without_extension.strip()
+    if pattern_original.match(distorted_without_extension):
     # If the original file name is contained in the distorted file name, generate the command
-    if original_without_extension in distorted_without_extension:
+    #if original_without_extension in distorted_without_extension:
         # Find the distorted video with file_name equal to distorted_full_name 
         # Extract metadata associated with the distorted file
         metadata = None
