@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import numpy as np
 
-dataset = "AGH_NTIA_Dolby"
+dataset = "ITS4S"
 
 csv_file = f'/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/combined_results_{dataset}.csv'
 
@@ -64,66 +64,72 @@ else:
             continue
         
         # Video Codec
-        for y_column in vmaf_models + features:
-            if y_column not in filtered_data.columns:
-                print(f"Columns {y_column} not found in {dataset}")
-                continue
+        if len(video_codecs) > 1:
+            for y_column in vmaf_models + features:
+              if y_column not in filtered_data.columns:
+                 print(f"Columns {y_column} not found in {dataset}")
+                 continue
 
-            plt.figure(figsize=(10, 6))
+              plt.figure(figsize=(10, 6))
 
-            for codec in video_codecs:
-                subset = filtered_data[filtered_data['Video_codec'] == codec]
-                plt.scatter(subset[x_column], subset[y_column], 
+              for codec in video_codecs:
+                 subset = filtered_data[filtered_data['Video_codec'] == codec]
+                 plt.scatter(subset[x_column], subset[y_column], 
                             label=f'{codec} (Video Codec)', 
                             color=codec_color_map[codec], 
                             marker='o', alpha=0.7)
 
-            plt.title(f"{x_column} vs {y_column} (temporal pooling: {temporal_pooling_value}) - Video Codec")
-            plt.xlabel(x_column)
-            plt.ylabel(y_column)
-            plt.legend(title='Video Codec', bbox_to_anchor=(1.05, 1), loc='upper left')
-            plt.grid(True)
-
-            if y_column in vmaf_models:
-                output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_video_codec.png"
-            else:
-                output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_video_codec.png"
-
-            plt.savefig(output_file, bbox_inches='tight')
-            print(f"Graph saved: {output_file}")
-            plt.close()
-
+              plt.title(f"{x_column} vs {y_column} (temporal pooling: {temporal_pooling_value}) - Video Codec")
+              plt.xlabel(x_column)
+              plt.ylabel(y_column)
+              plt.legend(title='Video Codec', bbox_to_anchor=(1.05, 1), loc='upper left')
+              plt.grid(True)
+              
+              if y_column in vmaf_models:
+                  output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_video_codec.png"
+              else:
+                  output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_video_codec.png"
+                
+              plt.savefig(output_file, bbox_inches='tight')
+              print(f"Graph saved: {output_file}")
+              plt.close()
+        else :
+            print("There is only one video codec")
+        
         # FPS
-        for y_column in vmaf_models + features:
-            if y_column not in filtered_data.columns:
-                print(f"Columns {y_column} not found in {dataset}")
-                continue
+        if len(FPS_values) > 1 and max(FPS_values) - min(FPS_values) >= 15:
+            for y_column in vmaf_models + features:
+                if y_column not in filtered_data.columns:
+                    print(f"Columns {y_column} not found in {dataset}")
+                    continue
 
-            plt.figure(figsize=(10, 6))
+                plt.figure(figsize=(10, 6))
 
-            for FPS in FPS_values:
-                subset = filtered_data[filtered_data['FPS'] == FPS]
-                plt.scatter(subset[x_column], subset[y_column], 
+                for FPS in FPS_values:
+                    subset = filtered_data[filtered_data['FPS'] == FPS]
+                    plt.scatter(subset[x_column], subset[y_column], 
                             label=f'{FPS} FPS', 
                             color=FPS_color_map[FPS], 
                             marker='x', alpha=0.5)
 
-            plt.title(f"{x_column} vs {y_column} (temporal pooling: {temporal_pooling_value}) - FPS")
-            plt.xlabel(x_column)
-            plt.ylabel(y_column)
-            plt.legend(title='FPS', bbox_to_anchor=(1.05, 1), loc='upper left')
-            plt.grid(True)
+                plt.title(f"{x_column} vs {y_column} (temporal pooling: {temporal_pooling_value}) - FPS")
+                plt.xlabel(x_column)
+                plt.ylabel(y_column)
+                plt.legend(title='FPS', bbox_to_anchor=(1.05, 1), loc='upper left')
+                plt.grid(True)
 
-            if y_column in vmaf_models:
-                output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_FPS.png"
-            else:
-                output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_FPS.png"
+                if y_column in vmaf_models:
+                    output_file = f"{vmaf_output_path}/scatter_{y_column}_{temporal_pooling_value}_FPS.png"
+                else:
+                    output_file = f"{features_output_path}/scatter_{y_column}_{temporal_pooling_value}_FPS.png"
 
-            plt.savefig(output_file, bbox_inches='tight')
-            print(f"Graph saved: {output_file}")
-            plt.close()
-
+                plt.savefig(output_file, bbox_inches='tight')
+                print(f"Graph saved: {output_file}")
+                plt.close()
+        else :
+            print("There are only similar fps values")
         # Duration
+        """
         for y_column in vmaf_models + features:
             if y_column not in filtered_data.columns:
                 print(f"Columns {y_column} not found in {dataset}")
@@ -152,7 +158,8 @@ else:
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
-
+            """
+        
         # Bitrate
         for y_column in vmaf_models + features:
             if y_column not in filtered_data.columns:
