@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import numpy as np
 
-dataset = "ITS4S"
+dataset = "KUGVD"
 
 csv_file = f'/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/combined_results_{dataset}.csv'
 
