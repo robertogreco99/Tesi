@@ -24,14 +24,13 @@ else:
         "vmaf_b_v0.6.3_bagging", 
         ]
 
-    hi_lo_float_b_v0_6_3 = ["vmaf_float_b_v0.6.3_ci_p95_lo",
-        "vmaf_float_b_v0.6.3_ci_p95_hi"]
+    lo_column_float_b = "vmaf_float_b_v0.6.3_ci_p95_lo"
+    hi_column_float_b = "vmaf_float_b_v0.6.3_ci_p95_hi"
+    lo_column_b = "vmaf_b_v0.6.3_ci_p95_lo"
+    hi_column_b = "vmaf_b_v0.6.3_ci_p95_hi"
+    stddev_column_float_b_v0_6_3 = "vmaf_float_b_v0.6.3_stddev"
+    stddev_column_b_v0_6_3 = "vmaf_b_v0.6.3_stddev"
     
-    hi_lo_v0_6_3 = ["vmaf_b_v0.6.3_ci_p95_lo", "vmaf_b_v0.6.3_ci_p95_hi"]
-
-    stddev_float_b_v0_6_3 =["vmaf_float_b_v0.6.3_stddev"]
-    stddev_b_v0_6_3 = ["vmaf_b_v0.6.3_stddev"]
-
     if x_column not in data.columns:
         raise ValueError(f"Columns {x_column} not found in the csv for {dataset}.")
 
@@ -173,127 +172,98 @@ else:
             plt.close()
             """
         
-        # Hi_lo_float
-        lo_column_float_b = "vmaf_float_b_v0.6.3_ci_p95_lo"
-        hi_column_float_b = "vmaf_float_b_v0.6.3_ci_p95_hi"
-        #stddev
-        stddev_column_float_b_v0_6_3 = "vmaf_float_b_v0.6.3_stddev"
+       
 
         if temporal_pooling_value !="total_variation":
-        # Verifica se le colonne esistono nel DataFrame
-         if lo_column_float_b not in filtered_data.columns or hi_column_float_b not in filtered_data.columns:
-          print(f"Columns {lo_column_float_b} or {hi_column_float_b} not found in {dataset}")
-         else:
-          plt.figure(figsize=(10, 6))
-          for vmaf_float_b_value in vmaf_float_b_values:
-              # Filtriamo i dati per il valore corrente di vmaf_float_b
-              subset = filtered_data[filtered_data['vmaf_float_b_v0.6.3'] == vmaf_float_b_value]
-              # Ottieni i valori di 'y' e 'error' (hi-lo) per la barra di errore
-              y_values = subset["vmaf_float_b_v0.6.3"].values  # Usa una colonna come riferimento per 'y'
-              lo_values = subset["vmaf_float_b_v0.6.3_ci_p95_lo"].values  # Limite inferiore
-              hi_values = subset["vmaf_float_b_v0.6.3_ci_p95_hi"].values  # Limite superiore
-
-             # Aggiungi il grafico con barre di errore
-              plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values,hi_values-y_values], fmt='o')
+            if lo_column_float_b not in filtered_data.columns or hi_column_float_b not in filtered_data.columns:
+               print(f"Columns {lo_column_float_b} or {hi_column_float_b} not found in {dataset}")
+            else:
+               plt.figure(figsize=(10, 6))
+               for vmaf_float_b_value in vmaf_float_b_values:
+                subset = filtered_data[filtered_data['vmaf_float_b_v0.6.3'] == vmaf_float_b_value]
+                y_values = subset["vmaf_float_b_v0.6.3"].values  
+                lo_values = subset["vmaf_float_b_v0.6.3_ci_p95_lo"].values 
+                hi_values = subset["vmaf_float_b_v0.6.3_ci_p95_hi"].values  
+                plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values,hi_values-y_values], fmt='o')
          
-          plt.title(f"{x_column} vs {"vmaf_float_b_v0.6.3"} (temporal pooling: {temporal_pooling_value})")
-          plt.xlabel("Mos")
-          plt.ylabel("vmaf_float_b_v0.6.3")
-          plt.grid(True)
+               plt.title(f"{x_column} vs vmaf_float_b_v0.6.3 (temporal pooling: {temporal_pooling_value})")
+               plt.xlabel("Mos")
+               plt.ylabel("vmaf_float_b_v0.6.3")
+               plt.grid(True)
           
-          output_file = f"{hi_lo_output_path}/scatter_vmaf_float_b_v0.6.3_{temporal_pooling_value}.png"
-          plt.savefig(output_file, bbox_inches='tight')
-          print(f"Graph saved: {output_file}")
-          plt.close()
-         # Hi_lo_float
-         if stddev_column_float_b_v0_6_3 not in filtered_data.columns:
-            print(f"Columns {stddev_column_float_b_v0_6_3}  not found in {dataset}")
-         else:
-          plt.figure(figsize=(10, 6))
-          for vmaf_float_b_value in vmaf_float_b_values:
-                 # Filtriamo i dati per il valore corrente di vmaf_float_b
-                 subset = filtered_data[filtered_data['vmaf_float_b_v0.6.3'] == vmaf_float_b_value]
-                 # Ottieni i valori di 'y' e 'error' (hi-lo) per la barra di errore
-                 y_values = subset["vmaf_float_b_v0.6.3"].values  # Usa una colonna come riferimento per 'y'
-                 stddev_float_b_value = subset["vmaf_float_b_v0.6.3_stddev"].values
-                 lo_values_float_stddev= y_values - stddev_float_b_value 
-                 hi_values_float_stdev = y_values + stddev_float_b_value 
-                 # Aggiungi il grafico con barre di errore
-                 plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values_float_stddev,hi_values_float_stdev-y_values], fmt='o')
-         
-          plt.title(f"{x_column} vs {"vmaf_float_b_v0.6.3 with stddev"} (temporal pooling: {temporal_pooling_value})")
-          plt.xlabel("Mos")
-          plt.ylabel("vmaf_float_b_v0.6.3")
-          plt.grid(True)
+               output_file = f"{hi_lo_output_path}/scatter_vmaf_float_b_v0.6.3_{temporal_pooling_value}.png"
+               plt.savefig(output_file, bbox_inches='tight')
+               print(f"Graph saved: {output_file}")
+               plt.close()
+
+            if stddev_column_float_b_v0_6_3 not in filtered_data.columns:
+                print(f"Columns {stddev_column_float_b_v0_6_3}  not found in {dataset}")
+            else:
+                plt.figure(figsize=(10, 6))
+                for vmaf_float_b_value in vmaf_float_b_values:
+                    subset = filtered_data[filtered_data['vmaf_float_b_v0.6.3'] == vmaf_float_b_value]
+                    y_values = subset["vmaf_float_b_v0.6.3"].values  
+                    stddev_float_b_value = subset["vmaf_float_b_v0.6.3_stddev"].values
+                    lo_values_float_stddev= y_values - stddev_float_b_value 
+                    hi_values_float_stdev = y_values + stddev_float_b_value 
+                    plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values_float_stddev,hi_values_float_stdev-y_values], fmt='o')
+              
+                plt.title(f"{x_column} vs vmaf_float_b_v0.6.3 with stddev (temporal pooling: {temporal_pooling_value})")
+                plt.xlabel("Mos")
+                plt.ylabel("vmaf_float_b_v0.6.3")
+                plt.grid(True)
           
-          output_file = f"{hi_lo_output_path}/scatter_vmaf_float_b_v0.6.3_{temporal_pooling_value}_stddev.png"
-          plt.savefig(output_file, bbox_inches='tight')
-          print(f"Graph saved: {output_file}")
-          plt.close()
+                output_file = f"{hi_lo_output_path}/scatter_vmaf_float_b_v0.6.3_{temporal_pooling_value}_stddev.png"
+                plt.savefig(output_file, bbox_inches='tight')
+                print(f"Graph saved: {output_file}")
+                plt.close()
 
 
-        lo_column_b = "vmaf_b_v0.6.3_ci_p95_lo"
-        hi_column_b = "vmaf_b_v0.6.3_ci_p95_hi"
-        stddev_column_b_v0_6_3 = "vmaf_b_v0.6.3_stddev"
+       
         
         if temporal_pooling_value !="total_variation":
-        # Verifica se le colonne esistono nel DataFrame
-         if lo_column_b not in filtered_data.columns or hi_column_b not in filtered_data.columns:
-          print(f"Columns {lo_column_b} or {hi_column_b} not found in {dataset}")
-         else:
-          plt.figure(figsize=(10, 6))
-          for vmaf_b_value in vmaf_b_values:
-              # Filtriamo i dati per il valore corrente di vmaf_float_b
-              subset = filtered_data[filtered_data['vmaf_b_v0.6.3'] == vmaf_b_value]
-              # Ottieni i valori di 'y' e 'error' (hi-lo) per la barra di errore
-              y_values = subset["vmaf_b_v0.6.3"].values  # Usa una colonna come riferimento per 'y'
-              lo_values = subset["vmaf_b_v0.6.3_ci_p95_lo"].values  # Limite inferiore
-              hi_values = subset["vmaf_b_v0.6.3_ci_p95_hi"].values  # Limite superiore
-
-             # Aggiungi il grafico con barre di errore
-              plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values,hi_values-y_values], fmt='o')
+            if lo_column_b not in filtered_data.columns or hi_column_b not in filtered_data.columns:
+                print(f"Columns {lo_column_b} or {hi_column_b} not found in {dataset}")
+            else:
+                plt.figure(figsize=(10, 6))
+                for vmaf_b_value in vmaf_b_values:
+                    subset = filtered_data[filtered_data['vmaf_b_v0.6.3'] == vmaf_b_value]
+                    y_values = subset["vmaf_b_v0.6.3"].values  
+                    lo_values = subset["vmaf_b_v0.6.3_ci_p95_lo"].values  
+                    hi_values = subset["vmaf_b_v0.6.3_ci_p95_hi"].values  
+                    plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values,hi_values-y_values], fmt='o')
+           
+                plt.title(f"{x_column} vs vmaf_b_v0.6.3 (temporal pooling: {temporal_pooling_value})")
+                plt.xlabel("Mos")
+                plt.ylabel("vmaf_b_v0.6.3")
+                plt.grid(True)
+            
+                output_file = f"{hi_lo_output_path}/scatter_vmaf_b_v0.6.3_{temporal_pooling_value}.png"
+                plt.savefig(output_file, bbox_inches='tight')
+                print(f"Graph saved: {output_file}")
+                plt.close()
          
-          plt.title(f"{x_column} vs {"vmaf_b_v0.6.3"} (temporal pooling: {temporal_pooling_value})")
-          plt.xlabel("Mos")
-          plt.ylabel("vmaf_b_v0.6.3")
-          plt.grid(True)
+            if stddev_column_b_v0_6_3 not in filtered_data.columns:
+                print(f"Columns {stddev_column_b_v0_6_3}  not found in {dataset}")
+            else:
+                plt.figure(figsize=(10, 6))
+                for vmaf_b_value in vmaf_b_values:
+                    subset = filtered_data[filtered_data['vmaf_b_v0.6.3'] == vmaf_b_value]
+                    y_values = subset["vmaf_b_v0.6.3"].values  
+                    stddev_b_value = subset["vmaf_float_b_v0.6.3_stddev"].values
+                    lo_values_b_stddev= y_values - stddev_b_value 
+                    hi_values_b_stddev = y_values + stddev_b_value
+                    plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values_b_stddev,hi_values_b_stddev-y_values], fmt='o')
+                    
+                plt.title(f"{x_column} vs vmaf_b_v0.6.3 with stddev (temporal pooling: {temporal_pooling_value})")
+                plt.xlabel("Mos")
+                plt.ylabel("vmaf_float_b_v0.6.3")
+                plt.grid(True)
           
-          output_file = f"{hi_lo_output_path}/scatter_vmaf_b_v0.6.3_{temporal_pooling_value}.png"
-          plt.savefig(output_file, bbox_inches='tight')
-          print(f"Graph saved: {output_file}")
-          plt.close()
-         
-         if stddev_column_b_v0_6_3 not in filtered_data.columns:
-            print(f"Columns {stddev_column_b_v0_6_3}  not found in {dataset}")
-         else:
-          plt.figure(figsize=(10, 6))
-          for vmaf_b_value in vmaf_b_values:
-                 # Filtriamo i dati per il valore corrente di vmaf_float_b
-                 subset = filtered_data[filtered_data['vmaf_b_v0.6.3'] == vmaf_b_value]
-                 # Ottieni i valori di 'y' e 'error' (hi-lo) per la barra di errore
-                 y_values = subset["vmaf_b_v0.6.3"].values  # Usa una colonna come riferimento per 'y'
-                 stddev_b_value = subset["vmaf_float_b_v0.6.3_stddev"].values
-                 lo_values_b_stddev= y_values - stddev_b_value 
-                 hi_values_b_stddev = y_values + stddev_b_value
-                 # Aggiungi il grafico con barre di errore
-                 plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values_b_stddev,hi_values_b_stddev-y_values], fmt='o')
-          
-          plt.title(f"{x_column} vs {"vmaf_b_v0.6.3 with stddev"} (temporal pooling: {temporal_pooling_value})")
-          plt.xlabel("Mos")
-          plt.ylabel("vmaf_float_b_v0.6.3")
-          plt.grid(True)
-          
-          output_file = f"{hi_lo_output_path}/scatter_vmaf_b_v0.6.3_{temporal_pooling_value}_stddev.png"
-          plt.savefig(output_file, bbox_inches='tight')
-          print(f"Graph saved: {output_file}")
-          plt.close()
-
-          
-
-
-
-
-
+                output_file = f"{hi_lo_output_path}/scatter_vmaf_b_v0.6.3_{temporal_pooling_value}_stddev.png"
+                plt.savefig(output_file, bbox_inches='tight')
+                print(f"Graph saved: {output_file}")
+                plt.close()
 
         # Bitrate models and features
         for y_column in vmaf_models + features:
