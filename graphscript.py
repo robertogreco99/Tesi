@@ -3,9 +3,9 @@ import pandas as pd
 import os
 import numpy as np
 
-dataset = "KUGVD"
+dataset = "AGH_NTIA_Dolby"
 
-csv_file = f'/home/greco/home/docker/Result/{dataset}/combined_results_{dataset}.csv'
+csv_file = f'/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/combined_results_{dataset}.csv'
 
 if not os.path.exists(csv_file):
     print(f"File CSV for dataset {dataset} not found")
@@ -28,7 +28,7 @@ else:
     if x_column not in data.columns:
         raise ValueError(f"Columns {x_column} not found in the csv for {dataset}.")
 
-    output_path = f"/home/greco/home/docker/Graph_results/Scatter_{dataset}"
+    output_path = f"/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Graph_results/Scatter_{dataset}"
     os.makedirs(output_path, exist_ok=True)
 
     vmaf_output_path = os.path.join(output_path, "VMAF_Models")
