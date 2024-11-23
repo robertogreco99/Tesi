@@ -331,7 +331,6 @@ else:
                 labels.append(f"{temporal_pooling_value}")
                 colors.append(temporal_pooling_color_map[temporal_pooling_value])  
              # Aggiungi scatter per ogni metodo di pooling
-            print(f"x value : {x_value}, y value : {y_values}")
 
             for i, temporal_pooling_value in enumerate(temporal_pooling_graph):
                 if temporal_pooling_value == "total_aggregation":
@@ -341,6 +340,7 @@ else:
             plt.title(f"{x_column} vs {feature} - feature:{feature}")
             plt.xlabel(x_column)
             plt.ylabel(feature)
+            plt.xticks(x_values) 
             plt.grid(True)
             plt.legend(title="Temporal Pooling", loc='center left', bbox_to_anchor=(1, 0.5))
 
