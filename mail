@@ -1,0 +1,31 @@
+Salve professore,
+ho aggiornato lo script sui grafici e quali grafici vengono realizzati.
+- Ho tolto i grafici relativi alla durata
+- Fatto che si che il grafico per i vari video codec venga realizzato solo se presenti video codec diversi 
+- Fatto si che il grafico per gli fps sia creato solo se nel dataset sono presenti differenze di fps rilevanti ( ho messo almeno 15).
+- Ho sistemato i grafici che confrontano mos vs i due modelli b sistemando gli estremi con hi,lo e stdev.
+- Realizzato un grafico  per ogni features dove i punti mostrati sono n punti per pvs in base al relativo pooling. Ad esempio mos vs cambi e per ogni pvs ci sono 6 punti dove ogni punto ha il valore di cambi per mean, harmonic_mean,geometric_mean,norm_lp1,norm_lp2,norm
+- Realizzato la stessa cosa per i grafici dei modelli
+Allego 4 grafici per capire se ho fatto bene le nuove disposizioni. 
+Ho prodotto i grafici per KUGVD che sul server stanno in /mnt/vertical/lxc/greco/home/docker/Result/KUGVD/graph_results/Graph_KUGVD.
+I grafici per i due modelli b con hi,lo e hi,lo e stddev sono da fare anch'essi per le singole pvs?
+Avevo riscontrato degli errori per quanto riguarda il csv di AGH_NTIA_Dolby dove per alcune sequenze il  video originale veniva confrontatto con un distorto sbagliato ( AGH_NTIA_Dolby,AGH-NTIA-Dolby_Railway_original.y4m veniva confrontato con railway_ties AGH-NTIA-Dolby_Railwayties_H264at512K.y4m per un bug nella creazione dei comandi di cui non mi ero accorto) e ho corretto il csv.
+Ho trovato delle sequenze con mean a bassi valori ( < 0.4) soprattutto per ITS4S,AGH_NTIA_Dolby e AVT-VQDB-UHD mentre solo 2 tra KUGVD e GamingVideoSet. 
+Per kugvd ho trovato un cambi a valori bassi (0.24) ma anche rilanciando il locale ottengo un json con gli stessi risultati.
+Ho pensato che l'errore forse sta nel resizing perchè non ho passato fps e durata per i dataset con molte sequenze particolari.
+Ho lanciato il resizing per ITS4S E AGH_NTIA_Dolby con
+            - ffmpeg -i "$distorted_decoded" \
+            -vf "scale=1280x720:flags=lanczos" \
+            -sws_flags lanczos+accurate_rnd+full_chroma_int \
+            -pix_fmt yuv420p "$distorted_decoded_resized"
+mentre KUGVD come 
+           ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv420p -r 30 -i "$distorted_decoded" \
+           -vf scale=1920x1080:flags=lanczos:param0=3 \
+           -sws_flags lanczos+accurate_rnd+full_chroma_int \
+           -pix_fmt yuv420p -r 30 -f rawvideo "$distorted_decoded_resized"
+e AVT-VQDB 1 e 2 con ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le  -i "$distorted_decoded" \
+           -vf scale=3840x2160:flags=lanczos:param0=3 \
+           -sws_flags lanczos+accurate_rnd+full_chroma_int \
+           -pix_fmt yuv422p10le -f rawvideo "$distorted_decoded_resized".
+Resto in attesa di  comunicazioni per un prossimo incontro.
+Distinti saluti
