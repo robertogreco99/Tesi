@@ -9,8 +9,9 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 dataset = sys.argv[1]
-
-csv_file = f'/home/greco/home/docker/Result/{dataset}/combined_results_{dataset}.csv'
+print(dataset)
+csv_file = f'/results/{dataset}/combined_results_{dataset}.csv'
+print(csv_file)
 
 if not os.path.exists(csv_file):
     print(f"File CSV for dataset {dataset} not found")
@@ -41,7 +42,7 @@ else:
     if x_column not in data.columns:
         raise ValueError(f"Columns {x_column} not found in the csv for {dataset}.")
 
-    output_path = f"/home/greco/home/docker/Result/{dataset}/graph_results/Graph_{dataset}"
+    output_path = f"/results/{dataset}/graph_results/Graph_{dataset}"
     os.makedirs(output_path, exist_ok=True)
 
     vmaf_output_path = os.path.join(output_path, "VMAF_Models")

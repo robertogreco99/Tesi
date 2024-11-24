@@ -1,6 +1,6 @@
 import subprocess
 dataset = "KUGVD"
-command=f"podman run --rm -it -v /home/greco/home/docker/Result:/results  python3 graph_script.py {dataset}"
+command=f"podman run --rm -it -v /home/greco/home/docker/Result:/results  image python3 graph_script.py {dataset}"
 if command:
     try:
         subprocess.run(command, shell=True, check=True)
