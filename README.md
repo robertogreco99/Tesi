@@ -1,9 +1,9 @@
 # How to run the simulations 
-##  **Build the Podman image**
+## 1. **Build the Podman image**
 Run the following command: `podman build -t <imageName> <folder>`. 
 
 This Dockerfile sets up a video quality analysis environment with Python 3.12, FFmpeg 7.0.2, and VMAF 3.0.0. It installs necessary development tools, libraries for video encoding, and Python packages for analysis. The container is configured to run video quality experiments, store results, and generate graphs using pre-defined scripts and MOS data.
-## **Modify the configuration file in the JSON folder** 
+## 2. **Modify the configuration file in the JSON folder** 
 
 The configuration file contains several fields:
   - `IMAGE_NAME` : the name of the Docker image used to execute the commands.
@@ -23,7 +23,7 @@ The configuration file contains several fields:
     - `float_ms_ssim`: Multi-Scale SSIM in floating-point precision.
     - `ciede`: CIEDE2000
     - `psnr_hvs`: PSNR optimized for the Human Visual System.
-## **Generate Podman commands with the Python script `run_simulation_create_commands.py`:**  
+## 3. **Generate Podman commands with the Python script `run_simulation_create_commands.py`:**  
 The Python script `run_simulation_create_commands.py` automates the process of generating Podman commands to run VMAF on reference and distorted videos. It is based on the functionality of the `create_commands.py` script and performs several key tasks:
   - Updating Configuration: For each original video file listed in a text file (e.g., DATASETNAME_reference_video_list.txt), it updates the JSON configuration file (config.json) by setting the ORIGINAL_VIDEO field to the current YUV file.
   - Executing Command Generation: It calls create_commands.py with the updated JSON configuration, generating Podman commands to process the videos.
@@ -45,17 +45,26 @@ The Podman commands are generated for each original video and saved in `OUTPUT_D
    
   To run the script : `python3 create_commands.py Json/config.json`.
   The output is saved in `OUTPUT_DIR/{DATASETNAME}/commands_{DATASETNAME}`
-## **Run the run_vmaf_simulation.py script to execute the simulation**
+## 4. **Run the run_vmaf_simulation.py script to execute the simulation**
 Instructions to set parameters:
    - dataset = Specifies the dataset name.
    - file_path: Specifies the location of the file containing the Podman commands, e.g., f"OUTPUT_DIR/{DATASETNAME}/commands_{DATASETNAME}.txt".
+   
+Every command is  shell command that runs a shell file `run_experiments.sh`.
+This script is designed to process video files for quality assessment using a variety of parameters. 
+- The script expects 18 arguments, such as directories for reference and distorted videos, output paths, model version, dataset details, and video properties (e.g., resolution, codec, bitrate). 
+- It checks that the necessary directories for input, output, and hashes exist, exiting with an error if any are missing.It defines file paths for the original and distorted videos, as well as output paths for decoded and resized versions.
+- The script decodes the distorted video using ffmpeg, with different options based on the dataset. It may convert the video to a specific format (e.g., .y4m or .yuv).
+- Depending on the dataset, it may resize the video to specific dimensions (e.g., 1280x720 or 1920x1080) using ffmpeg if the current resolution doesn't match the target.
+-  It generates a hash of the decoded video file. 
+- The script runs the vmaf simulation. If the model is vmaf_v0.6.1.json, it also runs the feature extraction. The vmaf simulation generates a JSON file as output.
 
 The simulations generate a `analyzescriptcommands_{DATASETNAME}.txt` file in the `OUTPUT_DIR/{DATASETNAME}` folder. 
 The file contains the podman commands to launch in order to create the final csv.
 
 If you want to run simulations on additional datasets, use the Python script `run_more_vmaf_simulation.py`. In this case, you need to set multiple dataset fields and corresponding file_path fields.
   
-## **Run the run_analyze_script_simulation.py script to generate the final csv** 
+## 5. **Run the run_analyze_script_simulation.py script to generate the final csv** 
 You need to set the dataset fields to specifies where to found the file with the podman commands.
 The final csv contains:
   - for every distorted file :
@@ -67,7 +76,7 @@ The final csv contains:
       - Stddev: Standard deviation of predictions
       - CI p95 lo/hi: Lower (lo) and upper (hi) bounds of the 95% confidence interval for the estimated score.
       - //TO DO  "integer_vif_scale3"
-## **Run the graph_simulations_run.py script to generate the graphs**
+## 6. **Run the graph_simulations_run.py script to generate the graphs**
 To create the graphs, execute the `graph_simulations_run.py` script. You will need to set the dataset field. 
 This script runs `graph_script.py` and generates:
     - For each feature:
