@@ -133,20 +133,21 @@ for distorted_file in os.listdir(input_distorted_dir):
         
             print(f"Metadata for {distorted_full_name}:")
             print(f"Width: {width}, Height: {height}, Bitrate: {bitrate}, Video Codec: {video_codec}, Pixel Format: {pixel_format}, Bit Depth: {bit_depth}, FPS: {fps}, Duration: {duration}")  # Debugging print for metadata details
+            output_dataset_dir = os.path.join(output_dir, dataset)
             commands_file_name = f"commands_{dataset}.txt"
             if model_version_file == 'VMAF_ALL':   
                 for model_version in vmaf_models:
                     command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
                     print(f"Generated command: {command}")  
-                    with open(os.path.join(output_dir, commands_file_name), 'a') as f:
+                    with open(os.path.join(output_dataset_dir, commands_file_name), 'a') as f:
                         f.write(command + '\n')
-                        print(f"Command written to {os.path.join(output_dir, commands_file_name)}")
+                        print(f"Command written to {os.path.join(output_dataset_dir, commands_file_name)}")
             else:  
                 command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
                 print(f"Generated command: {command}")  
-                with open(os.path.join(output_dir, commands_file_name), 'a') as f:
+                with open(os.path.join(output_dataset_dir, commands_file_name), 'a') as f:
                     f.write(command + '\n')
-                    print(f"Command written to {os.path.join(output_dir, commands_file_name)}")
+                    print(f"Command written to {os.path.join(output_dataset_dir, commands_file_name)}")
         else:
             print(f"{distorted_full_name} was not found in the metadata.")
 

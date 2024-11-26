@@ -2,8 +2,8 @@ import json
 import os
 import subprocess
 
-dataset="ITS4S"
-originalvideo_list_file = f"/home/greco/home/docker/Simulations/{dataset}/{dataset}_reference_video_list.txt"
+dataset="KUGVD"
+originalvideo_list_file = f"/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Simulations/{dataset}/{dataset}_reference_video_list.txt"
 json_config_path = "/home/greco/home/docker/Json/config.json"  
 
 def process_originalvideo_file(originalvideo_file):
