@@ -1,6 +1,7 @@
 import subprocess
 
-file_path = '/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/commands.txt'
+dataset = "KUGVD"
+file_path = f"/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/commands_{dataset}.txt"
 
 with open(file_path, 'r') as file:
     commands = file.readlines()
