@@ -151,4 +151,3 @@ for distorted_file in os.listdir(input_distorted_dir):
         else:
             print(f"{distorted_full_name} was not found in the metadata.")
 
-print(f"VMAF commands saved in {output_dir}/{commands_file_name}") 
