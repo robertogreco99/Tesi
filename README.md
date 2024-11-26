@@ -36,16 +36,17 @@ Instuction to sets:
     - dataset: Specifies the dataset name.
     - originalvideo_list_file: The path to the text file containing the list of original videos.
     - json_config_path: The path to the JSON configuration file that is updated for each YUV video.
+It also deletes the previous commands_{DATASETNAME} from precedent runs before executing the new one.
 3. Run the `run_vmaf_simulation.py` to run the simulation.
 Instruction to set : 
 - dataset = Specifies the dataset name.
-- file_path = `f"OUTPUT_DIR/{DATASETNAME}/commands_{DATASETNAME}.txt"` : where to found the file with the podman commands
+- file_path = `f"OUTPUT_DIR/{DATASETNAME}/commands_{DATASETNAME}.txt"` : where to found the file with the podman commands.
 If you want to run more simulations on more dataset run the python `run_more_vmaf_simulation.py`. Here you need to set more dataset fields and file_path fields.
 4. The simulations generate a `analyzescriptcommands_{DATASETNAME}.txt` file in the `OUTPUT_DIR/{DATASETNAME}` folder. 
 The file contains the podman commands to launch in order to create the final csv.
-To run the analysis run `run_analyze_script_simulation.py`.
+To run the analysis run `run_analyze_script_simulation.py`. You need to set the dataset fields to specifies where to found the file with the podman commands.
 The csv contains:
-- for every distorted file : the vmaf results for the 9 vmaf models and features calculated for different temporal poolings. It has also other 
+- for every distorted file : the vmaf results for the 9 vmaf models and features calculated for different temporal poolings. It has also other columsn 
 
 # What do you need
 - A json dataset file description like this :
