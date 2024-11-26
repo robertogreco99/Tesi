@@ -77,7 +77,7 @@ else:
     temporal_pooling_color_map={temporal_pooling : colors_temporal_pooling[i] for i ,temporal_pooling in enumerate(temporal_pooling_graph)}
 
 
-    """
+    
     for temporal_pooling_value in temporal_pooling_values:
         filtered_data = data[data['temporal_pooling'] == temporal_pooling_value]
 
@@ -240,7 +240,7 @@ else:
                 print(f"Graph saved: {output_file}")
                 plt.close()
 
-        # Bitrate models and features
+        # Bitrate 
         for y_column in vmaf_models + features:
             if y_column not in filtered_data.columns:
                 print(f"Columns {y_column} not found in {dataset}")
@@ -269,7 +269,7 @@ else:
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
-
+    """
     for pvs_value in pvs:
         output_dir = f"{pvs_path}/{pvs_value}/features/"
         if not os.path.exists(output_dir):
