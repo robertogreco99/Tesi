@@ -88,7 +88,7 @@ except ValidationError as e:
 with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
 
-# Gets the name of the original file without the extension (root)
+# Gets the name of the original file without the extension 
 original_without_extension = os.path.splitext(os.path.basename(original_video))[0]
 if dataset == "ITS4S":
     original_without_extension = original_without_extension.replace("_SRC", "")
@@ -117,7 +117,7 @@ for distorted_file in os.listdir(input_distorted_dir):
         for video in video_metadata["distorted_videos"]:
             if video["file_name"] == distorted_full_name:
                 metadata = video
-                print(f"Metadata found for {distorted_full_name}: {metadata}")  # Debugging print for metadata
+                print(f"Metadata found for {distorted_full_name}: {metadata}")  
                 break
 
         # If the video exists, extract its metadata
@@ -133,21 +133,21 @@ for distorted_file in os.listdir(input_distorted_dir):
         
             print(f"Metadata for {distorted_full_name}:")
             print(f"Width: {width}, Height: {height}, Bitrate: {bitrate}, Video Codec: {video_codec}, Pixel Format: {pixel_format}, Bit Depth: {bit_depth}, FPS: {fps}, Duration: {duration}")  # Debugging print for metadata details
-            
+            commands_file_name = f"commands_{dataset}.txt"
             if model_version_file == 'VMAF_ALL':   
                 for model_version in vmaf_models:
                     command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
-                    print(f"Generated command: {command}")  # Debug output
-                    with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                    print(f"Generated command: {command}")  
+                    with open(os.path.join(output_dir, commands_file_name), 'a') as f:
                         f.write(command + '\n')
-                        print(f"Command written to {os.path.join(output_dir, 'commands.txt')}")
+                        print(f"Command written to {os.path.join(output_dir, commands_file_name)}")
             else:  
                 command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
-                print(f"Generated command: {command}")  # Debug output
-                with open(os.path.join(output_dir, 'commands.txt'), 'a') as f:
+                print(f"Generated command: {command}")  
+                with open(os.path.join(output_dir, commands_file_name), 'a') as f:
                     f.write(command + '\n')
-                    print(f"Command written to {os.path.join(output_dir, 'commands.txt')}")
+                    print(f"Command written to {os.path.join(output_dir, commands_file_name)}")
         else:
             print(f"{distorted_full_name} was not found in the metadata.")
 
-print(f"VMAF commands saved in {output_dir}/commands.txt") 
+print(f"VMAF commands saved in {output_dir}/{commands_file_name}") 
