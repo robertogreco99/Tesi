@@ -46,7 +46,11 @@ If you want to run more simulations on more dataset run the python `run_more_vma
 The file contains the podman commands to launch in order to create the final csv.
 To run the analysis run `run_analyze_script_simulation.py`. You need to set the dataset fields to specifies where to found the file with the podman commands.
 The csv contains:
-- for every distorted file : the vmaf results for the 9 vmaf models and features calculated for different temporal poolings. It has also other columsn 
+- for every distorted file :
+  - for each temporal pooling :
+   - the vmaf scores for the 9 vmaf models 
+   - the different  features  values
+   -  It has also other columsn 
 
 # What do you need
 - A json dataset file description like this :

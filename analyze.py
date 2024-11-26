@@ -87,7 +87,7 @@ for score in data_mos["scores"]:
 else:
     print("No mos found")
 
-csv_filename = f'/results/combined_results_{dataset}.csv'
+csv_filename = f'/results/{dataset}/combined_results_{dataset}.csv'
 
 # if csv does not exits create with temporal_pooling_count entries
 if not os.path.isfile(csv_filename):
