@@ -63,7 +63,8 @@ features = ["cambi",
     "vmaf_b_v0.6.3_bagging",      
     "vmaf_b_v0.6.3_stddev",       
     "vmaf_b_v0.6.3_ci_p95_lo",    
-    "vmaf_b_v0.6.3_ci_p95_hi" 
+    "vmaf_b_v0.6.3_ci_p95_hi",
+    "integer_vif_scale3"
     ]
 mos_dataset = f"/mos/Scores{dataset}.json"
 
@@ -222,7 +223,7 @@ dframes = pd.DataFrame(frames_rows)
 
 def calculate_metrics(column_name):
     if column_name in dframes.columns:
-        mean_value = dframes[column_name].mean()
+        mean_value = np.mean(dframes[column_name])
         harmonic_mean_value = 1.0 / np.mean(1.0 / (dframes[column_name] + 1.0)) - 1.0
         geometric_mean_value = gmean(dframes[column_name])
         
@@ -247,13 +248,13 @@ def calculate_metrics(column_name):
         print(f"Total variation {column_name}: {total_variation}")
 
         # Norms
-        norm_lp_1 = np.power(np.mean(np.power(np.array(dframes[column_name]), 1)), 1.0 / 1)  # Norm L_1
+        norm_lp_1 = np.power(np.mean(np.power(np.array(dframes[column_name]), 1)), 1.0 / 1)  
         print(f"Norm L_1 of {column_name} values is: {norm_lp_1}")
 
-        norm_lp_2 = np.power(np.mean(np.power(np.array(dframes[column_name]), 2)), 1.0 / 2)  # Norm L_2
+        norm_lp_2 = np.power(np.mean(np.power(np.array(dframes[column_name]), 2)), 1.0 / 2)  
         print(f"Norm L_2 of {column_name} values is: {norm_lp_2}")
 
-        norm_lp_3 = np.power(np.mean(np.power(np.array(dframes[column_name]), 3)), 1.0 / 3)  # Norm L_3
+        norm_lp_3 = np.power(np.mean(np.power(np.array(dframes[column_name]), 3)), 1.0 / 3)  
         print(f"Norm L_3 of {column_name} values is: {norm_lp_3}")
 
         return mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3
@@ -273,6 +274,7 @@ if model_version == "vmaf_v0.6.1.json":
         "ciede2000",
         "psnr_hvs_y",
         "psnr_hvs_cb",
+        "integer_vif_scale3"
     ]
 elif model_version in ["vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
     metrics_to_evaluate = [
