@@ -10,7 +10,7 @@ if len(sys.argv) < 2:
 
 dataset = sys.argv[1]
 print(dataset)
-csv_file = f'/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/combined_results_{dataset}.csv'
+csv_file = f'/results/{dataset}/combined_results_{dataset}.csv'
 print(csv_file)
 
 if not os.path.exists(csv_file):
@@ -27,7 +27,7 @@ else:
     features = ["cambi", "float_ssim", "psnr_y",
         "psnr_cb", "psnr_cr", "float_ms_ssim", "ciede2000", "psnr_hvs_y",
         "psnr_hvs_cb", "vmaf_float_b_v0.6.3_bagging",
-        "vmaf_b_v0.6.3_bagging",
+        "vmaf_b_v0.6.3_bagging", "integer_vif_scale3"
         ]
     temporal_pooling_values = ["mean", "harmonic_mean", "geometric_mean", "total_variation", "norm_lp1", "norm_lp2", "norm_lp3"]
     temporal_pooling_graph = ["mean", "harmonic_mean", "geometric_mean","norm_lp1", "norm_lp2", "norm_lp3"]
@@ -42,7 +42,7 @@ else:
     if x_column not in data.columns:
         raise ValueError(f"Columns {x_column} not found in the csv for {dataset}.")
 
-    output_path = f"/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/graph_results/Graph_{dataset}"
+    output_path = f"/results/{dataset}/graph_results/"
     os.makedirs(output_path, exist_ok=True)
 
     vmaf_output_path = os.path.join(output_path, "VMAF_Models")
