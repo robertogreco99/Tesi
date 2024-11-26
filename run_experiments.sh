@@ -68,8 +68,11 @@ original="$ORIGINAL_VIDEO"
 echo "Original YUV file: $original"
 distorted="$DISTORTED_VIDEO"
 echo "Input distorted file: $distorted"
+
+mkdir -p "$HASH_DIR/${DATASET}"
+
 #directory where to save hash file
-output_hash="$HASH_DIR/${distorted}_decoded.md5"
+output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded.md5"
 # Output YUV : file name of decoded file
 #disto1rted_decoded_yuv="$OUTPUT_DIR/${distorted}_decoded.yuv"
 if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
@@ -101,6 +104,7 @@ fi
 
 ##create the directory if absent
 mkdir -p "$OUTPUT_DIR/${DATASET}/vmaf_results"
+
  #Output json 
 output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
 
@@ -168,7 +172,7 @@ if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
           echo "Resized video already exists"
         fi
       final_decoded_file="$distorted_decoded_resized"
-      output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+      output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
       width_new=1280
       height_new=720
       output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
@@ -196,7 +200,7 @@ elif [[ "$DATASET" == "KUGVD" ]] || [[ "$DATASET" == "GamingVideoSet1" ]] || [[ 
            echo "Resized video already exists"
          fi
         final_decoded_file="$distorted_decoded_resized"
-        output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+        output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
         width_new=1920
         height_new=1080
         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
@@ -224,7 +228,7 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_
            echo "Resized video already exists"
          fi
          final_decoded_file="$distorted_decoded_resized"
-         output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+         output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
          width_new=4000
          height_new=2250
          output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
@@ -250,7 +254,7 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_
            echo "Resized video already exists"
          fi
          final_decoded_file="$distorted_decoded_resized"
-         output_hash="$HASH_DIR/${distorted}_decoded_resized.md5"
+         output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
          width_new=3840
          height_new=2160
          output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
@@ -263,10 +267,15 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_
      fi
 fi
 
-# Compute MD5 hash of decoded YUV file
-echo "Hash MD5 for $final_decoded_file..."
-md5sum "$final_decoded_file" > "$output_hash"
-echo "Hash saved in $output_hash."
+# Compute MD5 hash of decoded YUV file only if it doesn't already exist
+if [ ! -f "$output_hash" ]; then
+    echo "Hash MD5 for $final_decoded_file..."
+    md5sum "$final_decoded_file" > "$output_hash"
+    echo "Hash saved in $output_hash."
+else
+    echo "Hash already exists in $output_hash."
+fi
+
 
 # Convert FEATURES string to an array
 # sep is ','; read from FEATURES and push into the feature_array the elmemnents
