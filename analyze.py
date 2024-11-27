@@ -298,7 +298,6 @@ for metric in metrics_to_evaluate:
         metrics_results[metric] = results
 
 
-print(metrics_results)
 df_existing = pd.read_csv(csv_filename)
 
 if model_version == 'vmaf_v0.6.1.json':
