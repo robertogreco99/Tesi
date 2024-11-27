@@ -56,6 +56,8 @@ features = ["cambi",
     "ciede2000",
     "psnr_hvs_y",
     "psnr_hvs_cb",
+    "psnr_hvs_cr",
+    "psnr_hvs",
     "vmaf_float_b_v0.6.3_bagging",      
     "vmaf_float_b_v0.6.3_stddev",       
     "vmaf_float_b_v0.6.3_ci_p95_lo",    
@@ -274,6 +276,8 @@ if model_version == "vmaf_v0.6.1.json":
         "ciede2000",
         "psnr_hvs_y",
         "psnr_hvs_cb",
+        "psnr_hvs_cr",
+        "psnr_hvs",
         "integer_vif_scale3"
     ]
 elif model_version in ["vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:

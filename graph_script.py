@@ -7,6 +7,39 @@ import sys
 if len(sys.argv) < 2:
     print("You need to call like graph_script <dataset_name>")
     sys.exit(1)
+    
+axis_limits = {
+    "MOS": (1, 5),
+    "vmaf_v0.6.1": (0, 100),
+    "vmaf_v0.6.1neg" : (0, 100),
+    "vmaf_float_v0.6.1": (0, 100),
+    "vmaf_float_v0.6.1neg": (0,100),
+    "vmaf_float_b_v0.6.3": (0,100),
+    "vmaf_b_v0.6.3": (0,100),
+    "vmaf_float_4k_v0.6.1": (0,100),
+    "vmaf_4k_v0.6.1": (0,100),
+    "vmaf_4k_v0.6.1neg": (0,100),
+    "float_ssim": (0.6, 1),
+    "float_ms_ssim": (0.6, 1),
+    "psnr_y": (20, 50),
+    "psnr_cb": (20, 50),
+    "psnr_cr": (20, 50),
+    "psnr_hvs_y": (20, 50),
+    "psnr_hvs_cb" : (20, 50),
+    "psnr_hvs_cr": (20, 50),
+    "psnr_hvs": (20, 50),
+    "ciede2000": (20, 50), #to do
+    "cambi": (0, 10),  #to do
+    "integer_vif_scale3" : (0.5,1),
+    "vmaf_float_b_v0.6.3_bagging" :(0, 100),      
+    "vmaf_float_b_v0.6.3_stddev" : (0, 100),       
+    "vmaf_float_b_v0.6.3_ci_p95_lo":(0, 100),    
+    "vmaf_float_b_v0.6.3_ci_p95_hi":(0, 100),
+    "vmaf_b_v0.6.3_bagging":(0, 100),      
+    "vmaf_b_v0.6.3_stddev":(0, 100),       
+    "vmaf_b_v0.6.3_ci_p95_lo":(0, 100),    
+    "vmaf_b_v0.6.3_ci_p95_hi":(0, 100),
+}
 
 dataset = sys.argv[1]
 print(dataset)
@@ -26,7 +59,7 @@ else:
     ]
     features = ["cambi", "float_ssim", "psnr_y",
         "psnr_cb", "psnr_cr", "float_ms_ssim", "ciede2000", "psnr_hvs_y",
-        "psnr_hvs_cb", "vmaf_float_b_v0.6.3_bagging",
+        "psnr_hvs_cb", "psnr_hvs_cr", "psnr_hvs","vmaf_float_b_v0.6.3_bagging",
         "vmaf_b_v0.6.3_bagging", "integer_vif_scale3"
         ]
     temporal_pooling_values = ["mean", "harmonic_mean", "geometric_mean", "total_variation", "norm_lp1", "norm_lp2", "norm_lp3"]
@@ -104,6 +137,12 @@ else:
               plt.title(f"{x_column} vs {y_column} (temporal pooling: {temporal_pooling_value}) - Video Codec")
               plt.xlabel(x_column)
               plt.ylabel(y_column)
+               
+              if y_column in axis_limits:
+                  plt.ylim(axis_limits[y_column]) 
+              if x_column in axis_limits:
+                  plt.xlim(axis_limits[x_column]) 
+                   
               plt.legend(title='Video Codec', bbox_to_anchor=(1.05, 1), loc='upper left')
               plt.grid(True)
 
@@ -137,6 +176,10 @@ else:
                 plt.title(f"{x_column} vs {y_column} (temporal pooling: {temporal_pooling_value}) - FPS")
                 plt.xlabel(x_column)
                 plt.ylabel(y_column)
+                if y_column in axis_limits:
+                  plt.ylim(axis_limits[y_column]) 
+                if x_column in axis_limits:
+                  plt.xlim(axis_limits[x_column]) 
                 plt.legend(title='FPS', bbox_to_anchor=(1.05, 1), loc='upper left')
                 plt.grid(True)
 
@@ -165,8 +208,13 @@ else:
                 plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values,hi_values-y_values], fmt='o')
 
                plt.title(f"{x_column} vs vmaf_float_b_v0.6.3 (temporal pooling: {temporal_pooling_value})")
-               plt.xlabel("Mos")
+               plt.xlabel("MOS")
                plt.ylabel("vmaf_float_b_v0.6.3")
+               if "MOS" in axis_limits:
+                   plt.xlim(axis_limits["MOS"])
+               if "vmaf_float_b_v0.6.3" in axis_limits:
+                   plt.ylim(axis_limits["vmaf_float_b_v0.6.3"])
+
                plt.grid(True)
 
                output_file = f"{hi_lo_output_path}/hilo_vmaf_float_b_v0.6.3_{temporal_pooling_value}.png"
@@ -187,8 +235,12 @@ else:
                     plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values_float_stddev,hi_values_float_stdev-y_values], fmt='o')
 
                 plt.title(f"{x_column} vs vmaf_float_b_v0.6.3 with stddev (temporal pooling: {temporal_pooling_value})")
-                plt.xlabel("Mos")
+                plt.xlabel("MOS")
                 plt.ylabel("vmaf_float_b_v0.6.3")
+                if "MOS" in axis_limits:
+                   plt.xlim(axis_limits["MOS"])
+                if "vmaf_float_b_v0.6.3" in axis_limits:
+                    plt.ylim(axis_limits["vmaf_float_b_v0.6.3"])
                 plt.grid(True)
 
                 output_file = f"{hi_lo_output_path}/hilostddev_vmaf_float_b_v0.6.3_{temporal_pooling_value}_stddev.png"
@@ -209,8 +261,12 @@ else:
                     plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values,hi_values-y_values], fmt='o')
 
                 plt.title(f"{x_column} vs vmaf_b_v0.6.3 (temporal pooling: {temporal_pooling_value})")
-                plt.xlabel("Mos")
+                plt.xlabel("MOS")
                 plt.ylabel("vmaf_b_v0.6.3")
+                if "MOS" in axis_limits:
+                   plt.xlim(axis_limits["MOS"])
+                if "vmaf_b_v0.6.3" in axis_limits:
+                   plt.ylim(axis_limits["vmaf_b_v0.6.3"])
                 plt.grid(True)
 
                 output_file = f"{hi_lo_output_path}/hilo_vmaf_b_v0.6.3_{temporal_pooling_value}.png"
@@ -231,8 +287,12 @@ else:
                     plt.errorbar(subset[x_column], y_values, yerr=[y_values-lo_values_b_stddev,hi_values_b_stddev-y_values], fmt='o')
 
                 plt.title(f"{x_column} vs vmaf_b_v0.6.3 with stddev (temporal pooling: {temporal_pooling_value})")
-                plt.xlabel("Mos")
+                plt.xlabel("MOS")
                 plt.ylabel("vmaf_float_b_v0.6.3")
+                if "MOS" in axis_limits:
+                   plt.xlim(axis_limits["MOS"])
+                if "vmaf_b_v0.6.3" in axis_limits:
+                   plt.ylim(axis_limits["vmaf_b_v0.6.3"])
                 plt.grid(True)
 
                 output_file = f"{hi_lo_output_path}/hilostdev_vmaf_b_v0.6.3_{temporal_pooling_value}_stddev.png"
@@ -258,6 +318,10 @@ else:
             plt.title(f"{x_column} vs {y_column} (temporal pooling: {temporal_pooling_value}) - Bitrate")
             plt.xlabel(x_column)
             plt.ylabel(y_column)
+            if y_column in axis_limits:
+                  plt.ylim(axis_limits[y_column]) 
+            if x_column in axis_limits:
+                  plt.xlim(axis_limits[x_column]) 
             plt.legend(title='Bitrate (kbps)', bbox_to_anchor=(1.05, 1), loc='upper left')
             plt.grid(True)
 
@@ -269,103 +333,7 @@ else:
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
-    """
-    for pvs_value in pvs:
-        output_dir = f"{pvs_path}/{pvs_value}/features/"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-
-        filtered_data = data[data['Distorted_file_name'] == pvs_value]
-
-        if filtered_data.empty:
-            print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
-            continue
-
-        x_value = filtered_data['MOS'].values[0]
-
-        for feature in features:
-            plt.figure(figsize=(10, 6))
-            x_values = []
-            y_values = []
-            labels = []
-            colors = []
-            for temporal_pooling_value in temporal_pooling_graph:
-                if temporal_pooling_value == "total_aggregation":
-                    continue
-                temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
-                if temporal_filtered_data.empty:
-                    print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
-                    continue
-                feature_value = temporal_filtered_data[feature].values
-                x_values.append(x_value)
-                y_values.append(feature_value[0])
-                labels.append(f"{temporal_pooling_value}")
-                colors.append(temporal_pooling_color_map[temporal_pooling_value])
-
-            for i, temporal_pooling_value in enumerate(temporal_pooling_graph):
-                if temporal_pooling_value == "total_aggregation":
-                    continue
-                plt.scatter(x_values[i], y_values[i], label=labels[i], color=colors[i], marker='o', alpha=0.7)
-            plt.title(f"{x_column} vs {feature} - pvs:{pvs_value}")
-            plt.xlabel(x_column)
-            plt.ylabel(feature)
-            plt.xticks(x_values)
-            plt.grid(True)
-            plt.legend(title="Temporal Pooling", loc='center left', bbox_to_anchor=(1, 0.5))
-
-            output_file = f"{pvs_path}/{pvs_value}/features/scatter_{feature}.png"
-            plt.savefig(output_file, bbox_inches='tight')
-            print(f"Graph saved: {output_file}")
-            plt.close()
-
-    for pvs_value in pvs:
-        output_dir = f"{pvs_path}/{pvs_value}/vmaf_models/"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-
-        filtered_data = data[data['Distorted_file_name'] == pvs_value]
-
-        if filtered_data.empty:
-            print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
-            continue
-
-        x_value = filtered_data['MOS'].values[0]
-
-        for model in vmaf_models:
-            plt.figure(figsize=(10, 6))
-            x_values = []
-            y_values = []
-            labels = []
-            colors = []
-            for temporal_pooling_value in temporal_pooling_graph:
-                if temporal_pooling_value == "total_aggregation":
-                    continue
-                temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
-                if temporal_filtered_data.empty:
-                    print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
-                    continue
-                model_value = temporal_filtered_data[model].values
-                x_values.append(x_value)
-                y_values.append(model_value[0])
-                labels.append(f"{temporal_pooling_value}")
-                colors.append(temporal_pooling_color_map[temporal_pooling_value])
-
-            for i, temporal_pooling_value in enumerate(temporal_pooling_graph):
-                if temporal_pooling_value == "total_aggregation":
-                    continue
-                plt.scatter(x_values[i], y_values[i], label=labels[i], color=colors[i], marker='o', alpha=0.7)
-            plt.title(f"{x_column} vs {model} - pvs:{pvs_value}")
-            plt.xlabel(x_column)
-            plt.ylabel(model)
-            plt.xticks(x_values)
-            plt.grid(True)
-            plt.legend(title="Temporal Pooling", loc='center left', bbox_to_anchor=(1, 0.5))
-
-            output_file = f"{pvs_path}/{pvs_value}/vmaf_models/scatter_{model}.png"
-            plt.savefig(output_file, bbox_inches='tight')
-            print(f"Graph saved: {output_file}")
-            plt.close()
-    """
+   
     for feature in features:
      plt.figure(figsize=(10, 6))
      labels = []
@@ -391,10 +359,15 @@ else:
             if temporal_pooling_value not in added_labels:
                labels.append(f"{temporal_pooling_value}")
                added_labels.add(temporal_pooling_value)
-
+     
+     
      plt.title(f"{x_column} vs {feature}")
      plt.xlabel(x_column)
      plt.ylabel(feature)
+     if "MOS" in axis_limits:
+         plt.xlim(axis_limits["MOS"])  
+     if feature in axis_limits:
+         plt.ylim(axis_limits[feature])  
      plt.grid(True)
      plt.xticks(rotation=45)
      plt.legend(title="Temporal Pooling", labels=labels, loc='center left', bbox_to_anchor=(1, 0.5))
@@ -432,7 +405,11 @@ else:
 
         plt.title(f"{x_column} vs {vmaf_model}")
         plt.xlabel(x_column)
-        plt.ylabel(feature)
+        plt.ylabel(vmaf_model)
+        if "MOS" in axis_limits:
+         plt.xlim(axis_limits["MOS"])  
+        if vmaf_model in axis_limits:
+         plt.ylim(axis_limits[vmaf_model]) 
         plt.grid(True)
         plt.xticks(rotation=45)
         plt.legend(title="Temporal Pooling", labels=labels, loc='center left', bbox_to_anchor=(1, 0.5))
