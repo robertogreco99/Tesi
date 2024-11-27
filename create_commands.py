@@ -100,6 +100,9 @@ original_without_extension = original_without_extension.strip()
 print(f"Original video name (without extension): {original_without_extension}")
 
 # Create the regex pattern to match the exact original_without_extension
+# escaping any special characters
+# ^ : from the start of original_without_extension to the end of the string or a "-"
+# compiled in a pattern object
 pattern_original = re.compile(f"^{re.escape(original_without_extension)}(_|$)")
 
 
