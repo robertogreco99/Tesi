@@ -75,7 +75,7 @@ The final csv contains:
       - Bagging: Average of the predictions from a lot of  models.
       - Stddev: Standard deviation of predictions
       - CI p95 lo/hi: Lower (lo) and upper (hi) bounds of the 95% confidence interval for the estimated score.
-      - //TO DO  "integer_vif_scale3"
+      - integer_vif_scale3
 ## 6. **Run the graph_simulations_run.py script to generate the graphs**
 To create the graphs, execute the `graph_simulations_run.py` script. You will need to set the dataset field. 
 This script runs `graph_script.py` and generates:
