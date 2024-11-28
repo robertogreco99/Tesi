@@ -8,9 +8,9 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
     
     original_video = f'"{original_video}"'
     distorted_video = f'"{distorted_video}"'
-    # The features are in a list, and I create a new list where they are split by a comma (',')
+    # The features are in a list, and I create a single string where they are joined by a comma (',')
     features = ','.join(features_list)  
-    
+    #commands creation with features if model is vmaf_v0.6.1.json
     if model_version == "vmaf_v0.6.1.json":
         command = f"podman run --rm -it \
         -v {input_reference_dir}:/reference \
@@ -71,9 +71,9 @@ model_version_file = config['MODEL_VERSION']
 dataset = config['DATASET']
 features_list = config['FEATURES']
 
-# Read the database file name 
+# Read the dataset file name 
 dataset_file = f"{dataset}.json"  
-# Find the database in the correct path
+# Find the dataset in the correct path
 dataset_file = os.path.join("Dataset", f"{dataset}.json")
 
 # Validate the schema 
@@ -89,13 +89,14 @@ with open(dataset_file, 'r') as f:
     video_metadata = json.load(f)
 
 # Gets the name of the original file without the extension 
+# Take basename (without the path), split into "name" and "extension", then take only the name.
 original_without_extension = os.path.splitext(os.path.basename(original_video))[0]
 if dataset == "ITS4S":
     original_without_extension = original_without_extension.replace("_SRC", "")
     print(original_without_extension)
 elif dataset == "AGH_NTIA_Dolby":
     original_without_extension = original_without_extension.replace("_original", "") 
-
+# Removes whitespaces from the string.
 original_without_extension = original_without_extension.strip()
 print(f"Original video name (without extension): {original_without_extension}")
 
@@ -109,11 +110,11 @@ pattern_original = re.compile(f"^{re.escape(original_without_extension)}(_|$)")
 # Loop on the files in input_distorted_dir
 for distorted_file in os.listdir(input_distorted_dir):
     distorted_full_name = distorted_file  
+    #take only the name without the extension and remove whitespaces
     distorted_without_extension = os.path.splitext(distorted_full_name)[0]
     distorted_without_extension= distorted_without_extension.strip()
     if pattern_original.match(distorted_without_extension):
     # If the original file name is contained in the distorted file name, generate the command
-    #if original_without_extension in distorted_without_extension:
         # Find the distorted video with file_name equal to distorted_full_name 
         # Extract metadata associated with the distorted file
         metadata = None
@@ -135,8 +136,10 @@ for distorted_file in os.listdir(input_distorted_dir):
             duration = metadata["duration"]
         
             print(f"Metadata for {distorted_full_name}:")
-            print(f"Width: {width}, Height: {height}, Bitrate: {bitrate}, Video Codec: {video_codec}, Pixel Format: {pixel_format}, Bit Depth: {bit_depth}, FPS: {fps}, Duration: {duration}")  # Debugging print for metadata details
+            print(f"Width: {width}, Height: {height}, Bitrate: {bitrate}, Video Codec: {video_codec}, Pixel Format: {pixel_format}, Bit Depth: {bit_depth}, FPS: {fps}, Duration: {duration}")  
+            # where the commands are saved
             output_dataset_dir = os.path.join(output_dir, dataset)
+            # output file name
             commands_file_name = f"commands_{dataset}.txt"
             if model_version_file == 'VMAF_ALL':   
                 for model_version in vmaf_models:
