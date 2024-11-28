@@ -7,7 +7,7 @@ import sys
 if len(sys.argv) < 2:
     print("You need to call like graph_script <dataset_name>")
     sys.exit(1)
-    
+# define axis_limits
 axis_limits = {
     "MOS": (1, 5),
     "vmaf_v0.6.1": (0, 100),
@@ -50,7 +50,7 @@ if not os.path.exists(csv_file):
     print(f"File CSV for dataset {dataset} not found")
 else:
     data = pd.read_csv(csv_file)
-
+    # define x columns, vmaf models, features, temporal pooling values and other for b models
     x_column = "MOS"
     vmaf_models = [
         "vmaf_v0.6.1", "vmaf_v0.6.1neg", "vmaf_float_v0.6.1", "vmaf_float_v0.6.1neg",
@@ -74,10 +74,16 @@ else:
 
     if x_column not in data.columns:
         raise ValueError(f"Columns {x_column} not found in the csv for {dataset}.")
-
+    # create the output path for every dataset
     output_path = f"/results/{dataset}/graph_results/"
     os.makedirs(output_path, exist_ok=True)
-
+    # Graph 
+    # - for every temporal pooling : MOS vs feature ( all the points are for the same temporal pooling) and HILO or HILOSTDD with different graphs (error bars) : "Features" dir or "HI_LO" dir
+    # - for every temporal pooling : MOS vs vmaf models ( all the points are for the same temporal pooling) : "VMAF models" dir
+    # - for every features all the pvs : for every pvs  different points for the different temporal pooling  : "PVS dir"
+    # - for every features all the pvs : for every pvs  different points for the different temporal pooling : "PVS dir"
+    
+    # where to save analysis    
     vmaf_output_path = os.path.join(output_path, "VMAF_Models")
     features_output_path = os.path.join(output_path, "Features")
     hi_lo_output_path = os.path.join(output_path,"HI_LO")
@@ -87,22 +93,27 @@ else:
     os.makedirs(hi_lo_output_path, exist_ok=True)
     os.makedirs(pvs_path, exist_ok=True)
 
-
+    # extract all the unique video_codescs,fps,duration,bitrate,vmaf_float_b.v0.6.3, vmaf_b_v0.6.3 values
+    # video_codes graph are generated only if there is more than one video_codecs
+    # fps graphs only if there is a minimun difference of 15 fps
     video_codecs = data['Video_codec'].unique()
     FPS_values = data['FPS'].unique()
     Duration_values = data['Duration'].unique()
     bitrate_values = data['Bitrate'].unique()
     vmaf_float_b_values = data['vmaf_float_b_v0.6.3'].unique()
     vmaf_b_values = data['vmaf_b_v0.6.3'].unique()
-
+    # extract all the different pvs
     pvs=data['Distorted_file_name'].unique()
-
+    # Create color palettes using Matplotlib colormap functions. Each palette contains a range of colors that are evenly distributed
+    # across an interval from 0 to 1, where each value in the interval corresponds to a specific color in the palette.
+    # The number of colors in each palette depends on the number of elements in the respective input list.
     colors_video_codec = plt.cm.tab10(np.linspace(0, 1, len(video_codecs)))
     colors_FPS = plt.cm.viridis(np.linspace(0, 1, len(FPS_values)))
     colors_Duration = plt.cm.plasma(np.linspace(0, 1, len(Duration_values)))
     colors_bitrate = plt.cm.cool(np.linspace(0, 1, len(bitrate_values)))
     colors_temporal_pooling=plt.cm.twilight(np.linspace(0,1,len(temporal_pooling_graph)))
-
+    # Create dictionaries that map each element (e.g., codec, FPS, duration, bitrate, temporal pooling) to a specific color
+    # based on its position in the respective list. Each color is selected from the previously generated color palettes.
     codec_color_map = {codec: colors_video_codec[i] for i, codec in enumerate(video_codecs)}
     FPS_color_map = {FPS: colors_FPS[i] for i, FPS in enumerate(FPS_values)}
     Duration_color_map = {Duration: colors_Duration[i] for i, Duration in enumerate(Duration_values)}
@@ -336,6 +347,7 @@ else:
    
     for feature in features:
      plt.figure(figsize=(10, 6))
+     # Initialize lists for labels and colors, and a set to avoid duplicate labels
      labels = []
      colors = []
      added_labels = set()
@@ -343,18 +355,24 @@ else:
          output_dir = f"{pvs_path}/all_features/"
          if not os.path.exists(output_dir):
             os.makedirs(output_dir)
+        # Filter the data for the current pvs_value
          filtered_data = data[data['Distorted_file_name'] == pvs_value]
          if filtered_data.empty:
             print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
             continue
+         # Extract the MOS value
          x_value = filtered_data['MOS'].values[0]
          for temporal_pooling_value in temporal_pooling_graph:
+             # Filter the data for the current temporal_pooling value
             temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
             if temporal_filtered_data.empty:
                 print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
                 continue
+            # Extract the feature value for the temporal filtered data
             feature_value = temporal_filtered_data[feature].values
+            # Get the color associated with the temporal_pooling value
             color = temporal_pooling_color_map[temporal_pooling_value]
+            # Create a scatter plot with the x_value and feature_value, using the corresponding color
             plt.scatter(x_value, feature_value, color=color, marker='o', alpha=0.7)
             if temporal_pooling_value not in added_labels:
                labels.append(f"{temporal_pooling_value}")
@@ -364,12 +382,14 @@ else:
      plt.title(f"{x_column} vs {feature}")
      plt.xlabel(x_column)
      plt.ylabel(feature)
+     # Set axis limits
      if "MOS" in axis_limits:
          plt.xlim(axis_limits["MOS"])  
      if feature in axis_limits:
          plt.ylim(axis_limits[feature])  
      plt.grid(True)
      plt.xticks(rotation=45)
+     # display the legend
      plt.legend(title="Temporal Pooling", labels=labels, loc='center left', bbox_to_anchor=(1, 0.5))
 
      output_file = f"{pvs_path}/all_features/scatter_{feature}.png"

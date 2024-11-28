@@ -107,11 +107,17 @@ The script
 
 ## 6. **Run the graph_simulations_run.py script to generate the graphs**
 To create the graphs, execute the `graph_simulations_run.py` script. You will need to set the dataset field. 
-This script runs `graph_script.py` and generates:
-    - For each feature:
-      A graph displaying all the PVS values, where each point represents the value of the PVS for that feature, calculated for a specific temporal pooling.
-    - For each model:
-      A graph displaying all the PVS values, where each point represents the value of the PVS for that model, calculated for a specific temporal pooling.
+This script runs `graph_script.py` from the csv files.
+### The python script `analyze.py`
+The script  extracts all the unique video_codescs,fps,duration,.bitrate,vmaf_float_b.v0.6.3, vmaf_b_v0.6.3 values. Video_codes graphs are generated only if there is more than one video_codecs,
+fps graphs only if there is a minimun difference of 15 fps. The script create color palettes using Matplotlib colormap functions. Each palette contains a range of colors that are evenly distributed  across an interval from 0 to 1, where each value in the interval corresponds to a specific color in the palette.  The number of colors in each palette depends on the number of elements in the respective input list. It create  dictionaries that map each element (e.g., codec, FPS, duration, bitrate, temporal pooling) to a specific color  based on its position in the respective list. Each color is selected from the previously generated color palettes.
+The script generates the following
+   - for every temporal pooling : MOS vs feature ( all the points are for the same temporal pooling) : "Features" dir 
+   - for every temporal pooling : MOS vs  HILO or HILOSTDD with different graphs (error bars) : "HI_LO" dir
+   - for every temporal pooling : MOS vs vmaf models ( all the points are for the same temporal pooling) : "VMAF models" dir
+   - for every features all the pvs : for every pvs  different points for the different temporal pooling  : "PVS dir"
+   - for every features all the pvs : for every pvs  different points for the different temporal pooling : "PVS dir"
+Axis limits are set by a dictionary.
 # Requirements
 - A JSON dataset file with the following structure:
 ```json
