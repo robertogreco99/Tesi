@@ -25,19 +25,21 @@
                 "VMAF_ALL"
             ]
         },
-        "DATASET": { "type": "string", "description": "The name of the dataset" ,
-        "enum": [
-            "KUGVD",
-            "AVT-VQDB-UHD-1_1",
-            "AVT-VQDB-UHD-1_2",
-            "AVT-VQDB-UHD-1_3",
-            "AVT-VQDB-UHD-1_4",
-            "GamingVideoSet1",
-            "GamingVideoSet2",
-            "AGH_NTIA_Dolby",
-            "ITS4S"
-        ]
-    },
+        "DATASET": {
+             "type": "string", 
+             "description": "The name of the dataset" ,
+            "enum": [
+                "KUGVD",
+                "AVT-VQDB-UHD-1_1",
+                "AVT-VQDB-UHD-1_2",
+                "AVT-VQDB-UHD-1_3",
+                "AVT-VQDB-UHD-1_4",
+                "GamingVideoSet1",
+                "GamingVideoSet2",
+                "AGH_NTIA_Dolby",
+                "ITS4S"
+            ]
+        },
         "FEATURES": {
             "type": "array",
             "description": "The different metrics that vmaf will calculate",
@@ -56,7 +58,7 @@
             "uniqueItems": true
         }
     },
-    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES"],
+    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES"],
     "additionalProperties": false
 }
 
