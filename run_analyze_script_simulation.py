@@ -1,6 +1,6 @@
 import subprocess
-dataset = "ITS4S"
-file_path = f'/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result/{dataset}/analyzescriptcommands_{dataset}.txt'
+dataset = "KUGVD"
+file_path = f'/home/greco/home/docker/Result/{dataset}/analyzescriptcommands_{dataset}.txt'
 with open(file_path, 'r') as file:
     commands = file.readlines()
 

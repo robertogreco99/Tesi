@@ -69,19 +69,23 @@ features = ["cambi",
     "integer_vif_scale3"
     ]
 mos_dataset = f"/mos/Scores{dataset}.json"
-
+# read mos dataset fil
 with open(mos_dataset) as f:
     data_mos = json.load(f)
-
+#remove extension and take only the name
 distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]  
 for score in data_mos["scores"]:
+    # if the distorted file is found in the mos files
     if score["PVS"]["PVS_ID"] == distorted_file_name_no_extension:
         print(score["PVS"]["PVS_ID"])  
+        #set mos
         mos = score["MOS"]
+        # set ci
         if "CI" in score:
          ci = score["CI"]
         else:
          ci = -1
+         #set computed mos
         if "Computed_MOS" in score:
          computed_mos = score["Computed_MOS"]
         else:
@@ -126,7 +130,7 @@ if not os.path.isfile(csv_filename):
         
         new_rows.append(row)
     
-    
+    # create a dataframe from the rows ( one row for temporal pooling) and convert to csv
     new_df = pd.DataFrame(new_rows)
     new_df.to_csv(csv_filename, mode='w', header=True, index=False)
     print("CSV created")
@@ -138,7 +142,7 @@ else:
     
     if distorted_video not in df_existing['Distorted_file_name'].values:
         print(f"{distorted_video} not found in the csv, adds rows")
-        
+        #add new rows if it another distorted video
         new_rows = []
         for temporal_pooling_value in temporal_pooling_values:
             row = {
@@ -176,7 +180,7 @@ else:
         print("temporal_pooling_count rows added to csv.")
     else:
         print(f"{distorted_video} is already present in the csv")
-
+#todo : remove lines here
 if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
     # Create the JSON path name
     if width_old != '1920' or height_old != '1080':
@@ -219,6 +223,7 @@ for frame in frames_list:
     row.update(metrics)
     frames_rows.append(row)
 
+# example of row in frames_rows : frame_number cambi ciede ecc
 # Create a DataFrame for current file's metrics
 dframes = pd.DataFrame(frames_rows)
 #print(dframes)
@@ -227,6 +232,7 @@ def calculate_metrics(column_name):
     if column_name in dframes.columns:
         column_data = dframes[column_name]
         if np.any(np.isnan(column_data)):
+            #return -1 for the column if there are null values
             print(f"NaN values found in {column_name}, returning -1 for all metrics.")
             return (-1, -1, -1, -1, -1, -1, -1)
         
@@ -298,8 +304,24 @@ for metric in metrics_to_evaluate:
     if results:
         metrics_results[metric] = results
 
-
+# example of metrics_results :
+# metrics_results[ciede2000] = {mean,harmonic_mean,..} 
 df_existing = pd.read_csv(csv_filename)
+
+# The following code 
+# has more cases for different model_versions
+#   for metric, values in metrics_results.items():
+#   - remove json extension to match the column name if the metric is vmaf,vmaf_bagging,vmaf_ci_p95_hi,vmaf_ci_p95_lo or vmaf_stddev
+#   - calculate how many rows are already occupied in the column corresponding to the model or metric 
+#   - start_row = rows_filled :  sets the starting row for inserting the new results. It uses the value of rows_filled to determine where the new data should begin.
+#   - end_row = start_row + temporal_pooling_count : calculates the end_row by adding temporal_pooling_count to the start_row. 
+#               This defines the range of rows where the new results will be inserted.
+#   - df_existing.loc[start_row:end_row-1, metric] =[ mean,harmonic_mean,geometric_mean,total_variation,norm_lp_1,norm_lp_2,norm_lp_3]
+#    This inserts the new metric values (mean, harmonic_mean, etc.) into the specified rows of the df_existing DataFrame. 
+#    The loc function is used to select the rows from start_row to end_row-1 (inclusive), and the column corresponding to model_version.
+#    The new values are assigned to that range of rows.
+
+
 
 if model_version == 'vmaf_v0.6.1.json':
     for metric, values in metrics_results.items():
