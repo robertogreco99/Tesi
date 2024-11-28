@@ -50,18 +50,36 @@ Instructions to set parameters:
    - dataset = Specifies the dataset name.
    - file_path: Specifies the location of the file containing the Podman commands, e.g., f"OUTPUT_DIR/{DATASETNAME}/commands_{DATASETNAME}.txt".
    
-Every command is  shell command that runs a shell file `run_experiments.sh`.
+Every command is a shell command that runs a shell file `run_experiments.sh`.
 This script is designed to process video files for quality assessment using a variety of parameters. 
 - The script expects 18 arguments, such as directories for reference and distorted videos, output paths, model version, dataset details, and video properties (e.g., resolution, codec, bitrate). 
-- It checks that the necessary directories for input, output, and hashes exist, exiting with an error if any are missing.It defines file paths for the original and distorted videos, as well as output paths for decoded and resized versions.
-- The script decodes the distorted video using ffmpeg, with different options based on the dataset. It may convert the video to a specific format (e.g., .y4m or .yuv).
-- Depending on the dataset, it may resize the video to specific dimensions (e.g., 1280x720 or 1920x1080) using ffmpeg if the current resolution doesn't match the target.
--  It generates a hash of the decoded video file. 
+- It checks that the necessary directories for input, output, mos and hashes exist, exiting with an error if any are missing.It defines file paths for the original and distorted videos, as well as output paths for decoded and resized versions.
+- The script decodes the distorted video using ffmpeg,if the decoded file does not already exist, with different options based on the dataset. It may convert the video to a specific format (e.g., .y4m or .yuv).
+    - For ITS4S, decode to YUV420p in a .y4m file.
+    - For AGH_NTIA_Dolby, the distorted video is already in .y4m format, so simply copy the file.
+    - For AVT-VQDB-UHD-1_1, decode to YUV422p in a .yuv file.
+    - For AVT-VQDB-UHD-1_2, AVT-VQDB-UHD-1_3, and AVT-VQDB-UHD-1_4, decode to YUV422p with 10-bit depth in a .yuv file.
+    - For KUGVD, GamingVideoSet1, and VideoGamingSet2, decode to YUV420p in a .yuv file.
+- Depending on the dataset, it may resize the video to specific dimensions (e.g., 1280x720 or 1920x1080),if the decodedand resized  file does not already exist, using ffmpeg if the current resolution doesn't match the target.
+    - For ITS4S and AGH_NTIA_Dolby, resize to 1280x720.
+    - For KUGVD, GamingVideoSet1, and GamingVideoSet2, resize to 1920x1080.
+    - For AVT-VQDB-UHD-1_1, resize to 4000x2250 for bigbuck_bunny_8bit.yuv related files, and 3840x2160 for others.
+    - For AVT-VQDB-UHD-1_2, AVT-VQDB-UHD-1_3, and AVT-VQDB-UHD-1_4, resize to 3840x2160.
+- It generates a hash of the decoded video file. 
 - The script runs the vmaf simulation. If the model is vmaf_v0.6.1.json, it also runs the feature extraction. The vmaf simulation generates a JSON file as output.
+  - VMAF parameters setup:
+    - referencevideo: Path to the reference .y4m or .yuv video.
+        - For ITS4S, convert the original video to YUV420p.
+        - For AVT-VQDB-UHD-1_1, convert the reference video to YUV422 with 8-bit depth if the original video is different from bigbuck_bunny_8bit.yuv.
+        - For AVT-VQDB-UHD-1_4, some videos have a different frame rate than the reference; convert the reference video to 30fps or 15fps.
+    - distortedvideo: Decoded or decoded and resized distorted video.
+    - model: Path to the VMAF model.
+    - $feature_args: Used only when the model is vmaf_v0.6.1.json.
+    - output: Write output as a JSON file.
+    - threads: Specify the number of threads to use for processing.
 
 The simulations generate a `analyzescriptcommands_{DATASETNAME}.txt` file in the `OUTPUT_DIR/{DATASETNAME}` folder. 
 The file contains the podman commands to launch in order to create the final csv.
-
 If you want to run simulations on additional datasets, use the Python script `run_more_vmaf_simulation.py`. In this case, you need to set multiple dataset fields and corresponding file_path fields.
   
 ## 5. **Run the run_analyze_script_simulation.py script to generate the final csv** 

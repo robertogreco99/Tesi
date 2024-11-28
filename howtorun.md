@@ -46,7 +46,7 @@ Example template:
    Output= /home/greco/home/docker/Result/{dataset}/analyzescriptcommands_{dataset}.txt
 
 4. **Generate Final CSV**  
-    Edit the variable dataset="" in run_analyze_script_simulation.py
+   Edit the variable dataset="" in run_analyze_script_simulation.py
    ```bash
     python3 run_analyze_script_simulation.py
    ```
