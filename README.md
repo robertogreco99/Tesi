@@ -83,7 +83,7 @@ The file contains the podman commands to launch in order to create the final csv
 If you want to run simulations on additional datasets, use the Python script `run_more_vmaf_simulation.py`. In this case, you need to set multiple dataset fields and corresponding file_path fields.
   
 ## 5. **Run the run_analyze_script_simulation.py script to generate the final csv** 
-You need to set the dataset fields to specifies where to found the file with the podman commands.
+You need to set the dataset fields to specifies where to found the file with the podman commands. The script runs the podman commands that runs `analyze.py` e writes the results of the analysis of the json file output of vmaf on a csv file.
 The final csv contains:
   - for every distorted file :
     - for each temporal pooling :
@@ -94,6 +94,17 @@ The final csv contains:
       - Stddev: Standard deviation of predictions
       - CI p95 lo/hi: Lower (lo) and upper (hi) bounds of the 95% confidence interval for the estimated score.
       - integer_vif_scale3
+
+### The python script `analyze.py`
+The script 
+-  checks if the correct number of arguments are passed (15). These arguments include details about the dataset, video characteristics, and output directory.
+- loads a JSON file containing MOS scores for different videos and extracts the MOS, confidence interval (CI), and computed MOS for the distorted video. (Not every dataset has CI)
+- It checks if a CSV file with combined results for the dataset exists. If not, it creates the CSV file and adds rows for temporal pooling values (mean, harmonic mean, etc.). If the file exists, it checks if the distorted video is already included; if not, it adds new rows.
+- The script constructs a JSON file path based on various parameters (like dataset, video resolution, codec) and loads the results from this file.
+- Metrics Calculation: For each frame in the loaded JSON data, the script calculates various metrics, including the mean, harmonic mean, geometric mean, total variation, and norms (L1, L2, L3). It handles missing data by checking for NaN values and prints the results for each metric.
+- The most important part of the code comes after the metrics calculation. In this section, the code handles multiple cases for different model versions. For each metric and its corresponding values in metrics_results.items(), the following steps are carried out. First, if the metric is one of the following: vmaf, vmaf_bagging, vmaf_ci_p95_hi, vmaf_ci_p95_lo, or vmaf_stddev, the code removes the JSON extension to match the column name in the DataFrame. Next, the number of rows already occupied in the corresponding column (for a specific model or metric) is calculated. The code then determines the starting row for inserting the new results with `start_row = rows_filled`, where the value of rows_filled defines where the new data will begin to be inserted. The end row is calculated as `end_row = start_row + temporal_pooling_count`, with temporal_pooling_count determining the number of rows that the new results will span. Finally, the code inserts the new metric values (such as mean, harmonic_mean, geometric_mean, etc.) into the existing DataFrame df_existing using `df_existing.loc[start_row:end_row-1, metric] = [mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3]`. The .loc function selects the rows from start_row to end_row-1 (inclusive) and the column corresponding to the metric. The new values are then assigned to this range of rows, completing the insertion of data into the DataFrame.
+- The final output includes generated CSV and JSON files containing the computed results and calculated metrics.
+
 ## 6. **Run the graph_simulations_run.py script to generate the graphs**
 To create the graphs, execute the `graph_simulations_run.py` script. You will need to set the dataset field. 
 This script runs `graph_script.py` and generates:
