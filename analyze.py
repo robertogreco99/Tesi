@@ -225,24 +225,25 @@ dframes = pd.DataFrame(frames_rows)
 
 def calculate_metrics(column_name):
     if column_name in dframes.columns:
+        column_data = dframes[column_name]
+        if np.any(np.isnan(column_data)):
+            print(f"NaN values found in {column_name}, returning -1 for all metrics.")
+            return (-1, -1, -1, -1, -1, -1, -1)
+        
         mean_value = np.mean(dframes[column_name])
         harmonic_mean_value = 1.0 / np.mean(1.0 / (dframes[column_name] + 1.0)) - 1.0
         geometric_mean_value = gmean(dframes[column_name])
-        
-        percentiles = {
-            '1%': np.percentile(dframes[column_name], 1),
-            '5%': np.percentile(dframes[column_name], 5),
-            '10%': np.percentile(dframes[column_name], 10),
-            '20%': np.percentile(dframes[column_name], 20),
-        }
+        #percentile_1 = np.percentile(dframes[column_name], 1)
+        #percentile_5 = np.percentile(dframes[column_name], 5)
+        #percentile_10 = np.percentile(dframes[column_name], 10) 
+        #percentile_20 = np.percentile(dframes[column_name], 20)
         
         # Print values
         print(f"{column_name} Mean: {mean_value}")
         print(f"Harmonic mean {column_name}: {harmonic_mean_value}")
         print(f"Geometric mean {column_name}: {geometric_mean_value}")
-        print(f"{column_name} Percentiles:")
-        for p, value in percentiles.items():
-            print(f"{p}: {value}")
+        #print(f"{column_name} Percentiles:")
+        
         
         # Total variation
         abs_diff_scores = np.absolute(np.diff(dframes[column_name]))
