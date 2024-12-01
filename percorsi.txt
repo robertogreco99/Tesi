@@ -1,3 +1,10 @@
 KUGVD
 /home/greco/home/datasets/IGVQM/KUGVD/dataset/ReferenceVideos_YUV
 /home/greco/home/datasets/IGVQM/KUGVD/dataset/DistortedVideos_MP4_v2
+
+The script  extracts all the unique video_codescs,fps,duration,.bitrate,vmaf_float_b.v0.6.3, vmaf_b_v0.6.3 values. Video_codes graphs are generated only if there is more than one video_codecs,
+fps graphs only if there is a minimun difference of 15 fps. The script create color palettes using Matplotlib colormap functions. Each palette contains a range of colors that are evenly distributed  across an interval from 0 to 1, where each value in the interval corresponds to a specific color in the palette.  The number of colors in each palette depends on the number of elements in the respective input list. It create  dictionaries that map each element (e.g., codec, FPS, duration, bitrate, temporal pooling) to a specific color  based on its position in the respective list. Each color is selected from the previously generated color palettes.
+
+- for every temporal pooling : MOS vs feature ( all the points are for the same temporal pooling) : "Features" dir 
+   - for every temporal pooling : MOS vs  HILO or HILOSTDD with different graphs (error bars) : "HI_LO" dir
+   - for every temporal pooling : MOS vs vmaf models ( all the points are for the same temporal pooling) : "VMAF models" dir

@@ -18,6 +18,8 @@ Example template:
     "OUTPUT_DIR": "/home/greco/home/docker/Result",
     "HASH_DIR": "/home/greco/home/docker/Hash",
     "MOS_DIR": "/home/greco/home/docker/Mos",
+    "DATASET_DIR": "/home/greco/home/docker/Dataset",
+    "SIMULATIONS_DIR": "/home/greco/home/docker/Simulations",
     "ORIGINAL_VIDEO": "",
     "MODEL_VERSION": "VMAF_ALL",
     "DATASET": "",
@@ -33,32 +35,30 @@ Example template:
 ```
 
 3. **Generate Podman Commands**  
-   Edit the variable dataset="" in run_simulation_create_commands.py
    ```bash
-   python3 run_simulation_create_commands.py
+   python3 run_simulation_create_commands.py Json/config.json
    ```
-   Output = /home/greco/home/docker/Result/{dataset}/commands_{dataset}.txt
+   Output = {output_dir}/{dataset}/commands_{dataset}.txt
 
 3. **Run VMAF Simulations** 
-   Edit the variable dataset="" in run_vmaf_simulation.py 
    ```bash
-   python3 run_vmaf_simulation.py
+   python3 run_vmaf_simulation.py Json/config.json
    ```
-   Json results in /home/greco/home/docker/Result/{dataset}/vmaf_results
+   Json results in {output_dir}/{dataset}/vmaf_results
    
    Output= /home/greco/home/docker/Result/{dataset}/analyzescriptcommands_{dataset}.txt
 
 4. **Generate Final CSV**  
-   Edit the variable dataset="" in run_analyze_script_simulation.py
    ```bash
-    python3 run_analyze_script_simulation.py
+    chmod +x run_create_csv.sh
+    ./run_create_csv.sh
    ```
-   Output= /home/greco/home/docker/Result/{dataset}/combined_results_{dataset}.csv
+   Output= {output_dir}/{dataset}/combined_results_{dataset}.csv
 
 
 5. **Generate Graphs**  
-   Edit the variable dataset="" in graph_simulations_run.py
    ```bash
-   python3 graph_simulations_run.py
+    chmod +x run_create_graphs.sh
+    ./run_create_csv.sh
    ```
-   Graph results in /home/greco/home/docker/Result/{dataset}/graph_results
+   Graph results in {output_dir}/{dataset}/graph_results
