@@ -60,19 +60,20 @@ RUN mkdir -p /reference /distorted /results /hash /mos
 WORKDIR /app
 
 # Copy scripts
-COPY analyze.py .
+#COPY analyze.py .
 COPY run_experiments.sh .
-COPY Mos/ScoresAVT-VQDB-UHD-1_1.json /mos
-COPY Mos/ScoresAVT-VQDB-UHD-1_2.json /mos
-COPY Mos/ScoresAVT-VQDB-UHD-1_3.json /mos
-COPY Mos/ScoresAVT-VQDB-UHD-1_4.json /mos
-COPY Mos/ScoresGamingVideoSet1.json /mos
-COPY Mos/ScoresGamingVideoSet2.json /mos
-COPY Mos/ScoresKUGVD.json /mos
-COPY Mos/ScoresITS4S.json /mos
-COPY Mos/ScoresAGH_NTIA_Dolby.json /mos
-COPY graph_script.py .
+#COPY Mos/ScoresAVT-VQDB-UHD-1_1.json /mos
+#COPY Mos/ScoresAVT-VQDB-UHD-1_2.json /mos
+#COPY Mos/ScoresAVT-VQDB-UHD-1_3.json /mos
+#COPY Mos/ScoresAVT-VQDB-UHD-1_4.json /mos
+#COPY Mos/ScoresGamingVideoSet1.json /mos
+#COPY Mos/ScoresGamingVideoSet2.json /mos
+#COPY Mos/ScoresKUGVD.json /mos
+#COPY Mos/ScoresITS4S.json /mos
+#COPY Mos/ScoresAGH_NTIA_Dolby.json /mos
+#COPY graph_script.py .
 # Make scripts executable
-RUN chmod +x run_experiments.sh analyze.py graph_script.py
+RUN chmod +x run_experiments.sh 
+#analyze.py graph_script.py
 
 CMD ["/bin/sh"]

@@ -68,7 +68,9 @@ features = ["cambi",
     "vmaf_b_v0.6.3_ci_p95_hi",
     "integer_vif_scale3"
     ]
-mos_dataset = f"/mos/Scores{dataset}.json"
+mos_dataset = f"{mos_dir}/Scores{dataset}.json"
+if not os.path.exists(mos_dataset):
+    raise FileNotFoundError(f"Mos file '{mos_dataset}' was not found")
 # read mos dataset fil
 with open(mos_dataset) as f:
     data_mos = json.load(f)
@@ -94,7 +96,7 @@ for score in data_mos["scores"]:
 else:
     print("No mos found")
 
-csv_filename = f'/results/{dataset}/combined_results_{dataset}.csv'
+csv_filename = f'{output_directory}/{dataset}/combined_results_{dataset}.csv'
 
 # if csv does not exits create with temporal_pooling_count entries
 if not os.path.isfile(csv_filename):
@@ -184,33 +186,41 @@ else:
 if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
     # Create the JSON path name
     if width_old != '1920' or height_old != '1080':
-        json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
     else:
-        json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3"]:
     if original_video == "bigbuck_bunny_8bit.yuv":
         if width_old != '4000' or height_old != '2250':
-            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
         else:
-            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
     else:
         if width_old != '3840' or height_old != '2160':
-            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
         else:
-            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 else:
     if dataset in [ "ITS4S" , "AGH_NTIA_Dolby"]:
         if width_old != '1280' or height_old != '720':
-            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
         else:
-            json_filename = f'/results/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
 
 # Print json filename
 print(f"Json file path: {json_filename}")
 
+
+try:
+    with open(json_filename) as f:
+        data = json.load(f)
+except FileNotFoundError:
+    print(f"Error: Json file  '{json_filename}' not found.")
+    sys.exit(1)
+    
 # Read the JSON file
-with open(json_filename) as f:
-    data = json.load(f)
+#with open(json_filename) as f:
+#    data = json.load(f)
 
 # Take data from the frames
 frames_list = data["frames"]

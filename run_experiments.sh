@@ -23,8 +23,11 @@ BIT_DEPTH="${13}"
 FPS="${14}"
 DURATION="${15}"
 ORIGINAL_VIDEO="${16}"
-DISTORTED_VIDEO="${17}"    
-FEATURES="${18}" 
+DISTORTED_VIDEO="${17}"  
+OUTPUT_DIR_SERVER="${18}"     
+HASH_DIR_SERVER="${19}"  
+MOS_DIR_SERVER="${20}"
+FEATURES="${21}"
 
 
 echo "---------------------------"
@@ -45,7 +48,10 @@ echo "FPS : $FPS"
 echo "Duration : $DURATION"
 echo "Original Video : $ORIGINAL_VIDEO"
 echo "Distorted Video : $DISTORTED_VIDEO"
-echo "Features: $FEATURES"
+echo "Output Directory server: $OUTPUT_DIR_SERVER"
+echo "Hash Directory sercer: $HASH_DIR_SERVER"
+echo "MOS Directory: $MOS_DIR_SERVER"
+echo "Features: $FEATURES_SERVER"
 
 # Check if directories exist
 for dir in "$INPUT_REFERENCE_DIR" "$INPUT_DISTORTED_DIR" "$OUTPUT_DIR" "$HASH_DIR" "$MOS_DIR"; do
@@ -615,9 +621,13 @@ echo "Old WIDTH : $width_old"
 echo "Old HEIGHT : $height_old"
 echo "FPS : $FPS"
 echo "Duration : $DURATION"
+echo "Output Directory server: $OUTPUT_DIR_SERVER"
+echo "Hash Directory sercer: $HASH_DIR_SERVER"
+echo "MOS Directory: $MOS_DIR_SERVER"
 
     #python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
 # save the python command to analyze the vmaf script
-echo "podman run --rm -it -v /home/greco/home/docker/Result:/results \
-                          -v /home/greco/home/docker/Mos:/mos image \
-                          python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR\"" >> "$FILE_COMMANDS"
+#echo "podman run --rm -it -v /home/greco/home/docker/Result:/results \
+#                          -v /home/greco/home/docker/Mos:/mos image \
+#                          python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR\"" >> "$FILE_COMMANDS"
+echo "python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR_SERVER\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR_SERVER\"" >> "$FILE_COMMANDS"
