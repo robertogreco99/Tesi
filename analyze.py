@@ -29,11 +29,11 @@ mos = -1
 ci = -1
 computed_mos = -1
 
-temporal_pooling_count = 7 
+temporal_pooling_count = 9
 
 print(f"width_old: {width_old}, height_old: {height_old}")
 
-temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean', 'total_variation', 'norm_lp1', 'norm_lp2', 'norm_lp3']
+temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean','percentile_1','percentile_5','percentile_95', 'norm_lp1', 'norm_lp2', 'norm_lp3']
 
 vmaf_models = [
     "vmaf_v0.6.1", 
@@ -239,10 +239,14 @@ def calculate_metrics(column_name):
         mean_value = np.mean(dframes[column_name])
         harmonic_mean_value = 1.0 / np.mean(1.0 / (dframes[column_name] + 1.0)) - 1.0
         geometric_mean_value = gmean(dframes[column_name])
-        #percentile_1 = np.percentile(dframes[column_name], 1)
-        #percentile_5 = np.percentile(dframes[column_name], 5)
-        #percentile_10 = np.percentile(dframes[column_name], 10) 
-        #percentile_20 = np.percentile(dframes[column_name], 20)
+        percentile_1 = np.percentile(dframes[column_name], 1)
+        percentile_5 = np.percentile(dframes[column_name], 5)
+        percentile_95 =np.percentile(dframes[column_name], 95)
+        
+        print(f"1st Percentile: {percentile_1}")
+        print(f"5th Percentile: {percentile_5}")
+        print(f"95th Percentile: {percentile_95}")
+
         
         # Print values
         print(f"{column_name} Mean: {mean_value}")
@@ -251,11 +255,6 @@ def calculate_metrics(column_name):
         #print(f"{column_name} Percentiles:")
         
         
-        # Total variation
-        abs_diff_scores = np.absolute(np.diff(dframes[column_name]))
-        total_variation = np.mean(abs_diff_scores)
-        print(f"Total variation {column_name}: {total_variation}")
-
         # Norms
         norm_lp_1 = np.power(np.mean(np.power(np.array(dframes[column_name]), 1)), 1.0 / 1)  
         print(f"Norm L_1 of {column_name} values is: {norm_lp_1}")
@@ -266,7 +265,7 @@ def calculate_metrics(column_name):
         norm_lp_3 = np.power(np.mean(np.power(np.array(dframes[column_name]), 3)), 1.0 / 3)  
         print(f"Norm L_3 of {column_name} values is: {norm_lp_3}")
 
-        return mean_value, harmonic_mean_value, geometric_mean_value, total_variation, norm_lp_1, norm_lp_2, norm_lp_3
+        return mean_value, harmonic_mean_value, geometric_mean_value, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3
     else:
         print(f"Metric '{column_name}' not found in the DataFrame.")
         return (-1,-1,-1,-1,-1,-1,-1)
@@ -316,7 +315,7 @@ df_existing = pd.read_csv(csv_filename)
 #   - start_row = rows_filled :  sets the starting row for inserting the new results. It uses the value of rows_filled to determine where the new data should begin.
 #   - end_row = start_row + temporal_pooling_count : calculates the end_row by adding temporal_pooling_count to the start_row. 
 #               This defines the range of rows where the new results will be inserted.
-#   - df_existing.loc[start_row:end_row-1, metric] =[ mean,harmonic_mean,geometric_mean,total_variation,norm_lp_1,norm_lp_2,norm_lp_3]
+#   - df_existing.loc[start_row:end_row-1, metric] =[ mean,harmonic_mean,geometric_mean,percentile_1,percentile_5,percentile_95,norm_lp_1,norm_lp_2,norm_lp_3]
 #    This inserts the new metric values (mean, harmonic_mean, etc.) into the specified rows of the df_existing DataFrame. 
 #    The loc function is used to select the rows from start_row to end_row-1 (inclusive), and the column corresponding to model_version.
 #    The new values are assigned to that range of rows.
@@ -325,7 +324,7 @@ df_existing = pd.read_csv(csv_filename)
 
 if model_version == 'vmaf_v0.6.1.json':
     for metric, values in metrics_results.items():
-     mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+     mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
      if metric == "vmaf":
             model_version=model_version.replace(".json","")
             rows_filled = df_existing[model_version].notna().sum()
@@ -335,7 +334,9 @@ if model_version == 'vmaf_v0.6.1.json':
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -348,14 +349,16 @@ if model_version == 'vmaf_v0.6.1.json':
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
             ]
 elif model_version == "vmaf_b_v0.6.3.json":
      for metric, values in metrics_results.items():
-         mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+         mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
          if metric == "vmaf":
             model_version=model_version.replace(".json","")
             rows_filled = df_existing[model_version].notna().sum()
@@ -365,7 +368,9 @@ elif model_version == "vmaf_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -380,7 +385,9 @@ elif model_version == "vmaf_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -395,7 +402,9 @@ elif model_version == "vmaf_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -410,7 +419,9 @@ elif model_version == "vmaf_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -425,14 +436,16 @@ elif model_version == "vmaf_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
             ]          
 elif model_version == "vmaf_float_b_v0.6.3.json":
      for metric, values in metrics_results.items():
-         mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = values
+         mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
          if metric == "vmaf":
             model_version=model_version.replace(".json","")
             rows_filled = df_existing[model_version].notna().sum()
@@ -442,7 +455,9 @@ elif model_version == "vmaf_float_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -457,7 +472,9 @@ elif model_version == "vmaf_float_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -472,7 +489,9 @@ elif model_version == "vmaf_float_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -487,7 +506,9 @@ elif model_version == "vmaf_float_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
@@ -502,14 +523,16 @@ elif model_version == "vmaf_float_b_v0.6.3.json":
                 mean,
                 harmonic_mean,
                 geometric_mean,
-                total_variation,
+                percentile_1,
+                percentile_5,
+                percentile_95,
                 norm_lp_1,
                 norm_lp_2,
                 norm_lp_3,
             ]
 else:
     if "vmaf" in metrics_results:
-        mean, harmonic_mean, geometric_mean, total_variation, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
+        mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
         model_version=model_version.replace(".json","")
         rows_filled = df_existing[model_version].notna().sum()
         start_row = rows_filled 
@@ -518,7 +541,9 @@ else:
         mean,
         harmonic_mean,
         geometric_mean,
-        total_variation,
+        percentile_1,
+        percentile_5,
+        percentile_95,
         norm_lp_1,
         norm_lp_2,
         norm_lp_3,

@@ -2,8 +2,11 @@
 
 1. **Build Podman Image**  
    ```bash
-   podman build -t <imageName> <folder>
-   ```
+   podman build -t <imageName>:<tag> <folder>   
+    ```
+- `imageName`:  Assigns a name and optionally a tag to the image being built
+- `folder`: Specifies the directory containing the Dockerfile and all the required files for the build
+  
 2. Set up the JSON Configuration File
 Create or edit the JSON file in /home/greco/home/docker.
 Example template:

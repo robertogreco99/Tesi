@@ -1,7 +1,8 @@
 # How to run the simulations 
 ## 1. **Build the Podman image**
-Run the following command: `podman build -t <imageName> <folder>`. 
-
+Run the following command: `podman build -t <imageName>:<tag> <folder>`. 
+- `imageName`:  Assigns a name and optionally a tag to the image being built
+- `folder`: Specifies the directory containing the Dockerfile and all the required files for the build
 This Dockerfile sets up a video quality analysis environment with Python 3.12, FFmpeg 7.0.2, and VMAF 3.0.0. It installs necessary development tools, libraries for video encoding, and Python packages for analysis. The container is configured to run video quality experiments, store results, and generate graphs using pre-defined scripts and MOS data.
 ## 2. **Modify the configuration file in the JSON folder** 
 
