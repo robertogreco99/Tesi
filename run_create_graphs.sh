@@ -5,7 +5,7 @@ if [ ! -d "csv_virtual_env" ]; then
     echo "Virtual environment not found. Creating the environment..."
     # Create the virtual environment
     python3 -m venv csv_virtual_env
-    # Activate the virtual environment
+    # Activate the virtual env
     source csv_virtual_env/bin/activate
     # Install the required packages
     pip install -r requirements.txt
