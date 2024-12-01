@@ -51,13 +51,23 @@ vmaf_models = [
     "vmaf_4k_v0.6.1neg.json",
 ]
 
-# Read the JSON configuration file
-with open(config_file, 'r') as f:
-    config = json.load(f)
+schema_file_path = 'Json/configschema.json'
 
-# Read the json schema file
-with open('Json/configschema.json') as schema_file:
-    schema = json.load(schema_file)
+try:
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+except FileNotFoundError:
+    print(f"Error: Config file '{config_file}' not found.")
+    sys.exit(1)
+
+try:
+    # Read the json schema file
+    with open(schema_file_path) as schema_file:
+        schema = json.load(schema_file)
+except FileNotFoundError:
+    print(f"Error: Schema file '{schema_file_path}' not found.")
+    sys.exit(1)
+
     
 # Get data from the config file
 image_name = config['IMAGE_NAME']
@@ -66,15 +76,28 @@ input_distorted_dir = config['INPUT_DIST_DIR']
 output_dir = config['OUTPUT_DIR']
 hash_dir = config['HASH_DIR']
 mos_dir = config['MOS_DIR']
+dataset_dir = config['DATASET_DIR']
 original_video = config['ORIGINAL_VIDEO']
 model_version_file = config['MODEL_VERSION']
 dataset = config['DATASET']
 features_list = config['FEATURES']
 
+# Create the directories if they do not exist
+os.makedirs(hash_dir, exist_ok=True)
+os.makedirs(mos_dir, exist_ok=True)
+os.makedirs(output_dir, exist_ok=True)
+os.makedirs(dataset_dir, exist_ok=True)
+
 # Read the dataset file name 
-dataset_file = f"{dataset}.json"  
+dataset_name = f"{dataset}.json"  
 # Find the dataset in the correct path
-dataset_file = os.path.join("Dataset", f"{dataset}.json")
+dataset_file = os.path.join(dataset_dir, dataset_name)
+
+# Verify if dataset file exists
+if not os.path.isfile(dataset_file):
+    print(f"Error: Dataset file '{dataset_file}' does not exixst")
+    sys.exit(1)
+
 
 # Validate the schema 
 try:
@@ -139,6 +162,7 @@ for distorted_file in os.listdir(input_distorted_dir):
             print(f"Width: {width}, Height: {height}, Bitrate: {bitrate}, Video Codec: {video_codec}, Pixel Format: {pixel_format}, Bit Depth: {bit_depth}, FPS: {fps}, Duration: {duration}")  
             # where the commands are saved
             output_dataset_dir = os.path.join(output_dir, dataset)
+            os.makedirs(output_dataset_dir, exist_ok=True)
             # output file name
             commands_file_name = f"commands_{dataset}.txt"
             if model_version_file == 'VMAF_ALL':   

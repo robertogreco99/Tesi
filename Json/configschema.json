@@ -8,6 +8,7 @@
         "OUTPUT_DIR": { "type": "string" , "description": "The path where the results are saved"},
         "HASH_DIR": { "type": "string" , "description": "The path where the hash files will be saved"},
         "MOS_DIR": { "type": "string" , "description": "The path where MOS description file can be found"},
+        "DATASET_DIR": { "type": "string" , "description": "The path where datasets description files can be found"},
         "ORIGINAL_VIDEO": { "type": "string", "description": "The video chosen to be analyzed" },
         "MODEL_VERSION": { 
             "type": "string",
@@ -58,7 +59,7 @@
             "uniqueItems": true
         }
     },
-    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES"],
+    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR","DATASET_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES"],
     "additionalProperties": false
 }
 
