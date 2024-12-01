@@ -19,7 +19,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
         -v {hash_dir}:/hash \
         -v {mos_dir}:/mos \
         {image_name} \
-        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {features}'"
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {features}'"
     else:
         command = f"podman run --rm -it\
         -v {input_reference_dir}:/reference \
@@ -28,7 +28,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
         -v {hash_dir}:/hash \
         -v {mos_dir}:/mos \
         {image_name} \
-        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {""}'"
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir}  {""}'"
     return command
 
 if __name__ == '__main__':
