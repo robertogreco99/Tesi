@@ -46,10 +46,6 @@ if __name__ == '__main__':
         sys.exit(1)
 
     output_dir = config['OUTPUT_DIR']
-    dataset = config['DATASET']
-    # where to found the commands file
-    file_path = f"{output_dir}/{dataset}/commands_{dataset}.txt"
-     
     database1 = 'AVT-VQDB-UHD-1_2'
     database2 = 'AVT-VQDB-UHD-1_3'
 
