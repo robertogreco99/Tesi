@@ -1,0 +1,2 @@
+python3 analyze.py "AVT-VQDB-UHD-1_1" "4000" "2250" "750" "h264" "vmaf_v0.6.1.json" "/home/greco/home/docker/Result" "bigbuck_bunny_8bit.yuv" "bigbuck_bunny_8bit_750kbps_720p_60.0fps_h264.mp4" "1280" "720" "60.0" "10.0" "/home/greco/home/docker/Mos"
+python3 analyze.py "AVT-VQDB-UHD-1_1" "4000" "2250" "750" "h264" "vmaf_v0.6.1neg.json" "/home/greco/home/docker/Result" "bigbuck_bunny_8bit.yuv" "bigbuck_bunny_8bit_750kbps_720p_60.0fps_h264.mp4" "1280" "720" "60.0" "10.0" "/home/greco/home/docker/Mos"
