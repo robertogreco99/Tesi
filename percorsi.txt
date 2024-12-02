@@ -1,9 +1,50 @@
-KUGVD
+KUGVD : DONE
 /home/greco/home/datasets/IGVQM/KUGVD/dataset/ReferenceVideos_YUV
 /home/greco/home/datasets/IGVQM/KUGVD/dataset/DistortedVideos_MP4_v2
 
+GamingVideoSet1
+/home/greco/home/datasets/IGVQM/GamingVideoSET/dataset/ReferenceVideos_Part1
+/home/greco/home/datasets/IGVQM/GamingVideoSET/dataset/DistortedVideos
+GamingVideoSet1
 
-AGH_NTIA_DOLBY
+GamingVideoSet2
+/home/greco/home/datasets/IGVQM/GamingVideoSET/dataset/ReferenceVideos_Part2
+/home/greco/home/datasets/IGVQM/GamingVideoSET/dataset/DistortedVideos
+GamingVideoSet2
+
+AGH_NTIA_DOLBY  : DONE
+/home/greco/home/datasets/IGVQM/AGH_NTIA_Dolby/y4m/original
+/home/greco/home/datasets/IGVQM/AGH_NTIA_Dolby/y4m/pvs
+AGH_NTIA_Dolby
+
+
+ITS4S
+/home/greco/home/datasets/IGVQM/ITS4S/uncompressed
+/home/greco/home/datasets/IGVQM/ITS4S/compressed
+ITS4S
+
+
+AVT-VQDB-UHD-1_1
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/src_videos
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/test_1/segments
+AVT-VQDB-UHD-1_1
+
+AVT-VQDB-UHD-1_2
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/src_videos
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/test_2/segments
+AVT-VQDB-UHD-1_2
+
+AVT-VQDB-UHD-1_3
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/src_videos
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/test_2/segments
+AVT-VQDB-UHD-1_3
+
+AVT-VQDB-UHD-1_4
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/src_videos
+/home/greco/home/datasets/IGVQM/AVT-VQDB-UHD-1/database/test_2/segments
+AVT-VQDB-UHD-1_4
+
+
 
 The script  extracts all the unique video_codescs,fps,duration,.bitrate,vmaf_float_b.v0.6.3, vmaf_b_v0.6.3 values. Video_codes graphs are generated only if there is more than one video_codecs,
 fps graphs only if there is a minimun difference of 15 fps. The script create color palettes using Matplotlib colormap functions. Each palette contains a range of colors that are evenly distributed  across an interval from 0 to 1, where each value in the interval corresponds to a specific color in the palette.  The number of colors in each palette depends on the number of elements in the respective input list. It create  dictionaries that map each element (e.g., codec, FPS, duration, bitrate, temporal pooling) to a specific color  based on its position in the respective list. Each color is selected from the previously generated color palettes.
