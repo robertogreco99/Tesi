@@ -244,7 +244,7 @@ def calculate_metrics(column_name):
         if np.any(np.isnan(column_data)):
             #return -1 for the column if there are null values
             print(f"NaN values found in {column_name}, returning -1 for all metrics.")
-            return (-1, -1, -1, -1, -1, -1, -1)
+            return (-1, -1, -1, -1, -1, -1, -1,-1,-1)
         
         mean_value = np.mean(dframes[column_name])
         harmonic_mean_value = 1.0 / np.mean(1.0 / (dframes[column_name] + 1.0)) - 1.0
