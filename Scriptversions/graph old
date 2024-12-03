@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import numpy as np
@@ -63,7 +63,7 @@ else:
         "psnr_hvs_cb", "psnr_hvs_cr", "psnr_hvs","vmaf_float_b_v0.6.3_bagging",
         "vmaf_b_v0.6.3_bagging", "integer_vif_scale3"
         ]
-    temporal_pooling_values = ["mean", "harmonic_mean", "geometric_mean", "total_variation","percentile_1","percentile_5","percentile_95","norm_lp1", "norm_lp2", "norm_lp3"]
+    #temporal_pooling_values = ["mean", "harmonic_mean", "geometric_mean", "total_variation","percentile_1","percentile_5","percentile_95","norm_lp1", "norm_lp2", "norm_lp3"]
     temporal_pooling_graph = ["mean", "harmonic_mean", "geometric_mean","percentile_1","percentile_5","percentile_95","norm_lp1", "norm_lp2", "norm_lp3"]
 
     lo_column_float_b = "vmaf_float_b_v0.6.3_ci_p95_lo"
@@ -79,25 +79,22 @@ else:
     output_path = f"{output_dir}/{dataset}/graph_results/"
     os.makedirs(output_path, exist_ok=True)
     # Graph 
-    # - for all the PVS, a scatter plot with the VMAF model's mean as the central value and error bars based on the hi and lo values as the lower and upper limits: HILO.
-    # - for all the PVS, a scatter plot with the VMAF model's mean with standard deviation as the central value and error bars based on the hi and lo values as the lower and upper limits: HILO.
-    # - for all the pvs  a scatter plot with the VMAF model's mean as the central value and error bars based on the 5th and 95th percentiles as lower and upper limits : "Percentile5_95_vsVmafMean"
+    # REMOVED - for every temporal pooling : MOS vs feature ( all the points are for the same temporal pooling) and HILO or HILOSTDD with different graphs (error bars) : "Features" dir or "HI_LO" dir
+    # REMOVED- for every temporal pooling : MOS vs vmaf models ( all the points are for the same temporal pooling) : "VMAF models" dir
     # - for every features all the pvs : for every pvs  different points for the different temporal pooling  : "PVS dir"
     # - for every features all the pvs : for every pvs  different points for the different temporal pooling : "PVS dir"
-    
+    # to do : hilo e hilosttdev
     
     
     # where to save analysis    
-    vmaf_output_path = os.path.join(output_path, "VMAF_Models")
-    features_output_path = os.path.join(output_path, "Features")
+    #vmaf_output_path = os.path.join(output_path, "VMAF_Models")
+    #features_output_path = os.path.join(output_path, "Features")
     hi_lo_output_path = os.path.join(output_path,"HI_LO")
     pvs_path=os.path.join(output_path,"PVS")
-    percentile_path = os.path.join(output_path,"Percentile5_95_vsVmafMean")
-    os.makedirs(vmaf_output_path, exist_ok=True)
-    os.makedirs(features_output_path, exist_ok=True)
+    #os.makedirs(vmaf_output_path, exist_ok=True)
+    #os.makedirs(features_output_path, exist_ok=True)
     os.makedirs(hi_lo_output_path, exist_ok=True)
     os.makedirs(pvs_path, exist_ok=True)
-    os.makedirs(percentile_path, exist_ok=True)
 
     # extract all the unique video_codescs,fps,duration,bitrate,vmaf_float_b.v0.6.3, vmaf_b_v0.6.3 values
     # video_codes graph are generated only if there is more than one video_codecs
@@ -125,7 +122,8 @@ else:
     Duration_color_map = {Duration: colors_Duration[i] for i, Duration in enumerate(Duration_values)}
     bitrate_color_map = {bitrate: colors_bitrate[i] for i, bitrate in enumerate(bitrate_values)}
     temporal_pooling_color_map={temporal_pooling : colors_temporal_pooling[i] for i ,temporal_pooling in enumerate(temporal_pooling_graph)}
-    
+
+
     for temporal_pooling_value in temporal_pooling_values:
         filtered_data = data[data['temporal_pooling'] == temporal_pooling_value]
 
@@ -171,7 +169,7 @@ else:
               plt.close()
         else :
             print("There is only one video codec")
-
+        
         # FPS
         if len(FPS_values) > 1 and max(FPS_values) - min(FPS_values) >= 15:
             for y_column in vmaf_models + features:
@@ -347,4 +345,4 @@ else:
             plt.savefig(output_file, bbox_inches='tight')
             print(f"Graph saved: {output_file}")
             plt.close()
-    
+   
