@@ -31,8 +31,7 @@ computed_mos = -1
 
 temporal_pooling_count = 9
 
-print(f"Distorted_video: {distorted_video}")
-#print(f"width_old: {width_old}, height_old: {height_old}")
+print(f"width_old: {width_old}, height_old: {height_old}")
 
 temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean','percentile_1','percentile_5','percentile_95', 'norm_lp1', 'norm_lp2', 'norm_lp3']
 
@@ -254,27 +253,27 @@ def calculate_metrics(column_name):
         percentile_5 = np.percentile(dframes[column_name], 5)
         percentile_95 =np.percentile(dframes[column_name], 95)
         
-        #print(f"1st Percentile: {percentile_1}")
-        #print(f"5th Percentile: {percentile_5}")
-        #print(f"95th Percentile: {percentile_95}")
+        print(f"1st Percentile: {percentile_1}")
+        print(f"5th Percentile: {percentile_5}")
+        print(f"95th Percentile: {percentile_95}")
 
         
         # Print values
-        #print(f"{column_name} Mean: {mean_value}")
-        #print(f"Harmonic mean {column_name}: {harmonic_mean_value}")
-        #print(f"Geometric mean {column_name}: {geometric_mean_value}")
+        print(f"{column_name} Mean: {mean_value}")
+        print(f"Harmonic mean {column_name}: {harmonic_mean_value}")
+        print(f"Geometric mean {column_name}: {geometric_mean_value}")
         #print(f"{column_name} Percentiles:")
         
         
         # Norms
         norm_lp_1 = np.power(np.mean(np.power(np.array(dframes[column_name]), 1)), 1.0 / 1)  
-        #print(f"Norm L_1 of {column_name} values is: {norm_lp_1}")
+        print(f"Norm L_1 of {column_name} values is: {norm_lp_1}")
 
         norm_lp_2 = np.power(np.mean(np.power(np.array(dframes[column_name]), 2)), 1.0 / 2)  
-        #print(f"Norm L_2 of {column_name} values is: {norm_lp_2}")
+        print(f"Norm L_2 of {column_name} values is: {norm_lp_2}")
 
         norm_lp_3 = np.power(np.mean(np.power(np.array(dframes[column_name]), 3)), 1.0 / 3)  
-        #print(f"Norm L_3 of {column_name} values is: {norm_lp_3}")
+        print(f"Norm L_3 of {column_name} values is: {norm_lp_3}")
 
         return mean_value, harmonic_mean_value, geometric_mean_value, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3
     else:
@@ -318,11 +317,237 @@ for metric in metrics_to_evaluate:
 # metrics_results[ciede2000] = {mean,harmonic_mean,..} 
 df_existing = pd.read_csv(csv_filename)
 
+# The following code 
+# has more cases for different model_versions
+#   for metric, values in metrics_results.items():
+#   - remove json extension to match the column name if the metric is vmaf,vmaf_bagging,vmaf_ci_p95_hi,vmaf_ci_p95_lo or vmaf_stddev
+#   - calculate how many rows are already occupied in the column corresponding to the model or metric 
+#   - start_row = rows_filled :  sets the starting row for inserting the new results. It uses the value of rows_filled to determine where the new data should begin.
+#   - end_row = start_row + temporal_pooling_count : calculates the end_row by adding temporal_pooling_count to the start_row. 
+#               This defines the range of rows where the new results will be inserted.
+#   - df_existing.loc[start_row:end_row-1, metric] =[ mean,harmonic_mean,geometric_mean,percentile_1,percentile_5,percentile_95,norm_lp_1,norm_lp_2,norm_lp_3]
+#    This inserts the new metric values (mean, harmonic_mean, etc.) into the specified rows of the df_existing DataFrame. 
+#    The loc function is used to select the rows from start_row to end_row-1 (inclusive), and the column corresponding to model_version.
+#    The new values are assigned to that range of rows.
 
-def fill_dataframe(df, model_version, metric, values, start_row, temporal_pooling_count):
-    # Fill the column with values for temporal_pooling_count rows starting from start_row
-    mean, harmonic_mean, geometric_mean, percentile_1, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
-    df.loc[start_row:start_row + temporal_pooling_count - 1, metric] = [
+
+
+if model_version == 'vmaf_v0.6.1.json':
+    for metric, values in metrics_results.items():
+     mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
+     if metric == "vmaf":
+            model_version=model_version.replace(".json","")
+            rows_filled = df_existing[model_version].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_version] =[            
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+     else:
+        rows_filled = df_existing[metric].notna().sum()
+        start_row = rows_filled 
+        end_row = start_row + temporal_pooling_count
+        df_existing.loc[start_row:end_row-1, metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+elif model_version == "vmaf_b_v0.6.3.json":
+     for metric, values in metrics_results.items():
+         mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
+         if metric == "vmaf":
+            model_version=model_version.replace(".json","")
+            rows_filled = df_existing[model_version].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_version] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]    
+         if metric == "vmaf_bagging":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_bagging"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_stddev":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_stddev"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]        
+         if metric == "vmaf_ci_p95_hi":
+             model_version=model_version.replace(".json","")
+             model_metric = f"{model_version}_ci_p95_hi"
+             rows_filled = df_existing[model_metric].notna().sum()
+             start_row = rows_filled 
+             end_row = start_row + temporal_pooling_count
+             df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_ci_p95_lo":
+             model_version=model_version.replace(".json","")
+             model_metric = f"{model_version}_ci_p95_lo"
+             rows_filled = df_existing[model_metric].notna().sum()
+             start_row = rows_filled 
+             end_row = start_row + temporal_pooling_count
+             df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]          
+elif model_version == "vmaf_float_b_v0.6.3.json":
+     for metric, values in metrics_results.items():
+         mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
+         if metric == "vmaf":
+            model_version=model_version.replace(".json","")
+            rows_filled = df_existing[model_version].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_version] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_bagging":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_bagging"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[            
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_stddev":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_stddev"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]        
+         if metric == "vmaf_ci_p95_hi":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_ci_p95_hi"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+         if metric == "vmaf_ci_p95_lo":
+            model_version=model_version.replace(".json","")
+            model_metric = f"{model_version}_ci_p95_lo"
+            rows_filled = df_existing[model_metric].notna().sum()
+            start_row = rows_filled 
+            end_row = start_row + temporal_pooling_count
+            df_existing.loc[start_row:end_row-1, model_metric] =[
+                mean,
+                harmonic_mean,
+                geometric_mean,
+                percentile_1,
+                percentile_5,
+                percentile_95,
+                norm_lp_1,
+                norm_lp_2,
+                norm_lp_3,
+            ]
+else:
+    if "vmaf" in metrics_results:
+        mean, harmonic_mean, geometric_mean, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
+        model_version=model_version.replace(".json","")
+        rows_filled = df_existing[model_version].notna().sum()
+        start_row = rows_filled 
+        end_row = start_row + temporal_pooling_count
+        df_existing.loc[start_row:end_row-1, model_version] =[
         mean,
         harmonic_mean,
         geometric_mean,
@@ -332,37 +557,7 @@ def fill_dataframe(df, model_version, metric, values, start_row, temporal_poolin
         norm_lp_1,
         norm_lp_2,
         norm_lp_3,
-    ]
-
-def process_metrics(df_existing, metrics_results, model_version, temporal_pooling_count, distorted_video):
-    model_base = model_version.replace(".json", "")
-    
-    # Find the first occurrence of 'distorted_video' in the 'Distorted_file_name' column
-    first_occurrence_row = df_existing[df_existing["Distorted_file_name"] == distorted_video].index[0]
-    
-    # Loop through each metric in metrics_results
-    for metric, values in metrics_results.items():
-        if metric == "vmaf":
-            column = model_base
-        elif metric.startswith("vmaf_"):
-            column = f"{model_base}_{metric.split('_', 1)[1]}"
-        else:
-            column = metric
-        
-        fill_dataframe(df_existing, model_version, column, values, first_occurrence_row, temporal_pooling_count)
-
-if model_version in ["vmaf_v0.6.1.json", "vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
-    process_metrics(df_existing, metrics_results, model_version, temporal_pooling_count, distorted_video)
-elif "vmaf" in metrics_results:
-    mean, harmonic_mean, geometric_mean, percentile_1, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
-    # Find the first occurrence row where 'Distorted_file_name' matches distorted_video
-    first_occurrence_row = df_existing[df_existing["Distorted_file_name"] == distorted_video].index[0]
-    
-    # Fill the columns starting from the first occurrence row
-    fill_dataframe(df_existing, model_version, model_version.replace(".json", ""), 
-                   [mean, harmonic_mean, geometric_mean, percentile_1, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3], 
-                   first_occurrence_row, temporal_pooling_count)
-
+]
 # Update the csv with the new dataframe
 df_existing.to_csv(csv_filename, mode='w', header=True, index=False)
 
