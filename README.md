@@ -106,6 +106,7 @@ The final csv contains:
       - integer_vif_scale3
 
 ### The python script `analyze.py`
+DA RISCRIVERE 
 The script 
 -  checks if the correct number of arguments are passed (15). These arguments include details about the dataset, video characteristics, and output directory.
 - loads a JSON file containing MOS scores for different videos and extracts the MOS, confidence interval (CI), and computed MOS for the distorted video. (Not every dataset has CI)
@@ -120,6 +121,7 @@ This script checks if a virtual environment named `csv_virtual_env` exists. If i
 The script installs the required packages listed in the requirements.txt file, which includes specific versions of libraries such as pandas, numpy, scipy, and matplotlib. By specifying these versions in the requirements.txt, it ensures that the correct dependencies are installed, providing a consistent environment for the script to run. This helps to avoid compatibility issues and ensures reproducibility across different systems or environments.
 After the script execution, it deactivates the virtual environment. If the virtual environment already exists, the script simply activates it and runs the `graph_simulations_run.py` script without recreating the environment.
 ###  The graph_simulations_run.py script 
+DA RISCRIVERE
 To create the graphs, execute the `graph_simulations_run.py` script. This script runs `graph_script.py` from the csv files.
 ### The python script `graph_script`
 
