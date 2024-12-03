@@ -79,49 +79,30 @@ else:
     output_path = f"{output_dir}/{dataset}/graph_results/"
     os.makedirs(output_path, exist_ok=True)
     # Graph 
-    # - for all the pvs a graph for the vmaf_float_b_v0.6.3 and vmaf_b_v0.6.3  with hilo and stdev: for every pvs different points for the different temporal pooling  : "HILO dir"
+    # - for all the PVS, a scatter plot with the VMAF model's mean as the central value and error bars based on the hi and lo values as the lower and upper limits: HILO.
+    # - for all the PVS, a scatter plot with the VMAF model's mean with standard deviation as the central value and error bars based on the hi and lo values as the lower and upper limits: HILO.
+    # - for all the pvs  a scatter plot with the VMAF model's mean as the central value and error bars based on the 5th and 95th percentiles as lower and upper limits : "Percentile5_95_vsVmafMean"
     # - for every features all the pvs : for every pvs  different points for the different temporal pooling  : "PVS dir"
     # - for every features all the pvs : for every pvs  different points for the different temporal pooling : "PVS dir"
     
     
     
     # where to save analysis    
-    #vmaf_output_path = os.path.join(output_path, "VMAF_Models")
-    #features_output_path = os.path.join(output_path, "Features")
+
     hi_lo_output_path = os.path.join(output_path,"HI_LO")
     pvs_path=os.path.join(output_path,"PVS")
-    #os.makedirs(vmaf_output_path, exist_ok=True)
-    #os.makedirs(features_output_path, exist_ok=True)
+    percentile_path = os.path.join(output_path,"Percentile5_95_vsVmafMean")
+    
     os.makedirs(hi_lo_output_path, exist_ok=True)
     os.makedirs(pvs_path, exist_ok=True)
-
-    # extract all the unique video_codescs,fps,duration,bitrate,vmaf_float_b.v0.6.3, vmaf_b_v0.6.3 values
-    # video_codes graph are generated only if there is more than one video_codecs
-    # fps graphs only if there is a minimun difference of 15 fps
-    video_codecs = data['Video_codec'].unique()
-    FPS_values = data['FPS'].unique()
-    Duration_values = data['Duration'].unique()
-    bitrate_values = data['Bitrate'].unique()
-    vmaf_float_b_values = data['vmaf_float_b_v0.6.3'].unique()
-    vmaf_b_values = data['vmaf_b_v0.6.3'].unique()
+    os.makedirs(percentile_path, exist_ok=True)
+    
     # extract all the different pvs
     pvs=data['Distorted_file_name'].unique()
-    # Create color palettes using Matplotlib colormap functions. Each palette contains a range of colors that are evenly distributed
-    # across an interval from 0 to 1, where each value in the interval corresponds to a specific color in the palette.
-    # The number of colors in each palette depends on the number of elements in the respective input list.
-    colors_video_codec = plt.cm.tab10(np.linspace(0, 1, len(video_codecs)))
-    colors_FPS = plt.cm.viridis(np.linspace(0, 1, len(FPS_values)))
-    colors_Duration = plt.cm.plasma(np.linspace(0, 1, len(Duration_values)))
-    colors_bitrate = plt.cm.cool(np.linspace(0, 1, len(bitrate_values)))
     colors_temporal_pooling=plt.cm.twilight(np.linspace(0,1,len(temporal_pooling_graph)))
     # Create dictionaries that map each element (e.g., codec, FPS, duration, bitrate, temporal pooling) to a specific color
     # based on its position in the respective list. Each color is selected from the previously generated color palettes.
-    codec_color_map = {codec: colors_video_codec[i] for i, codec in enumerate(video_codecs)}
-    FPS_color_map = {FPS: colors_FPS[i] for i, FPS in enumerate(FPS_values)}
-    Duration_color_map = {Duration: colors_Duration[i] for i, Duration in enumerate(Duration_values)}
-    bitrate_color_map = {bitrate: colors_bitrate[i] for i, bitrate in enumerate(bitrate_values)}
     temporal_pooling_color_map={temporal_pooling : colors_temporal_pooling[i] for i ,temporal_pooling in enumerate(temporal_pooling_graph)}
-
 
     for feature in features:
      plt.figure(figsize=(10, 6))
@@ -402,4 +383,53 @@ else:
     output_file = f"{hi_lo_output_path}/b_model/hilostddev_vmaf_b_v0.6.3_stddev.png"
     print(f"Graph saved: {output_file}")
     plt.savefig(output_file, bbox_inches='tight')
+    plt.close()
+    
+# Percentile
+for vmaf_model in vmaf_models:
+    plt.figure(figsize=(10, 6))
+    labels = []
+    colors = []
+    added_labels = set()
+    for pvs_value in pvs : 
+        output_dir = f"{percentile_path}/error_bar/"
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir) 
+        filtered_data = data[data['Distorted_file_name'] == pvs_value]
+        if filtered_data.empty:
+            print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
+            continue
+        x_value = filtered_data['MOS'].values[0]
+        temporal_pooling_value = "mean"
+        temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
+        temporal_pooling_lo = "percentile_5"
+        percentile_5_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_lo]
+        temporal_pooling_hi = "percentile_95"
+        percentile_95_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_hi]
+        if temporal_filtered_data.empty:
+            print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
+            continue
+        y_value = temporal_filtered_data[vmaf_model].values  
+        if  y_value == -1:
+            continue
+        lo_value_percentile_5 = percentile_5_data[vmaf_model].values 
+        hi_value_percentile_95 = percentile_95_data[vmaf_model].values 
+        plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_percentile_5,hi_value_percentile_95-y_value],fmt='o')
+        if temporal_pooling_value not in added_labels:
+            labels.append(f"{temporal_pooling_value}")
+            added_labels.add(temporal_pooling_value)
+
+    plt.title(f"{x_column} vs {vmaf_model} mean with percentile")
+    plt.xlabel("MOS")
+    plt.ylabel(vmaf_model)
+    if "MOS" in axis_limits:
+        plt.xlim(axis_limits["MOS"])
+    if vmaf_model in axis_limits:
+        plt.ylim(axis_limits[vmaf_model])  
+    plt.grid(True)
+    plt.xticks(rotation=45)
+    plt.legend(title="Temporal Pooling", labels=labels, loc='center left', bbox_to_anchor=(1, 0.5))   
+    output_file = f"{percentile_path}/error_bar/percentile5_95_{vmaf_model}.png"
+    print(f"Graph saved: {output_file}")  
+    plt.savefig(output_file, bbox_inches='tight') 
     plt.close()
