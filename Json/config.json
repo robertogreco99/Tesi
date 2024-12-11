@@ -10,7 +10,7 @@
     "JSON_DIR": "/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Json",
     "ORIGINAL_VIDEO": "Overwatch_30fps_30sec_v2.yuv",
     "MODEL_VERSION": "VMAF_ALL",
-    "DATASET": "AGH_NTIA_Dolby",
+    "DATASET": "KUGVD",
     "FEATURES": [
         "cambi",
         "float_ssim",
@@ -18,5 +18,7 @@
         "float_ms_ssim",
         "ciede",
         "psnr_hvs"
-    ]
+    ],
+    "USE_LIBVMAF": false,
+    "USE_ESSIM": true
 }

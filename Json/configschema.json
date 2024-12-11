@@ -59,9 +59,34 @@
             },
             "minItems": 1,
             "uniqueItems": true
+        },
+        "USE_LIBVMAF": {
+            "type": "boolean",
+            "description": "Indicates if libvmaf should be used for video quality assessment"
+        },
+        "USE_ESSIM": {
+            "type": "boolean",
+            "description": "Indicates if eSSIM should be used for video quality assessment"
         }
     },
     "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR","DATASET_DIR","SIMULATIONS_DIR","JSON_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES"],
+    "dependencies": {
+        "FEATURES": {
+            "oneOf": [
+                {
+                    "properties": {
+                        "USE_LIBVMAF": { "const": true }
+                    },
+                    "required": ["FEATURES"]
+                },
+                {
+                    "properties": {
+                        "USE_LIBVMAF": { "const": false }
+                    }
+                }
+            ]
+        }
+    },
     "additionalProperties": false
 }
 
