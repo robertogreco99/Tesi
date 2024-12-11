@@ -24,7 +24,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libvorbis-dev=1.3.7-1\
     libopus-dev=1.3.1-3\
     libaom-dev=3.6.0-1+deb12u1\
-    xxd=2:9.0.1378-2
+    xxd=2:9.0.1378-2\
+    cmake=3.25.1-1\
+    clang-tidy=1:14.0-55.7~deb12u1\
+    clang-format=1:14.0-55.7~deb12u1
    
 
 # Python libraries for analysis and graphs
@@ -51,7 +54,28 @@ RUN curl -L https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n7.0.2.zip -o ffm
     && make -j$(nproc) \
     && make install \
     && ldconfig  
-    
+
+#Download the ZIP of the ESSIM Git repository, with the version fixed to a specific commit.
+#RUN curl -L https://github.com/facebookresearch/essim/archive/refs/heads/main.zip -o essim.zip \
+#    && unzip essim.zip \
+#    && mv essim-main /essim \ 
+#    && cd /essim \
+#    #&& git checkout 4131785b1fe2b920af9c698066fde79df76982b8 \
+#    && mkdir build \
+#    && cd build \
+#    && cmake .. -G Ninja \ 
+#    && cmake --build . --parallel
+
+#Download the ZIP of the ESSIM Git repository, with the version fixed to a specific commit.
+RUN curl -L https://github.com/facebookresearch/essim/archive/4131785b1fe2b920af9c698066fde79df76982b8.zip -o essim.zip \
+    && unzip essim.zip \
+    && mv essim-4131785b1fe2b920af9c698066fde79df76982b8 /essim \  
+    && cd /essim \
+    && mkdir build \
+    && cd build \
+    && cmake .. -G Ninja \
+    && cmake --build . --parallel
+
 
 # Create a directory for videos,results and hash
 RUN mkdir -p /reference /distorted /results /hash /mos
