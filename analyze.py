@@ -256,7 +256,7 @@ if (use_essim == "True" and use_libvmaf == "True"):
     essim_dframes = pd.read_csv(essim_filename)
     # Merge: add essim columns to vmaf columns
     merged_df = pd.merge(dframes, essim_dframes, on='Frame', how='left')
-    print(merged_df)
+    #print(merged_df)
 
     
     
