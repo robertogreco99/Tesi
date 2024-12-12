@@ -624,11 +624,31 @@ if [[ "$USE_ESSIM" == "True" ]]; then
 
     # Convert video file based on dataset type
     if [[ "$DATASET" == "ITS4S" ]]; then
-        ffmpeg -i "$original_converted_to420p" -f rawvideo -pix_fmt yuv420p "$final_original_file_essim"
-        ffmpeg -i "$final_decoded_file" -f rawvideo -pix_fmt yuv420p "$final_decoded_file_essim"
+        final_original_file_essim="$OUTPUT_DIR/${original%.*}.yuv"     
+        final_decoded_file_essim="${final_decoded_file%.*}.yuv"
+        if [ ! -f "$final_original_file_essim" ]; then
+            ffmpeg -i "$original_converted_to420p" -f rawvideo -pix_fmt yuv420p "$final_original_file_essim"
+        else 
+            echo "File already exists: $final_original_file_essim"
+        fi
+        if [ ! -f "$final_decoded_file_essim" ]; then
+            ffmpeg -i "$final_decoded_file" -f rawvideo -pix_fmt yuv420p "$final_decoded_file_essim"
+        else 
+            echo "File already exists: $final_decoded_file_essim"
+        fi
     elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
-        ffmpeg -i "$INPUT_REFERENCE_DIR/$original" -f rawvideo -pix_fmt yuv422p "$final_original_file_essim"
-        ffmpeg -i "$final_decoded_file" -f rawvideo -pix_fmt yuv422p "$final_decoded_file_essim"
+        final_original_file_essim="$OUTPUT_DIR/${original%.*}.yuv"     
+        final_decoded_file_essim="${final_decoded_file%.*}.yuv"
+        if [ ! -f "$final_original_file_essim" ]; then
+            ffmpeg -i "$INPUT_REFERENCE_DIR/$original" -f rawvideo -pix_fmt yuv422p "$final_original_file_essim"
+        else  
+            echo "File already exists: $final_original_file_essim"
+        fi
+        if [ ! -f "$final_decoded_file_essim" ]; then
+            ffmpeg -i "$final_decoded_file" -f rawvideo -pix_fmt yuv422p "$final_decoded_file_essim"
+        else 
+            echo "File already exists: $final_decoded_file_essim"
+        fi
     fi
 
     # Run eSSIM
@@ -664,7 +684,7 @@ if [[ "$MODEL_VERSION" == "vmaf_4k_v0.6.1neg.json" ]]; then
     fi
     if [ -f "$reference_converted_to_8_bit" ]; then
         rm "$reference_converted_to_8_bit"
-        echo "Decoded resized file removed: $reference_converted_to_8_bit"
+        echo "Reference converted to 8-bit removed: $reference_converted_to_8_bit"
     fi
     if [ -f "$reference_converted_to_30fps" ]; then
         rm "$reference_converted_to_30fps"
@@ -673,6 +693,16 @@ if [[ "$MODEL_VERSION" == "vmaf_4k_v0.6.1neg.json" ]]; then
     if [ -f "$reference_converted_to_15fps" ]; then
         rm "$reference_converted_to_15fps"
         echo "Reference converted to 15fps removed: $reference_converted_to_15fps"
+    fi
+    if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
+        if [ -f "$final_original_file_essim" ]; then
+            rm "$final_original_file_essim"
+            echo "Final_original_file_essimm removed: $final_original_file_essim"
+        fi
+        if [ -f "$final_decoded_file_essim" ]; then
+            rm "$final_decoded_file_essim"
+            echo "Final_decoded_file_essim removed: $final_decoded_file_essim"
+        fi
     fi
 else
     echo "Model version is not 'vmaf_4k_v0.6.1neg.json', skipping file removal."
