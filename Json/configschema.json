@@ -67,9 +67,20 @@
         "USE_ESSIM": {
             "type": "boolean",
             "description": "Indicates if eSSIM should be used for video quality assessment"
+        },
+        "ESSIM_PARAMETERS": {
+            "type": "object",
+            "properties": {
+                "Window_size": { "type": "string", "default": "8", "description": "Window size for eSSIM (can be 8 or 16). Default is 8", "enum": ["8", "16"]},
+                "Window_stride": { "type": "string", "default": "4", "description": "Window stride for eSSIM (can be 4, 8, 16). Default is 4","enum": ["4", "8", "16"]},
+                "SSIM_Minkowski_pooling": { "type": "string", "default": "3", "description": "SSIM Minkowski pooling (can be 3 or 4). Default is 3","enum": ["3", "4"]},
+                "Mode": { "type": "string", "default": "2", "description": "Mode : Can be 0 -> SSIM_MODE_REF, 1 -> SSIM_MODE_INT, 2 -> SSIM_MODE_PERF. Default is 2","enum": ["0", "1", "2"]}
+            },
+            "required": ["Window_size", "Window_stride", "SSIM_Minkowski_pooling", "Mode"],
+            "additionalProperties": false
         }
     },
-    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR","DATASET_DIR","SIMULATIONS_DIR","JSON_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES","USE_LIBVMAF","USE_ESSIM"],
+    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR","DATASET_DIR","SIMULATIONS_DIR","JSON_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES","USE_LIBVMAF","USE_ESSIM","ESSIM_PARAMETERS"],
     "dependencies": {
         "FEATURES": {
             "oneOf": [
@@ -82,6 +93,21 @@
                 {
                     "properties": {
                         "USE_LIBVMAF": { "const": false }
+                    }
+                }
+            ]
+        },
+        "USE_ESSIM": {
+            "oneOf": [
+                {
+                    "properties": {
+                        "USE_ESSIM": { "const": true }
+                    },
+                    "required": ["ESSIM_PARAMETERS"]
+                },
+                {
+                    "properties": {
+                        "USE_ESSIM": { "const": false }
                     }
                 }
             ]

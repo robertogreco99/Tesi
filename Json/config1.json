@@ -19,6 +19,12 @@
         "ciede",
         "psnr_hvs"
     ],
-    "USE_LIBVMAF" : true,
-    "USE_ESSIM": true
+    "USE_LIBVMAF": false,
+    "USE_ESSIM": true,
+    "ESSIM_PARAMETERS": {
+        "Window_size": "8",
+        "Window_stride": "4",
+        "SSIM_Minkowski_pooling": "3",
+        "Mode": "2"
+    }
 }
