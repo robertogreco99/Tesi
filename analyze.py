@@ -6,8 +6,8 @@ import json
 import sys
 from scipy.stats import gmean
 
-if len(sys.argv) != 15:
-    print("Error, format is : python3 analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video> <distorted_video> <width_old> <height_old> <fps> <duration> <mos_dir>")
+if len(sys.argv) != 18:
+    print("Error, format is : python3 analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video> <distorted_video> <width_old> <height_old> <fps> <duration> <mos_dir> <essim_params_string> <use_libvmaf> <use_essim>")
     sys.exit(1)
 
 dataset = sys.argv[1]        
@@ -24,17 +24,20 @@ height_old = sys.argv[11]
 fps = sys.argv[12]
 duration = sys.argv[13]
 mos_dir = sys.argv[14]
+essim_params_string = sys.argv[15]
+use_libvmaf = sys.argv[16]
+use_essim = sys.argv[17]
 
 mos = -1
 ci = -1
 computed_mos = -1
 
-temporal_pooling_count = 9
+temporal_pooling_count = 8
 
 print(f"Distorted_video: {distorted_video}")
 #print(f"width_old: {width_old}, height_old: {height_old}")
 
-temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean','percentile_1','percentile_5','percentile_95', 'norm_lp1', 'norm_lp2', 'norm_lp3']
+temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean','percentile_5','percentile_95', 'norm_lp1', 'norm_lp2', 'norm_lp3']
 
 vmaf_models = [
     "vmaf_v0.6.1", 
@@ -67,7 +70,9 @@ features = ["cambi",
     "vmaf_b_v0.6.3_stddev",       
     "vmaf_b_v0.6.3_ci_p95_lo",    
     "vmaf_b_v0.6.3_ci_p95_hi",
-    "integer_vif_scale3"
+    "integer_vif_scale3",
+    "eSSIM",
+    "SSIM",
     ]
 mos_dataset = f"{mos_dir}/Scores{dataset}.json"
 if not os.path.exists(mos_dataset):
@@ -188,25 +193,34 @@ if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
     # Create the JSON path name
     if width_old != '1920' or height_old != '1080':
         json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
     else:
         json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
 elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3"]:
     if original_video == "bigbuck_bunny_8bit.yuv":
         if width_old != '4000' or height_old != '2250':
             json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
         else:
             json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
     else:
         if width_old != '3840' or height_old != '2160':
             json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
         else:
             json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
 else:
     if dataset in [ "ITS4S" , "AGH_NTIA_Dolby"]:
         if width_old != '1280' or height_old != '720':
             json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
         else:
             json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
+
 
 # Print json filename
 print(f"Json file path: {json_filename}")
@@ -217,42 +231,55 @@ try:
         data = json.load(f)
 except FileNotFoundError:
     print(f"Error: Json file  '{json_filename}' not found.")
-    sys.exit(1)
+    #sys.exit(1)
+
+print(essim_filename)
+
+if (use_libvmaf == "True"):
+    # Take data from the frames
+    frames_list = data["frames"]
+    frames_rows = []
+
+    for frame in frames_list:
+        frame_num = frame["frameNum"]
+        metrics = frame["metrics"]
+        row = {"Frame": frame_num}
+        row.update(metrics)
+        frames_rows.append(row)
+
+    # example of row in frames_rows : frame_number cambi ciede ecc
+    # Create a DataFrame for current file's metrics
+    dframes = pd.DataFrame(frames_rows)
     
-# Read the JSON file
-#with open(json_filename) as f:
-#    data = json.load(f)
 
-# Take data from the frames
-frames_list = data["frames"]
-frames_rows = []
+if (use_essim == "True" and use_libvmaf == "True"):
+    essim_dframes = pd.read_csv(essim_filename)
+    # Merge: add essim columns to vmaf columns
+    merged_df = pd.merge(dframes, essim_dframes, on='Frame', how='left')
+    print(merged_df)
 
-for frame in frames_list:
-    frame_num = frame["frameNum"]
-    metrics = frame["metrics"]
-    row = {"frameNum": frame_num}
-    row.update(metrics)
-    frames_rows.append(row)
+    
+    
+if (use_essim=="True" and use_libvmaf =="False"):
+    essim_dframes = pd.read_csv(essim_filename)
+    
 
-# example of row in frames_rows : frame_number cambi ciede ecc
-# Create a DataFrame for current file's metrics
-dframes = pd.DataFrame(frames_rows)
-#print(dframes)
 
-def calculate_metrics(column_name):
-    if column_name in dframes.columns:
-        column_data = dframes[column_name]
+def calculate_metrics(dataframe_name,column_name):
+    dataframe_name.columns = dataframe_name.columns.str.strip()
+    if column_name in dataframe_name.columns:
+        column_data = dataframe_name[column_name]
         if np.any(np.isnan(column_data)):
             #return -1 for the column if there are null values
             print(f"NaN values found in {column_name}, returning -1 for all metrics.")
-            return (-1, -1, -1, -1, -1, -1, -1,-1,-1)
+            return (-1, -1, -1, -1, -1, -1, -1,-1)
         
-        mean_value = np.mean(dframes[column_name])
-        harmonic_mean_value = 1.0 / np.mean(1.0 / (dframes[column_name] + 1.0)) - 1.0
-        geometric_mean_value = gmean(dframes[column_name])
-        percentile_1 = np.percentile(dframes[column_name], 1)
-        percentile_5 = np.percentile(dframes[column_name], 5)
-        percentile_95 =np.percentile(dframes[column_name], 95)
+        mean_value = np.mean(dataframe_name[column_name])
+        harmonic_mean_value = 1.0 / np.mean(1.0 / (dataframe_name[column_name] + 1.0)) - 1.0
+        geometric_mean_value = gmean(dataframe_name[column_name])
+        #percentile_1 = np.percentile(dframes[column_name], 1)
+        percentile_5 = np.percentile(dataframe_name[column_name], 5)
+        percentile_95 =np.percentile(dataframe_name[column_name], 95)
         
         #print(f"1st Percentile: {percentile_1}")
         #print(f"5th Percentile: {percentile_5}")
@@ -267,19 +294,19 @@ def calculate_metrics(column_name):
         
         
         # Norms
-        norm_lp_1 = np.power(np.mean(np.power(np.array(dframes[column_name]), 1)), 1.0 / 1)  
+        norm_lp_1 = np.power(np.mean(np.power(np.array(dataframe_name[column_name]), 1)), 1.0 / 1)  
         #print(f"Norm L_1 of {column_name} values is: {norm_lp_1}")
 
-        norm_lp_2 = np.power(np.mean(np.power(np.array(dframes[column_name]), 2)), 1.0 / 2)  
+        norm_lp_2 = np.power(np.mean(np.power(np.array(dataframe_name[column_name]), 2)), 1.0 / 2)  
         #print(f"Norm L_2 of {column_name} values is: {norm_lp_2}")
 
-        norm_lp_3 = np.power(np.mean(np.power(np.array(dframes[column_name]), 3)), 1.0 / 3)  
+        norm_lp_3 = np.power(np.mean(np.power(np.array(dataframe_name[column_name]), 3)), 1.0 / 3)  
         #print(f"Norm L_3 of {column_name} values is: {norm_lp_3}")
 
-        return mean_value, harmonic_mean_value, geometric_mean_value, percentile_1,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3
+        return mean_value, harmonic_mean_value, geometric_mean_value,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3
     else:
         print(f"Metric '{column_name}' not found in the DataFrame.")
-        return (-1,-1,-1,-1,-1,-1,-1)
+        return (-1,-1,-1,-1,-1,-1,-1,-1)
 
 if model_version == "vmaf_v0.6.1.json":
     metrics_to_evaluate = [
@@ -295,7 +322,9 @@ if model_version == "vmaf_v0.6.1.json":
         "psnr_hvs_cb",
         "psnr_hvs_cr",
         "psnr_hvs",
-        "integer_vif_scale3"
+        "integer_vif_scale3",
+        "eSSIM",
+        "SSIM" ,
     ]
 elif model_version in ["vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
     metrics_to_evaluate = [
@@ -310,7 +339,12 @@ else:
 
 metrics_results = {}
 for metric in metrics_to_evaluate:
-    results = calculate_metrics(metric)
+    if use_essim == "True" and use_libvmaf == "True":
+        results = calculate_metrics(merged_df,metric)
+    elif use_essim =="True" and use_libvmaf =="False":
+        results= calculate_metrics(essim_dframes,metric)
+    else:
+        results= calculate_metrics(dframes,metric)
     if results:
         metrics_results[metric] = results
 
@@ -321,12 +355,11 @@ df_existing = pd.read_csv(csv_filename)
 
 def fill_dataframe(df, model_version, metric, values, start_row, temporal_pooling_count):
     # Fill the column with values for temporal_pooling_count rows starting from start_row
-    mean, harmonic_mean, geometric_mean, percentile_1, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
+    mean, harmonic_mean, geometric_mean, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
     df.loc[start_row:start_row + temporal_pooling_count - 1, metric] = [
         mean,
         harmonic_mean,
         geometric_mean,
-        percentile_1,
         percentile_5,
         percentile_95,
         norm_lp_1,
@@ -354,13 +387,13 @@ def process_metrics(df_existing, metrics_results, model_version, temporal_poolin
 if model_version in ["vmaf_v0.6.1.json", "vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
     process_metrics(df_existing, metrics_results, model_version, temporal_pooling_count, distorted_video)
 elif "vmaf" in metrics_results:
-    mean, harmonic_mean, geometric_mean, percentile_1, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
+    mean, harmonic_mean, geometric_mean,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
     # Find the first occurrence row where 'Distorted_file_name' matches distorted_video
     first_occurrence_row = df_existing[df_existing["Distorted_file_name"] == distorted_video].index[0]
     
     # Fill the columns starting from the first occurrence row
     fill_dataframe(df_existing, model_version, model_version.replace(".json", ""), 
-                   [mean, harmonic_mean, geometric_mean, percentile_1, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3], 
+                   [mean, harmonic_mean, geometric_mean,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3], 
                    first_occurrence_row, temporal_pooling_count)
 
 # Update the csv with the new dataframe
