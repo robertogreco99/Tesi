@@ -27,7 +27,10 @@ DISTORTED_VIDEO="${17}"
 OUTPUT_DIR_SERVER="${18}"     
 HASH_DIR_SERVER="${19}"  
 MOS_DIR_SERVER="${20}"
-FEATURES="${21}"
+ESSIM_PARAMS_STRING="${21}"
+USE_LIBVMAF="${22}"
+USE_ESSIM="${23}"
+FEATURES="${24}"
 
 
 echo "---------------------------"
@@ -51,7 +54,10 @@ echo "Distorted Video : $DISTORTED_VIDEO"
 echo "Output Directory server: $OUTPUT_DIR_SERVER"
 echo "Hash Directory sercer: $HASH_DIR_SERVER"
 echo "MOS Directory: $MOS_DIR_SERVER"
-echo "Features: $FEATURES_SERVER"
+echo "Features: $FEATURES"
+echo "USE_LIBVMAF : $USE_LIBVMAF"
+echo "USE_ESSIM" : "$USE_ESSIM"
+echo "ESSIM_PARAMS_STRING : $ESSIM_PARAMS_STRING"
 
 # Check if directories exist
 for dir in "$INPUT_REFERENCE_DIR" "$INPUT_DISTORTED_DIR" "$OUTPUT_DIR" "$HASH_DIR" "$MOS_DIR"; do
@@ -108,11 +114,10 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
     fi
 fi
 
-#AVT-VQDB-UHD-1_4 has some videos with a different frame rate than the reference. Convert the reference video to 30fps or 15fps."
+#AVT-VQDB-UHD-1_4 has some videos with a different frame rate than the reference. Convert the reference video to 30fps or 15fps
 
 if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
     if [[ "$FPS" == 59.94 ]] || [[ "$FPS" == 60.0 ]] ; then
-        # 24fps??
         final_original_file_avt_1_4="$INPUT_REFERENCE_DIR/$original"
     else
         if [[ "$FPS" == 30.0 ]]; then
@@ -154,6 +159,9 @@ mkdir -p "$OUTPUT_DIR/${DATASET}/vmaf_results"
 
 #Default Output json 
 output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
+
+#Default Output Essim
+output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}.csv"
 
 #Decoding: (decode only if the decoded file does not exist)
 #   - ITS4S: Decode the distorted video. The result is YUV420p in a .y4m file.
@@ -201,7 +209,7 @@ else
 fi
 
    
-# Save Width and height in two variables : they are needed for naming and int he csv
+# Save Width and height in two variables : they are needed for naming in The csv
 width_old="$WIDTH"
 height_old="$HEIGHT"
 
@@ -243,6 +251,7 @@ if [[ "$DATASET" == "ITS4S" ]]; then
       width_new=1280
       height_new=720
       output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+      output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
     else
         echo "No resizing needed. Dimensions are already 1280x720."
         final_decoded_file="$distorted_decoded"
@@ -270,6 +279,7 @@ elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
       width_new=1280
       height_new=720
       output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+      output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
     else
         echo "No resizing needed. Dimensions are already 1280x720."
         final_decoded_file="$distorted_decoded"
@@ -298,6 +308,7 @@ elif [[ "$DATASET" == "KUGVD" ]] || [[ "$DATASET" == "GamingVideoSet1" ]] || [[ 
         width_new=1920
         height_new=1080
         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+        output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
     else
         echo "No resizing needed. Dimensions are already 1920x1080."
         final_decoded_file="$distorted_decoded"
@@ -326,6 +337,7 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
          width_new=4000
          height_new=2250
          output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+         output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
         else
            echo "No resizing needed. Dimensions are already 4000x2250."
            final_decoded_file="$distorted_decoded"
@@ -380,6 +392,7 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_2" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_
         width_new=3840
         height_new=2160
         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+        output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
      else
         echo "No resizing needed. Dimensions are already 3840x2160."
         final_decoded_file="$distorted_decoded"
@@ -437,27 +450,65 @@ echo "Final decoded file: $final_decoded_file"
 # - threads : number of threads to use
 
 
-
-# VMAF evaluation
-if [[ "${MODEL_VERSION}" == "vmaf_v0.6.1.json" ]]; then
-    if [[ "${DATASET}" == "ITS4S" ]]; then
-        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-        --reference "$original_converted_to420p" \
-        --distorted "$final_decoded_file" \
-        --model "$path" \
-        $feature_args \
-        --output "$output_json" --json \
-        --threads "$(nproc)" 
-    elif [[ "${DATASET}" == "AGH_NTIA_Dolby" ]]; then
-        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-        --reference "$INPUT_REFERENCE_DIR/$original" \
-        --distorted "$final_decoded_file" \
-        --model "$path" \
-        $feature_args \
-        --output "$output_json" --json \
-        --threads "$(nproc)" 
-    elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_1" ]]; then
-        if [[ "$original" == "bigbuck_bunny_8bit.yuv" ]]; then
+# Check if USE_LIBVMAF is true
+if [[ "$USE_LIBVMAF" == "True" ]]; then
+    # VMAF evaluation
+    if [[ "${MODEL_VERSION}" == "vmaf_v0.6.1.json" ]]; then
+        if [[ "${DATASET}" == "ITS4S" ]]; then
+            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+            --reference "$original_converted_to420p" \
+            --distorted "$final_decoded_file" \
+            --model "$path" \
+            $feature_args \
+            --output "$output_json" --json \
+            --threads "$(nproc)"
+        elif [[ "${DATASET}" == "AGH_NTIA_Dolby" ]]; then
+            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+            --reference "$INPUT_REFERENCE_DIR/$original" \
+            --distorted "$final_decoded_file" \
+            --model "$path" \
+            $feature_args \
+            --output "$output_json" --json \
+            --threads "$(nproc)"
+        elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_1" ]]; then
+            if [[ "$original" == "bigbuck_bunny_8bit.yuv" ]]; then
+                /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+                --reference "$INPUT_REFERENCE_DIR/$original" \
+                --distorted "$final_decoded_file" \
+                --width "$width_new" \
+                --height "$height_new" \
+                --pixel_format "$PIXEL_FORMAT" \
+                --bitdepth "$BIT_DEPTH" \
+                --model "$path" \
+                $feature_args \
+                --output "$output_json" --json \
+                --threads "$(nproc)"
+            else
+                /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+                --reference "$reference_converted_to_8_bit" \
+                --distorted "$final_decoded_file" \
+                --width "$width_new" \
+                --height "$height_new" \
+                --pixel_format "$PIXEL_FORMAT" \
+                --bitdepth "$BIT_DEPTH" \
+                --model "$path" \
+                $feature_args \
+                --output "$output_json" --json \
+                --threads "$(nproc)"
+            fi
+        elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_4" ]]; then
+            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+            --reference "$final_original_file_avt_1_4" \
+            --distorted "$final_decoded_file" \
+            --width "$width_new" \
+            --height "$height_new" \
+            --pixel_format "$PIXEL_FORMAT" \
+            --bitdepth "$BIT_DEPTH" \
+            --model "$path" \
+            $feature_args \
+            --output "$output_json" --json \
+            --threads "$(nproc)"
+        else
             /vmaf-3.0.0/libvmaf/build/tools/vmaf \
             --reference "$INPUT_REFERENCE_DIR/$original" \
             --distorted "$final_decoded_file" \
@@ -468,63 +519,60 @@ if [[ "${MODEL_VERSION}" == "vmaf_v0.6.1.json" ]]; then
             --model "$path" \
             $feature_args \
             --output "$output_json" --json \
-            --threads "$(nproc)" 
-        else 
+            --threads "$(nproc)"
+        fi
+    else
+        if [[ "${DATASET}" == "ITS4S" ]]; then
             /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-            --reference "$reference_converted_to_8_bit" \
+            --reference "$original_converted_to420p" \
+            --distorted "$final_decoded_file" \
+            --model "$path" \
+            --output "$output_json" --json \
+            --threads "$(nproc)"
+        elif [[ "${DATASET}" == "AGH_NTIA_Dolby" ]]; then
+            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+            --reference "$INPUT_REFERENCE_DIR/$original" \
+            --distorted "$final_decoded_file" \
+            --model "$path" \
+            --output "$output_json" --json \
+            --threads "$(nproc)"
+        elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_1" ]]; then
+            if [[ "$original" == "bigbuck_bunny_8bit.yuv" ]]; then
+                /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+                --reference "$INPUT_REFERENCE_DIR/$original" \
+                --distorted "$final_decoded_file" \
+                --width "$width_new" \
+                --height "$height_new" \
+                --pixel_format "$PIXEL_FORMAT" \
+                --bitdepth "$BIT_DEPTH" \
+                --model "$path" \
+                --output "$output_json" --json \
+                --threads "$(nproc)"
+            else
+                /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+                --reference "$reference_converted_to_8_bit" \
+                --distorted "$final_decoded_file" \
+                --width "$width_new" \
+                --height "$height_new" \
+                --pixel_format "$PIXEL_FORMAT" \
+                --bitdepth "$BIT_DEPTH" \
+                --model "$path" \
+                --output "$output_json" --json \
+                --threads "$(nproc)"
+            fi
+        elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_4" ]]; then
+            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+            --reference "$final_original_file_avt_1_4" \
             --distorted "$final_decoded_file" \
             --width "$width_new" \
             --height "$height_new" \
             --pixel_format "$PIXEL_FORMAT" \
             --bitdepth "$BIT_DEPTH" \
             --model "$path" \
-            $feature_args \
             --output "$output_json" --json \
-            --threads "$(nproc)" 
-        fi
-    elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_4" ]]; then
-        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-        --reference "$final_original_file_avt_1_4" \
-        --distorted "$final_decoded_file" \
-        --width "$width_new" \
-        --height "$height_new" \
-        --pixel_format "$PIXEL_FORMAT" \
-        --bitdepth "$BIT_DEPTH" \
-        --model "$path" \
-        $feature_args \
-        --output "$output_json" --json \
-        --threads "$(nproc)"
-    else
-        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-        --reference "$INPUT_REFERENCE_DIR/$original" \
-        --distorted "$final_decoded_file" \
-        --width "$width_new" \
-        --height "$height_new" \
-        --pixel_format "$PIXEL_FORMAT" \
-        --bitdepth "$BIT_DEPTH" \
-        --model "$path" \
-        $feature_args \
-        --output "$output_json" --json \
-        --threads "$(nproc)"   
-    fi   
-else
-    if [[ "${DATASET}" == "ITS4S" ]]; then
-        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-       --reference "$original_converted_to420p" \
-       --distorted "$final_decoded_file" \
-       --model "$path" \
-       --output "$output_json" --json \
-       --threads "$(nproc)" 
-    elif [[ "${DATASET}" == "AGH_NTIA_Dolby" ]]; then
-        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-        --reference "$INPUT_REFERENCE_DIR/$original" \
-        --distorted "$final_decoded_file" \
-        --model "$path" \
-        --output "$output_json" --json \
-        --threads "$(nproc)" 
-    elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_1" ]]; then
-        if [[ "$original" == "bigbuck_bunny_8bit.yuv" ]]; then
-             /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+            --threads "$(nproc)"
+        else
+            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
             --reference "$INPUT_REFERENCE_DIR/$original" \
             --distorted "$final_decoded_file" \
             --width "$width_new" \
@@ -533,43 +581,71 @@ else
             --bitdepth "$BIT_DEPTH" \
             --model "$path" \
             --output "$output_json" --json \
-            --threads "$(nproc)" 
-        else 
-            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-            --reference "$reference_converted_to_8_bit" \
-            --distorted "$final_decoded_file" \
-            --width "$width_new" \
-            --height "$height_new" \
-            --pixel_format "$PIXEL_FORMAT" \
-            --bitdepth "$BIT_DEPTH" \
-            --model "$path" \
-            --output "$output_json" --json \
-            --threads "$(nproc)" 
+            --threads "$(nproc)"
         fi
-    elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_4" ]]; then
-        /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-        --reference "$final_original_file_avt_1_4" \
-        --distorted "$final_decoded_file" \
-        --width "$width_new" \
-        --height "$height_new" \
-        --pixel_format "$PIXEL_FORMAT" \
-        --bitdepth "$BIT_DEPTH" \
-        --model "$path" \
-        --output "$output_json" --json \
-        --threads "$(nproc)"
-    else
-       /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-       --reference "$INPUT_REFERENCE_DIR/$original" \
-       --distorted "$final_decoded_file" \
-       --width "$width_new" \
-       --height "$height_new" \
-       --pixel_format "$PIXEL_FORMAT" \
-       --bitdepth "$BIT_DEPTH" \
-       --model "$path" \
-       --output "$output_json" --json \
-       --threads "$(nproc)" 
     fi
 fi
+
+mkdir -p "$OUTPUT_DIR/${DATASET}/essim_results"
+
+
+#Function to interpret the model string:
+
+
+
+if [[ "$USE_ESSIM" == "True" ]]; then
+    # Function to parse the model string and extract parameters
+    parse_model() {
+        local model_str="$1"
+        wsize=$(echo "$model_str" | sed -n 's/.*ws\([0-9]*\).*/\1/p')
+        wstride=$(echo "$model_str" | sed -n 's/.*wt\([0-9]*\).*/\1/p')
+        mink=$(echo "$model_str" | sed -n 's/.*mk\([0-9]*\).*/\1/p')
+        mode=$(echo "$model_str" | sed -n 's/.*md\([0-9]*\).*/\1/p')
+    }
+
+    # Extracting parameters from the template string
+    parse_model "$ESSIM_PARAMS_STRING"
+
+    # Set directories and file paths
+    final_original_file_essim="$INPUT_REFERENCE_DIR/$original"
+    final_decoded_file_essim="$final_decoded_file" 
+   
+    if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
+        if [[ "$original" != "bigbuck_bunny_8bit.yuv" ]]; then
+            final_original_file_essim="$reference_converted_to_8_bit"
+        else
+            final_original_file_essim="$INPUT_REFERENCE_DIR/$original"
+        fi
+    fi
+
+    if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
+        final_original_file_essim="$final_original_file_avt_1_4"
+    fi
+
+    # Convert video file based on dataset type
+    if [[ "$DATASET" == "ITS4S" ]]; then
+        ffmpeg -i "$original_converted_to420p" -f rawvideo -pix_fmt yuv420p "$final_original_file_essim"
+        ffmpeg -i "$final_decoded_file" -f rawvideo -pix_fmt yuv420p "$final_decoded_file_essim"
+    elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
+        ffmpeg -i "$INPUT_REFERENCE_DIR/$original" -f rawvideo -pix_fmt yuv422p "$final_original_file_essim"
+        ffmpeg -i "$final_decoded_file" -f rawvideo -pix_fmt yuv422p "$final_decoded_file_essim"
+    fi
+
+    # Run eSSIM
+    /essim/build/bin/essim \
+        -r "$final_original_file_essim" \
+        -d "$final_decoded_file_essim" \
+        -w "$width_new" \
+        -h "$height_new" \
+        -bd "$BIT_DEPTH" \
+        -wsize "$wsize" \
+        -wstride "$wstride" \
+        -mink "$mink" \
+        -mode "$mode" \
+        -o "$output_essim"
+fi
+
+
 
 # remove file after the vmaf evaluations
 # TODO: when i can delete the files?
@@ -623,10 +699,11 @@ echo "Duration : $DURATION"
 echo "Output Directory server: $OUTPUT_DIR_SERVER"
 echo "Hash Directory sercer: $HASH_DIR_SERVER"
 echo "MOS Directory: $MOS_DIR_SERVER"
+echo "Essim String : $ESSIM_PARAMS_STRING"
+echo "USE_LIBVMAF : $USE_LIBVMAF"
+echo "USE_ESSIM : $USE_ESSIM"
 
-    #python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
-# save the python command to analyze the vmaf script
-#echo "podman run --rm -it -v /home/greco/home/docker/Result:/results \
-#                          -v /home/greco/home/docker/Mos:/mos image \
-#                          python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR\"" >> "$FILE_COMMANDS"
-echo "python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR_SERVER\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR_SERVER\"" >> "$FILE_COMMANDS"
+#python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
+
+# echo "python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR_SERVER\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR_SERVER\" " >> "$FILE_COMMANDS"
+echo "python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR_SERVER\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR_SERVER\" \"$ESSIM_PARAMS_STRING\" \"$USE_LIBVMAF\" \"$USE_ESSIM\"" >> "$FILE_COMMANDS"
