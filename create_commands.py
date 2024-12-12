@@ -4,7 +4,7 @@ import json
 from jsonschema import validate, ValidationError
 import re
 
-def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_video, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list):
+def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_video, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf,use_essim,essim_params_string,features_list):
     
     original_video = f'"{original_video}"'
     distorted_video = f'"{distorted_video}"'
@@ -19,7 +19,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
         -v {hash_dir}:/hash \
         -v {mos_dir}:/mos \
         {image_name} \
-        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {features}'"
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {essim_params_string} {use_libvmaf} {use_essim}  {features}'"
     else:
         command = f"podman run --rm -it\
         -v {input_reference_dir}:/reference \
@@ -28,7 +28,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
         -v {hash_dir}:/hash \
         -v {mos_dir}:/mos \
         {image_name} \
-        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir}  {""}'"
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {essim_params_string} {use_libvmaf} {use_essim}  {""}'"
     return command
 
 if __name__ == '__main__':
@@ -81,6 +81,14 @@ original_video = config['ORIGINAL_VIDEO']
 model_version_file = config['MODEL_VERSION']
 dataset = config['DATASET']
 features_list = config['FEATURES']
+use_libvmaf = config['USE_LIBVMAF']
+use_essim = config ['USE_ESSIM']
+essim_params =config["ESSIM_PARAMETERS"]
+ws = essim_params["Window_size"]
+wt = essim_params["Window_stride"]
+mink = essim_params["SSIM_Minkowski_pooling"]
+mode = essim_params["Mode"]
+essim_params_string = f"ws{ws}_wt{wt}_mk{mink}_md{mode}"
 
 # Create the directories if they do not exist
 os.makedirs(hash_dir, exist_ok=True)
@@ -167,13 +175,13 @@ for distorted_file in os.listdir(input_distorted_dir):
             commands_file_name = f"commands_{dataset}.txt"
             if model_version_file == 'VMAF_ALL':   
                 for model_version in vmaf_models:
-                    command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
+                    command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf, use_essim, essim_params_string,features_list)
                     print(f"Generated command: {command}")  
                     with open(os.path.join(output_dataset_dir, commands_file_name), 'a') as f:
                         f.write(command + '\n')
                         print(f"Command written to {os.path.join(output_dataset_dir, commands_file_name)}")
             else:  
-                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, features_list)
+                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf, use_essim, essim_params_string, features_list)
                 print(f"Generated command: {command}")  
                 with open(os.path.join(output_dataset_dir, commands_file_name), 'a') as f:
                     f.write(command + '\n')
