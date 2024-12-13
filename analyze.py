@@ -234,8 +234,8 @@ except FileNotFoundError:
     #sys.exit(1)
 
 print(essim_filename)
-print(use_essim)
-print(use_libvmaf)
+#print(use_essim)
+#print(use_libvmaf)
 
 if (use_libvmaf == "True"):
     # Take data from the frames
