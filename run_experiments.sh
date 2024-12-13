@@ -694,6 +694,9 @@ if [[ "$MODEL_VERSION" == "vmaf_4k_v0.6.1neg.json" ]]; then
         rm "$reference_converted_to_15fps"
         echo "Reference converted to 15fps removed: $reference_converted_to_15fps"
     fi
+    echo "Final_original_file_essim : $final_original_file_essim"
+    echo "Final_decoded_file_essimm : $final_decoded_file_essim"
+
     if [[ "$DATASET" == "ITS4S" ]] || [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
         if [ -f "$final_original_file_essim" ]; then
             rm "$final_original_file_essim"
