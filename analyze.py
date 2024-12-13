@@ -32,12 +32,12 @@ mos = -1
 ci = -1
 computed_mos = -1
 
-temporal_pooling_count = 8
+temporal_pooling_count = 9
 
 print(f"Distorted_video: {distorted_video}")
 #print(f"width_old: {width_old}, height_old: {height_old}")
 
-temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean','percentile_5','percentile_95', 'norm_lp1', 'norm_lp2', 'norm_lp3']
+temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean','percentile_50','percentile_5','percentile_95', 'norm_lp1', 'norm_lp2', 'norm_lp3']
 
 vmaf_models = [
     "vmaf_v0.6.1", 
@@ -234,6 +234,8 @@ except FileNotFoundError:
     #sys.exit(1)
 
 print(essim_filename)
+print(use_essim)
+print(use_libvmaf)
 
 if (use_libvmaf == "True"):
     # Take data from the frames
@@ -272,12 +274,12 @@ def calculate_metrics(dataframe_name,column_name):
         if np.any(np.isnan(column_data)):
             #return -1 for the column if there are null values
             print(f"NaN values found in {column_name}, returning -1 for all metrics.")
-            return (-1, -1, -1, -1, -1, -1, -1,-1)
+            return (-1, -1, -1, -1, -1, -1, -1,-1,-1)
         
         mean_value = np.mean(dataframe_name[column_name])
         harmonic_mean_value = 1.0 / np.mean(1.0 / (dataframe_name[column_name] + 1.0)) - 1.0
         geometric_mean_value = gmean(dataframe_name[column_name])
-        #percentile_1 = np.percentile(dframes[column_name], 1)
+        percentile_50 = np.percentile(dataframe_name[column_name], 50)
         percentile_5 = np.percentile(dataframe_name[column_name], 5)
         percentile_95 =np.percentile(dataframe_name[column_name], 95)
         
@@ -303,10 +305,10 @@ def calculate_metrics(dataframe_name,column_name):
         norm_lp_3 = np.power(np.mean(np.power(np.array(dataframe_name[column_name]), 3)), 1.0 / 3)  
         #print(f"Norm L_3 of {column_name} values is: {norm_lp_3}")
 
-        return mean_value, harmonic_mean_value, geometric_mean_value,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3
+        return mean_value, harmonic_mean_value, geometric_mean_value,percentile_50,percentile_5,percentile_95, norm_lp_1, norm_lp_2, norm_lp_3
     else:
         print(f"Metric '{column_name}' not found in the DataFrame.")
-        return (-1,-1,-1,-1,-1,-1,-1,-1)
+        return (-1,-1,-1,-1,-1,-1,-1,-1,-1)
 
 if model_version == "vmaf_v0.6.1.json":
     metrics_to_evaluate = [
@@ -355,11 +357,12 @@ df_existing = pd.read_csv(csv_filename)
 
 def fill_dataframe(df, model_version, metric, values, start_row, temporal_pooling_count):
     # Fill the column with values for temporal_pooling_count rows starting from start_row
-    mean, harmonic_mean, geometric_mean, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
+    mean, harmonic_mean, geometric_mean, percentile_50,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
     df.loc[start_row:start_row + temporal_pooling_count - 1, metric] = [
         mean,
         harmonic_mean,
         geometric_mean,
+        percentile_50,
         percentile_5,
         percentile_95,
         norm_lp_1,
@@ -387,13 +390,13 @@ def process_metrics(df_existing, metrics_results, model_version, temporal_poolin
 if model_version in ["vmaf_v0.6.1.json", "vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
     process_metrics(df_existing, metrics_results, model_version, temporal_pooling_count, distorted_video)
 elif "vmaf" in metrics_results:
-    mean, harmonic_mean, geometric_mean,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
+    mean, harmonic_mean, geometric_mean,percentile_50,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = metrics_results["vmaf"]
     # Find the first occurrence row where 'Distorted_file_name' matches distorted_video
     first_occurrence_row = df_existing[df_existing["Distorted_file_name"] == distorted_video].index[0]
     
     # Fill the columns starting from the first occurrence row
     fill_dataframe(df_existing, model_version, model_version.replace(".json", ""), 
-                   [mean, harmonic_mean, geometric_mean,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3], 
+                   [mean, harmonic_mean, geometric_mean,percentile_50,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3], 
                    first_occurrence_row, temporal_pooling_count)
 
 # Update the csv with the new dataframe

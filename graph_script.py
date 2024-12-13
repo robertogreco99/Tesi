@@ -39,7 +39,20 @@ axis_limits = {
     "vmaf_b_v0.6.3_stddev":(0, 100),       
     "vmaf_b_v0.6.3_ci_p95_lo":(0, 100),    
     "vmaf_b_v0.6.3_ci_p95_hi":(0, 100),
+    "eSSIM":(0, 1),
+    "SSIM":(0, 1),
 }
+temporal_pooling_marker_map = {
+    'mean': '^',  
+    'harmonic_mean': 's',  
+    'geometric_mean': 'D',  
+    'percentile_50': 'o',  
+    'percentile_5': 'v',  
+    'percentile_95': 'p',  
+    'norm_lp1': '*',  
+    'norm_lp2': 'h',  
+    'norm_lp3': 'x',  
+    }
 output_dir = sys.argv[1]
 dataset = sys.argv[2]
 print(dataset)
@@ -61,10 +74,10 @@ else:
     features = ["cambi", "float_ssim", "psnr_y",
         "psnr_cb", "psnr_cr", "float_ms_ssim", "ciede2000", "psnr_hvs_y",
         "psnr_hvs_cb", "psnr_hvs_cr", "psnr_hvs","vmaf_float_b_v0.6.3_bagging",
-        "vmaf_b_v0.6.3_bagging", "integer_vif_scale3"
+        "vmaf_b_v0.6.3_bagging", "integer_vif_scale3","eSSIM","SSIM"
         ]
-    #temporal_pooling_values = ["mean", "harmonic_mean", "geometric_mean", "total_variation","percentile_1","percentile_5","percentile_95","norm_lp1", "norm_lp2", "norm_lp3"]
-    temporal_pooling_graph = ["mean", "harmonic_mean", "geometric_mean","percentile_1","percentile_5","percentile_95","norm_lp1", "norm_lp2", "norm_lp3"]
+    #temporal_pooling_values = ["mean", "harmonic_mean", "geometric_mean", "total_variation,"percentile_5","percentile_95","norm_lp1", "norm_lp2", "norm_lp3"]
+    temporal_pooling_graph = ["mean", "harmonic_mean", "geometric_mean","percentile_50","percentile_5","percentile_95","norm_lp1", "norm_lp2", "norm_lp3"]
 
     lo_column_float_b = "vmaf_float_b_v0.6.3_ci_p95_lo"
     hi_column_float_b = "vmaf_float_b_v0.6.3_ci_p95_hi"
@@ -133,8 +146,9 @@ else:
                 continue
             # Get the color associated with the temporal_pooling value
             color = temporal_pooling_color_map[temporal_pooling_value]
+            marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
             # Create a scatter plot with the x_value and feature_value, using the corresponding color
-            plt.scatter(x_value, feature_value, color=color, marker='o', alpha=0.7)
+            plt.scatter(x_value, feature_value, color=color, marker=marker, alpha=0.7)
             if temporal_pooling_value not in added_labels:
                labels.append(f"{temporal_pooling_value}")
                added_labels.add(temporal_pooling_value)
@@ -180,7 +194,8 @@ else:
                 if model_value == -1:
                     continue
                 color = temporal_pooling_color_map[temporal_pooling_value]
-                plt.scatter(x_value, model_value, color=color, marker='o', alpha=0.7)
+                marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
+                plt.scatter(x_value, model_value, color=color, marker=marker, alpha=0.7)
                 if temporal_pooling_value not in added_labels:
                     labels.append(f"{temporal_pooling_value}")
                     added_labels.add(temporal_pooling_value)
@@ -225,9 +240,10 @@ else:
             if  y_value == -1:
                 continue
             color = temporal_pooling_color_map[temporal_pooling_value]
+            marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
             lo_value = temporal_filtered_data["vmaf_float_b_v0.6.3_ci_p95_lo"].values 
             hi_value = temporal_filtered_data["vmaf_float_b_v0.6.3_ci_p95_hi"].values 
-            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value,hi_value-y_value], color=color,fmt='o')
+            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value,hi_value-y_value], color=color,marker=marker)
             if temporal_pooling_value not in added_labels:
                 labels.append(f"{temporal_pooling_value}")
                 added_labels.add(temporal_pooling_value)
@@ -270,10 +286,11 @@ else:
             if  y_value == -1:
                 continue
             color = temporal_pooling_color_map[temporal_pooling_value]
+            marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
             stddev_float_b_value = temporal_filtered_data["vmaf_float_b_v0.6.3_stddev"].values
             lo_value_float_stddev= y_value - stddev_float_b_value
             hi_value_float_stdev = y_value + stddev_float_b_value
-            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_float_stddev,hi_value_float_stdev-y_value],color=color, fmt='o')
+            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_float_stddev,hi_value_float_stdev-y_value],color=color, marker=marker)
             if temporal_pooling_value not in added_labels:
                 labels.append(f"{temporal_pooling_value}")
                 added_labels.add(temporal_pooling_value)
@@ -317,9 +334,10 @@ else:
             if  y_value == -1:
                 continue
             color = temporal_pooling_color_map[temporal_pooling_value]
+            marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
             lo_value = temporal_filtered_data["vmaf_b_v0.6.3_ci_p95_lo"].values 
             hi_value = temporal_filtered_data["vmaf_b_v0.6.3_ci_p95_hi"].values 
-            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value,hi_value-y_value], color=color,fmt='o')
+            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value,hi_value-y_value], color=color,marker=marker)
             if temporal_pooling_value not in added_labels:
                 labels.append(f"{temporal_pooling_value}")
                 added_labels.add(temporal_pooling_value)
@@ -362,10 +380,11 @@ else:
             if  y_value == -1:
                 continue
             color = temporal_pooling_color_map[temporal_pooling_value]
+            marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
             stddev_b_value = temporal_filtered_data["vmaf_b_v0.6.3_stddev"].values
             lo_value_b_stddev= y_value - stddev_b_value
             hi_value_b_stdev = y_value + stddev_b_value
-            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_b_stddev,hi_value_b_stdev-y_value],color=color, fmt='o')
+            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_b_stddev,hi_value_b_stdev-y_value],color=color, marker=marker)
             if temporal_pooling_value not in added_labels:
                 labels.append(f"{temporal_pooling_value}")
                 added_labels.add(temporal_pooling_value)
@@ -385,51 +404,103 @@ else:
     plt.savefig(output_file, bbox_inches='tight')
     plt.close()
     
-# Percentile
-for vmaf_model in vmaf_models:
-    plt.figure(figsize=(10, 6))
-    labels = []
-    colors = []
-    added_labels = set()
-    for pvs_value in pvs : 
-        output_dir = f"{percentile_path}/error_bar/"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir) 
-        filtered_data = data[data['Distorted_file_name'] == pvs_value]
-        if filtered_data.empty:
-            print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
-            continue
-        x_value = filtered_data['MOS'].values[0]
-        temporal_pooling_value = "mean"
-        temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
-        temporal_pooling_lo = "percentile_5"
-        percentile_5_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_lo]
-        temporal_pooling_hi = "percentile_95"
-        percentile_95_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_hi]
-        if temporal_filtered_data.empty:
-            print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
-            continue
-        y_value = temporal_filtered_data[vmaf_model].values  
-        if  y_value == -1:
-            continue
-        lo_value_percentile_5 = percentile_5_data[vmaf_model].values 
-        hi_value_percentile_95 = percentile_95_data[vmaf_model].values 
-        plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_percentile_5,hi_value_percentile_95-y_value],fmt='o')
-        if temporal_pooling_value not in added_labels:
-            labels.append(f"{temporal_pooling_value}")
-            added_labels.add(temporal_pooling_value)
+    # Percentile
+    for vmaf_model in vmaf_models:
+        plt.figure(figsize=(10, 6))
+        labels = []
+        colors = []
+        added_labels = set()
+        for pvs_value in pvs : 
+            output_dir = f"{percentile_path}/error_bar/"
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir) 
+            filtered_data = data[data['Distorted_file_name'] == pvs_value]
+            if filtered_data.empty:
+                print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
+                continue
+            x_value = filtered_data['MOS'].values[0]
+            temporal_pooling_value = "mean"
+            temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
+            temporal_pooling_lo = "percentile_5"
+            percentile_5_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_lo]
+            temporal_pooling_hi = "percentile_95"
+            percentile_95_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_hi]
+            if temporal_filtered_data.empty:
+                print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
+                continue
+            y_value = temporal_filtered_data[vmaf_model].values  
+            if  y_value == -1:
+                continue
+            lo_value_percentile_5 = percentile_5_data[vmaf_model].values 
+            hi_value_percentile_95 = percentile_95_data[vmaf_model].values 
+            marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
+            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_percentile_5,hi_value_percentile_95-y_value],marker=marker)
+            if temporal_pooling_value not in added_labels:
+                labels.append(f"{temporal_pooling_value}")
+                added_labels.add(temporal_pooling_value)
 
-    plt.title(f"{x_column} vs {vmaf_model} mean with percentile")
-    plt.xlabel("MOS")
-    plt.ylabel(vmaf_model)
-    if "MOS" in axis_limits:
-        plt.xlim(axis_limits["MOS"])
-    if vmaf_model in axis_limits:
-        plt.ylim(axis_limits[vmaf_model])  
-    plt.grid(True)
-    plt.xticks(rotation=45)
-    plt.legend(title="Temporal Pooling", labels=labels, loc='center left', bbox_to_anchor=(1, 0.5))   
-    output_file = f"{percentile_path}/error_bar/percentile5_95_{vmaf_model}.png"
-    print(f"Graph saved: {output_file}")  
-    plt.savefig(output_file, bbox_inches='tight') 
-    plt.close()
+        plt.title(f"{x_column} vs {vmaf_model} mean with percentile")
+        plt.xlabel("MOS")
+        plt.ylabel(vmaf_model)
+        if "MOS" in axis_limits:
+            plt.xlim(axis_limits["MOS"])
+        if vmaf_model in axis_limits:
+            plt.ylim(axis_limits[vmaf_model])  
+        plt.grid(True)
+        plt.xticks(rotation=45)
+        plt.legend(title="Temporal Pooling", labels=labels, loc='center left', bbox_to_anchor=(1, 0.5))   
+        output_file = f"{percentile_path}/error_bar/mean_percentile5_95_{vmaf_model}.png"
+        print(f"Graph saved: {output_file}")  
+        plt.savefig(output_file, bbox_inches='tight') 
+        plt.close()
+    
+     # Percentile
+    # Percentile_50
+    for vmaf_model in vmaf_models:
+        plt.figure(figsize=(10, 6))
+        labels = []
+        colors = []
+        added_labels = set()
+        for pvs_value in pvs : 
+            output_dir = f"{percentile_path}/error_bar/"
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir) 
+            filtered_data = data[data['Distorted_file_name'] == pvs_value]
+            if filtered_data.empty:
+                print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
+                continue
+            x_value = filtered_data['MOS'].values[0]
+            temporal_pooling_value = "percentile_50"
+            temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
+            temporal_pooling_lo = "percentile_5"
+            percentile_5_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_lo]
+            temporal_pooling_hi = "percentile_95"
+            percentile_95_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_hi]
+            if temporal_filtered_data.empty:
+                print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
+                continue
+            y_value = temporal_filtered_data[vmaf_model].values  
+            if  y_value == -1:
+                continue
+            lo_value_percentile_5 = percentile_5_data[vmaf_model].values 
+            hi_value_percentile_95 = percentile_95_data[vmaf_model].values 
+            marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the Default marker
+            plt.errorbar(x_value, y_value, yerr=[y_value-lo_value_percentile_5,hi_value_percentile_95-y_value],marker=marker)
+            if temporal_pooling_value not in added_labels:
+                labels.append(f"{temporal_pooling_value}")
+                added_labels.add(temporal_pooling_value)
+
+        plt.title(f"{x_column} vs {vmaf_model} median with percentile")
+        plt.xlabel("MOS")
+        plt.ylabel(vmaf_model)
+        if "MOS" in axis_limits:
+            plt.xlim(axis_limits["MOS"])
+        if vmaf_model in axis_limits:
+            plt.ylim(axis_limits[vmaf_model])  
+        plt.grid(True)
+        plt.xticks(rotation=45)
+        plt.legend(title="Temporal Pooling", labels=labels, loc='center left', bbox_to_anchor=(1, 0.5))   
+        output_file = f"{percentile_path}/error_bar/median_percentile5_95_{vmaf_model}.png"
+        print(f"Graph saved: {output_file}")  
+        plt.savefig(output_file, bbox_inches='tight') 
+        plt.close()

@@ -30,7 +30,15 @@ Example template:
         "float_ms_ssim",
         "ciede",
         "psnr_hvs"
-    ]
+    ],
+    "USE_LIBVMAF": true,
+    "USE_ESSIM": true,
+    "ESSIM_PARAMETERS": {
+        "Window_size": "8",
+        "Window_stride": "4",
+        "SSIM_Minkowski_pooling": "3",
+        "Mode": "2"
+    }
 }
 ```
 
@@ -47,6 +55,14 @@ Example template:
    Json results in {output_dir}/{dataset}/vmaf_results
    
    Output= /home/greco/home/docker/Result/{dataset}/analyzescriptcommands_{dataset}.txt
+
+   Results:
+
+    - If use_libvmaf is set to true: results will be saved in {output_dir}/{dataset}/vmaf_results.Otherwise, no results will be generated.
+
+    - If use_essim is set to true: results will be saved in {output_dir}/{dataset}/essim_results.Otherwise, no results will be generated.
+
+    General output:  /home/greco/home/docker/Result/{dataset}/analyzescriptcommands_{dataset}.txt.
 
 4. **Generate Final CSV**  
    ```bash

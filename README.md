@@ -28,6 +28,17 @@ The configuration file contains several fields:
     - `float_ms_ssim`: Multi-Scale SSIM in floating-point precision.
     - `ciede`: CIEDE2000
     - `psnr_hvs`: PSNR optimized for the Human Visual System.
+    - `USE_LIBVMAF`: This can be set to true or false. If set to true, the VMAF evaluation will be executed.
+    - `USE_Essim`: This can be set to true or false. If set to true, the eSSIM evaluation will be executed.
+    The `ESSIM_PARAMETERS` object contains the following configurable settings:
+       - `Window_size`: This parameter defines the window size for the eSSIM calculation and can be either "8" or "16". The default value is "8".
+       - `Window_stride`: This parameter specifies the window stride for eSSIM and can be one of "4", "8", or "16". The default value is "4".
+       - `SSIM_Minkowski_pooling`: This parameter sets the SSIM Minkowski pooling value, which can be either "3" or "4". The default value is "3".
+       - `Mode`: This parameter defines the mode of the SSIM calculation. It can be "0" (SSIM_MODE_REF), "1" (SSIM_MODE_INT), or "2" (SSIM_MODE_PERF), with the default set to "2".
+    
+    These parameters configure the ESSIM (Enhanced Structural SIMilarity) evaluation method.These parameters require `USE_ESSIM` to be set to true in order to be applied.From these parameters, a string is created in the following format:
+    - essim_params_string = `ws{ws}_wt{wt}_mk{mink}_md{mode}`.This string represents the configured eSSIM parameters, where ws, wt, mink, and mode correspond to the values set for the respective parameters. The default string is `ws8_wt4_mk3_md2`
+
 ## 3. **Generate Podman commands with the Python script `run_simulation_create_commands.py Json/config.json`:**  
 The Python script `run_simulation_create_commands.py` automates the process of generating Podman commands to run VMAF on reference and distorted videos. It is based on the functionality of the `create_commands.py` script and performs several key tasks:
   - Reading a JSON configuration file and validating it against a JSON schema.The file is read to obtain the necessary information for OUTPUT_DIR, DATASET, SIMULATIONS_DIR and JSON_DIR.
@@ -43,14 +54,17 @@ The Podman commands are generated for each original video and saved in `OUTPUT_D
    - Comparing the names of distorted videos with the original video's name using regex.
    - Retrieving information (resolution, bitrate, codec, etc.) from a metadata JSON dataset file.
    - Creating commands to run the VMAF script with Podman and saving them to a commands.txt file.
-   - Supporting multiple models: Allows the use of one or more VMAF models specified in the configuration.                                                                                                                
+   - Supporting multiple models: Allows the use of one or more VMAF models specified in the configuration.              
+   -Passing the USE_LIBVMAF parameter as either true or false in the command for the VMAF evaluation
+  - Passing the USE_ESSIM parameter as either true or false in the command, along with the ESSIM_PARAMS string for the eSSIM evaluation     
+
   To run the script : `python3 create_commands.py Json/config.json`.
   The output is saved in `OUTPUT_DIR/{DATASETNAME}/commands_{DATASETNAME}`
 ## 4. **Run the  run_vmaf_simulation.py script to ecxecute the simulation**
   
 Every command is a shell command that runs a shell file `run_experiments.sh`.
 This script is designed to process video files for quality assessment using a variety of parameters. 
-- The script expects 21 arguments, such as directories for reference and distorted videos, output paths, model version, dataset details, hash_dir_server,mos_dir_server and output_dir_server and video properties (e.g., resolution, codec, bitrate). 
+- The script expects 24 arguments, such as directories for reference and distorted videos, output paths, model version, dataset details, hash_dir_server,mos_dir_server and output_dir_server , video properties (e.g., resolution, codec, bitrate) , use_libmaf and use_essim flag and the essim_params_string.
 - It checks that the necessary directories for input, output, mos and hashes exist, exiting with an error if any are missing.It defines file paths for the original and distorted videos, as well as output paths for decoded and resized versions.
 - The script decodes the distorted video using ffmpeg,if the decoded file does not already exist, with different options based on the dataset. It may convert the video to a specific format (e.g., .y4m or .yuv).
     - For ITS4S, decode to YUV420p in a .y4m file.
@@ -75,10 +89,41 @@ This script is designed to process video files for quality assessment using a va
     - $feature_args: Used only when the model is vmaf_v0.6.1.json.
     - output: Write output as a JSON file.
     - threads: Specify the number of threads to use for processing.
+- The script runs also the eSSIM simulation. 
+  -  The script first checks if the USE_ESSIM variable is set to "True".  If it is, the eSSIM evaluation will be executed.
+  - A function parse_model is defined, which extracts values for four parameters (wsize, wstride, mink, and mode) from a string (ESSIM_PARAMS_STRING) using regular expressions with sed.
+
+    - wsize is extracted by searching for ws followed by a number.
+    - wstride is extracted by searching for wt followed by a number.
+    - mink is extracted by searching for mk followed by a number.
+    - mode is extracted by searching for md followed by a number.
+  - The parse_model function is called, passing the string stored in ESSIM_PARAMS_STRING. The function populates the variables wsize, wstride, mink, and mode with the corresponding values extracted from the string.
+  - The script set file paths:
+
+    - final_original_file_essim and final_decoded_file_essim are initialized with values based on the original video file and the decoded video file.
+    - If the DATASET is "AVT-VQDB-UHD-1_1", a check is made to see if the original video is bigbuck_bunny_8bit.yuv. If it is not, it uses a converted 8-bit reference file; otherwise, it uses the original reference file.
+    - If the DATASET is "AVT-VQDB-UHD-1_4", final_original_file_essim is set to final_original_file_avt_1_4.
+  
+  - The script does Dataset-specific video file conversion:
+
+    - For the dataset "ITS4S", if the video file has not been converted yet, it uses ffmpeg to convert the original video to raw YUV420p format and saves it as final_original_file_essim. The same is done for the decoded video.
+    - For the dataset "AGH_NTIA_Dolby", the script converts the original video to YUV422p format and also converts the decoded video if necessary.
+  - The script runs eSSIM evaluation:
+
+    - Once the appropriate video files are prepared (either converted or original), the script runs the eSSIM evaluation by executing the essim command. It passes several parameters to the command:
+        - r specifies the reference video (final_original_file_essim).
+        - d specifies the distorted (decoded) video (final_decoded_file_essim).
+        - w and -h specify the width and height of the video (width_new and height_new).
+        - bd specifies the bit depth (BIT_DEPTH).
+        - wsize, -wstride, -mink, and -mode are set to the values extracted earlier from ESSIM_PARAMS_STRING.
+        - o specifies the output file for the eSSIM result (output_essim). The essim results are saved in `OUTPUT_DIR/{DATASETNAME}/essim_results`
+
+  - Exit if USE_ESSIM is not set to "True": If `USE_ESSIM` is not set to "True", the script does nothing and the block of code is skipped.
+
 
 The simulations generate a `analyzescriptcommands_{DATASETNAME}.txt` file in the `OUTPUT_DIR/{DATASETNAME}` folder. 
 The file contains the podman commands to launch in order to create the final csv.
-If you want to run simulations on additional datasets, use the Python script `run_more_vmaf_simulation.py`. In this case, you need to set multiple dataset fields and corresponding file_path fields.
+
   
 ## 5. **Generate  the final CSV with the script run_create_csv.sh** 
 This script checks if a virtual environment named csv_virtual_env exists. If it does not, the script performs the following steps:
@@ -104,31 +149,69 @@ The final csv contains:
       - Stddev: Standard deviation of predictions
       - CI p95 lo/hi: Lower (lo) and upper (hi) bounds of the 95% confidence interval for the estimated score.
       - integer_vif_scale3
+      - Two additional columns: eSSIM and SSIM. These represent the results of the eSSIM evaluation and SSIM derived from the previous essim evaluation.
 
 ### The python script `analyze.py`
-DA RISCRIVERE 
+
 The script 
--  checks if the correct number of arguments are passed (15). These arguments include details about the dataset, video characteristics, and output directory.
+-  checks if the correct number of arguments are passed (18). These arguments include details about the dataset, video characteristics, and output directory.
 - loads a JSON file containing MOS scores for different videos and extracts the MOS, confidence interval (CI), and computed MOS for the distorted video. (Not every dataset has CI)
 - It checks if a CSV file with combined results for the dataset exists. If not, it creates the CSV file and adds rows for temporal pooling values (mean, harmonic mean, etc.). If the file exists, it checks if the distorted video is already included; if not, it adds new rows.
-- The script constructs a JSON file path based on various parameters (like dataset, video resolution, codec) and loads the results from this file.
-- Metrics Calculation: For each frame in the loaded JSON data, the script calculates various metrics, including the mean, harmonic mean, geometric mean, total variation, and norms (L1, L2, L3). It handles missing data by checking for NaN values and prints the results for each metric.
-- The most important part of the code comes after the metrics calculation. In this section, the code handles multiple cases for different model versions. For each metric and its corresponding values in metrics_results.items(), the following steps are carried out. First, if the metric is one of the following: vmaf, vmaf_bagging, vmaf_ci_p95_hi, vmaf_ci_p95_lo, or vmaf_stddev, the code removes the JSON extension to match the column name in the DataFrame. Next, the number of rows already occupied in the corresponding column (for a specific model or metric) is calculated. The code then determines the starting row for inserting the new results with `start_row = rows_filled`, where the value of rows_filled defines where the new data will begin to be inserted. The end row is calculated as `end_row = start_row + temporal_pooling_count`, with temporal_pooling_count determining the number of rows that the new results will span. Finally, the code inserts the new metric values (such as mean, harmonic_mean, geometric_mean, etc.) into the existing DataFrame df_existing using `df_existing.loc[start_row:end_row-1, metric] = [mean, harmonic_mean, geometric_mean, percentile_1.percentile_5,percentile_95,  norm_lp_1, norm_lp_2, norm_lp_3]`. The .loc function selects the rows from start_row to end_row-1 (inclusive) and the column corresponding to the metric. The new values are then assigned to this range of rows, completing the insertion of data into the DataFrame.
-- The final output includes generated CSV and JSON files containing the computed results and calculated metrics.
+- The script constructs a JSON file path based on various parameters (like dataset, video resolution, codec) and loads the results from this file. It also constructs a essim file path in a similar way.
+- The script loads and processes VMAF data. If the flag use_libvmaf is set to "True", the code extracts data from the frames of a video. The variable frames_list contains a list of frames, each having a frame number and associated metrics.  These data are transformed into a row-by-row format (frames_rows), where each row is a combination of the frame number and its metrics. A pandas DataFrame (dframes) is then created to collect all the rows of data.
+- The script processes eSSIM data. If both use_essim and use_libvmaf are set to "True", the code loads a CSV file containing eSSIM results.  It then merges the VMAF data (dframes) and eSSIM data (essim_dframes) by joining them on the frame number. The result is a unified DataFrame (merged_df) containing both VMAF and eSSIM metrics for each frame. If use_essim is "True" and use_libvmaf is "False", only the eSSIM data is loaded, and the VMAF data is ignored.
+- The script calculates and stores metrics results. It initializes an empty dictionary metrics_results to store the computed results for each metric. It then iterates over the list of metrics to evaluate (metrics_to_evaluate). For each metric, the script checks if both use_essim and use_libvmaf are set to "True". If so, it calculates the metric using the merged VMAF and eSSIM data. If only use_essim is "True", it calculates the metric using only the eSSIM data. If neither condition is met, the metric is calculated using just the VMAF data.
+After the metric is calculated, the results (such as mean, harmonic mean, geometric mean, etc.) are stored in the metrics_results dictionary.
+Example of metrics_results:
+   For each metric, the results are stored as a dictionary with values such as mean, harmonic mean, geometric mean, etc.
+        For example, metrics_results["ciede2000"] could look like {mean, harmonic_mean, geometric_mean, percentile_50, percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3}.
+  The function `calculate_metrics` handles cases where columns contain missing or NaN values, in which case it returns a default value of -1.
+- The script fills the dataframe with the calculated metrics:
+    The script then loads an existing CSV file (df_existing) into a DataFrame.
+    A function fill_dataframe is defined to fill the dataframe with calculated metric values for a given column. It updates the specified rows (starting from start_row and spanning temporal_pooling_count rows) with values for the metric (mean, harmonic mean, geometric mean, etc.).
+- The script process the metrics and updates the dataframe:
+  The script checks the model_version to determine which metrics to process.
+    - If the model version is among the specified ones (vmaf_v0.6.1.json, vmaf_b_v0.6.3.json, vmaf_float_b_v0.6.3.json), it calls the process_metrics function to process and fill in the calculated metrics into the DataFrame.
+      - In the process_metrics function:
+        The model_base is derived from the model version (by removing .json).
+        The script searches for the first occurrence of distorted_video in the Distorted_file_name column of the DataFrame.
+        For each metric in metrics_results, it determines the appropriate column name and calls fill_dataframe to update the DataFrame with the metric values.
+   -  If the model version is not among the specified ones but "vmaf" is present in metrics_results, the script directly fills the dataframe with the values of the vmaf metric, following similar steps as described above.
+
+- After processing all metrics and filling the DataFrame, the script writes the updated DataFrame to the CSV file, overwriting the existing content (mode='w'). The script then prints a message confirming that the column for the specified model_version has been added to the CSV file.
+
+
+
 
 ## 6. **Run the run_create_graphs.sh script to generate the graphs**
 This script checks if a virtual environment named `csv_virtual_env` exists. If it doesn't, it creates the environment, activates it, installs the required packages from `requirements.txt`, and then runs the `graph_simulations_run.py` script with the `Json/config.json` file.
 The script installs the required packages listed in the requirements.txt file, which includes specific versions of libraries such as pandas, numpy, scipy, and matplotlib. By specifying these versions in the requirements.txt, it ensures that the correct dependencies are installed, providing a consistent environment for the script to run. This helps to avoid compatibility issues and ensures reproducibility across different systems or environments.
 After the script execution, it deactivates the virtual environment. If the virtual environment already exists, the script simply activates it and runs the `graph_simulations_run.py` script without recreating the environment.
 ###  The graph_simulations_run.py script 
-DA RISCRIVERE
+
 To create the graphs, execute the `graph_simulations_run.py` script. This script runs `graph_script.py` from the csv files.
 ### The python script `graph_script`
 
-The script generates the following
-   - for every features all the pvs : for every pvs  different points for the different temporal pooling  : "PVS dir"
-   - for every features all the pvs : for every pvs  different points for the different temporal pooling : "PVS dir"
 Axis limits are set by a dictionary.
+- The script generates the following:
+
+  - For each feature, a plot is created to visualize the relationship between the MOS (Mean Opinion Score) values and a specific feature value for each temporal pooling setting. The MOS values are plotted on the x-axis, while the feature values are plotted on the y-axis. Different temporal pooling values are represented by distinct colors and markers to differentiate the data points for each temporal pooling setting. If data for a particular combination of PVS (Perceptual Video Sequence) and temporal pooling is available, it will be plotted as a scatter point. The plot is saved as a PNG file with the name format `scatter_<feature>.png`.
+
+  - For each VMAF model, a plot is created to visualize the relationship between the MOS (Mean Opinion Score) values and the VMAF scores for that specific model. In this plot, the MOS values are shown on the x-axis, and the VMAF scores for the selected model are plotted on the y-axis. Different temporal pooling values are distinguished by unique colors and markers, defined by the `temporal_pooling_color_map` and `temporal_pooling_marker_map`. The plot for each VMAF model is saved as a PNG file, with the name format `scatter_<vmaf_model>.png`.
+
+  - For the `float_b_model` with Error Bars, a plot is created to visualize the relationship between the MOS (Mean Opinion Score) values and the VMAF scores for version `vmaf_float_b_v0.6.3`. The MOS values are plotted on the x-axis, while the VMAF scores are plotted on the y-axis. Error bars representing the 95% confidence intervals are derived from the `vmaf_float_b_v0.6.3_ci_p95_lo` and `vmaf_float_b_v0.6.3_ci_p95_hi` values. Different colors and markers represent varying temporal pooling values. The plot is saved as `hilo_vmaf_float_b_v0.6.3.png`.
+
+  - For the `float_b_model` with Standard Deviation, a plot is created to show the same relationship between the MOS values and the VMAF scores, but with error bars representing the standard deviation. These error bars are derived from the `vmaf_float_b_v0.6.3_stddev` values, extending from the mean VMAF score to the bounds defined by the standard deviation. The resulting plot is saved as `hilostddev_vmaf_float_b_v0.6.3_stddev.png`.
+
+  - For the `b_model` with Error Bars, a plot is created to visualize the relationship between MOS values and the VMAF scores for version `vmaf_b_v0.6.3`. Like the `float_b_model`, the graph shows MOS values on the x-axis and VMAF scores on the y-axis, with error bars representing the 95% confidence intervals, derived from `vmaf_b_v0.6.3_ci_p95_lo` and `vmaf_b_v0.6.3_ci_p95_hi`. The plot is saved as `hilo_vmaf_b_v0.6.3.png`.
+
+  - For the `b_model` with Standard Deviation, a plot is created to show the same data as the previous `b_model` plot, but with error bars incorporating the standard deviation. These error bars extend from the VMAF score to the lower and upper bounds defined by the standard deviation (`vmaf_b_v0.6.3_stddev`). The resulting plot is saved as `hilostddev_vmaf_b_v0.6.3_stddev.png`.
+
+  - For each VMAF model, a plot is created to visualize the relationship between MOS (Mean Opinion Score) values and VMAF scores for the selected model, incorporating error bars representing the 5th and 95th percentiles. MOS values are plotted on the x-axis, and VMAF scores for the model are plotted on the y-axis. The central value, representing the VMAF score, is the mean for each combination of PVS and temporal pooling. The error bars indicate the range between the 5th and 95th percentiles, showing data variability. Different temporal pooling values are represented by distinct markers. The plot is saved as a PNG file with the name `mean_percentile5_95_<vmaf_model>.png`.
+
+  - For each VMAF model, a plot is created to visualize the relationship between MOS (Mean Opinion Score) values and VMAF scores for the selected model, incorporating error bars representing the 5th and 95th percentiles. MOS values are plotted on the x-axis, and VMAF scores for the model are plotted on the y-axis. The central value, representing the VMAF score, is the median (`percentile_50`) for each combination of PVS and temporal pooling. The error bars represent the range between the 5th and 95th percentiles. Different temporal pooling values are indicated by distinctive markers. The plot is saved as a PNG file with the name `median_percentile5_95_<vmaf_model>.png`.
+
+
 # Requirements
 - A JSON dataset file with the following structure:
 ```json
