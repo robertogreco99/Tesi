@@ -123,7 +123,7 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
         if [[ "$FPS" == 30.0 ]]; then
             reference_converted_to_30fps="$OUTPUT_DIR/${original}_30fps.yuv"
             if [[ ! -f "$reference_converted_to_30fps" ]]; then
-                ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 "$reference_converted_to_30fps"
+                ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_30fps"
                 final_original_file_avt_1_4="$reference_converted_to_30fps"
             else
                 echo "30fps original file already exists: $reference_converted_to_30fps"
@@ -131,7 +131,7 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
         elif [[ "$FPS" == 15.0 ]]; then
             reference_converted_to_15fps="$OUTPUT_DIR/${original}_15fps.yuv"
             if [[ ! -f "$reference_converted_to_15fps" ]]; then
-                ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,4))" -vsync 0 -strict -1 "$reference_converted_to_15fps"
+                ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,4))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_15fps"
                 final_original_file_avt_1_4="$reference_converted_to_15fps"
             else
                 echo "15fps original file already exists: $reference_converted_to_15fps"
@@ -139,8 +139,6 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
         fi
     fi
 fi
-
-
 
 
 
