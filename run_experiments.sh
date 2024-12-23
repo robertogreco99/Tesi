@@ -118,30 +118,26 @@ fi
 #AVT-VQDB-UHD-1_4 has some videos with a different frame rate than the reference. Convert the reference video to 30fps or 15fps
 
 if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
-    if [[ "$FPS" == 59.94 ]] || [[ "$FPS" == 60.0 ]] ; then
-        final_original_file_avt_1_4="$INPUT_REFERENCE_DIR/$original"
-    else
-        if [[ "$FPS" == 30.0 ]]; then
-            reference_converted_to_30fps="$OUTPUT_DIR/${original}_30fps.yuv"
-            if [[ ! -f "$reference_converted_to_30fps" ]]; then
-                ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_30fps"
-                final_original_file_avt_1_4="$reference_converted_to_30fps"
-            else
-                echo "30fps original file already exists: $reference_converted_to_30fps"
-            fi
-        elif [[ "$FPS" == 15.0 ]]; then
-            reference_converted_to_15fps="$OUTPUT_DIR/${original}_15fps.yuv"
-            if [[ ! -f "$reference_converted_to_15fps" ]]; then
-                ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,4))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_15fps"
-                final_original_file_avt_1_4="$reference_converted_to_15fps"
-            else
-                echo "15fps original file already exists: $reference_converted_to_15fps"
-            fi
+    if [[ "$FPS" == 30.0 ]]; then
+        reference_converted_to_30fps="$OUTPUT_DIR/${original}_30fps.yuv"
+        if [[ ! -f "$reference_converted_to_30fps" ]]; then
+            ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_30fps"
+        else
+            echo "30fps original file already exists: $reference_converted_to_30fps"
+        fi
+    elif [[ "$FPS" == 15.0 ]]; then
+        echo "fps 15 fps conversion"
+        reference_converted_to_15fps="$OUTPUT_DIR/${original}_15fps.yuv"
+        if [[ ! -f "$reference_converted_to_15fps" ]]; then
+            ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select='not(mod(n,4))'" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_15fps"
+        else
+            echo "15fps original file already exists: $reference_converted_to_15fps"
         fi
     fi
 fi
 
 
+echo "fps done"
 
 
 # Print the name of the decoded file
@@ -496,17 +492,45 @@ if [[ "$USE_LIBVMAF" == "True" ]]; then
                 --threads "$(nproc)"
             fi
         elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_4" ]]; then
-            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-            --reference "$final_original_file_avt_1_4" \
-            --distorted "$final_decoded_file" \
-            --width "$width_new" \
-            --height "$height_new" \
-            --pixel_format "$PIXEL_FORMAT" \
-            --bitdepth "$BIT_DEPTH" \
-            --model "$path" \
-            $feature_args \
-            --output "$output_json" --json \
-            --threads "$(nproc)"
+            if [[ "$FPS" == 30.0 ]]; then
+              echo "Reference file: $reference_converted_to_30fps"
+              /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+              --reference "$reference_converted_to_30fps" \
+              --distorted "$final_decoded_file" \
+              --width "$width_new" \
+              --height "$height_new" \
+              --pixel_format "$PIXEL_FORMAT" \
+              --bitdepth "$BIT_DEPTH" \
+              --model "$path" \
+              $feature_args \
+              --output "$output_json" --json \
+              --threads "$(nproc)"
+            elif [[ "$FPS" == 15.0 ]]; then
+              echo "Reference file: $reference_converted_to_15fps"
+              /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+              --reference "$reference_converted_to_15fps" \
+              --distorted "$final_decoded_file" \
+              --width "$width_new" \
+              --height "$height_new" \
+              --pixel_format "$PIXEL_FORMAT" \
+              --bitdepth "$BIT_DEPTH" \
+              --model "$path" \
+              $feature_args \
+              --output "$output_json" --json \
+              --threads "$(nproc)"
+            else 
+              /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+              --reference "$INPUT_REFERENCE_DIR/$original" \
+              --distorted "$final_decoded_file" \
+              --width "$width_new" \
+              --height "$height_new" \
+              --pixel_format "$PIXEL_FORMAT" \
+              --bitdepth "$BIT_DEPTH" \
+              --model "$path" \
+              $feature_args \
+              --output "$output_json" --json \
+              --threads "$(nproc)"
+            fi
         else
             /vmaf-3.0.0/libvmaf/build/tools/vmaf \
             --reference "$INPUT_REFERENCE_DIR/$original" \
@@ -560,16 +584,42 @@ if [[ "$USE_LIBVMAF" == "True" ]]; then
                 --threads "$(nproc)"
             fi
         elif [[ "${DATASET}" == "AVT-VQDB-UHD-1_4" ]]; then
-            /vmaf-3.0.0/libvmaf/build/tools/vmaf \
-            --reference "$final_original_file_avt_1_4" \
-            --distorted "$final_decoded_file" \
-            --width "$width_new" \
-            --height "$height_new" \
-            --pixel_format "$PIXEL_FORMAT" \
-            --bitdepth "$BIT_DEPTH" \
-            --model "$path" \
-            --output "$output_json" --json \
-            --threads "$(nproc)"
+           if [[ "$FPS" == 30.0 ]]; then
+              echo "Reference file: $reference_converted_to_30fps"
+              /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+              --reference "$reference_converted_to_30fps" \
+              --distorted "$final_decoded_file" \
+              --width "$width_new" \
+              --height "$height_new" \
+              --pixel_format "$PIXEL_FORMAT" \
+              --bitdepth "$BIT_DEPTH" \
+              --model "$path" \
+              --output "$output_json" --json \
+              --threads "$(nproc)"
+           elif [[ "$FPS" == 15.0 ]]; then
+              echo "Reference file: $reference_converted_to_15fps"
+              /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+              --reference "$reference_converted_to_15fps" \
+              --distorted "$final_decoded_file" \
+              --width "$width_new" \
+              --height "$height_new" \
+              --pixel_format "$PIXEL_FORMAT" \
+              --bitdepth "$BIT_DEPTH" \
+              --model "$path" \
+              --output "$output_json" --json \
+              --threads "$(nproc)"
+           else 
+              /vmaf-3.0.0/libvmaf/build/tools/vmaf \
+              --reference "$INPUT_REFERENCE_DIR/$original" \
+              --distorted "$final_decoded_file" \
+              --width "$width_new" \
+              --height "$height_new" \
+              --pixel_format "$PIXEL_FORMAT" \
+              --bitdepth "$BIT_DEPTH" \
+              --model "$path" \
+              --output "$output_json" --json \
+              --threads "$(nproc)"
+           fi
         else
             /vmaf-3.0.0/libvmaf/build/tools/vmaf \
             --reference "$INPUT_REFERENCE_DIR/$original" \
@@ -618,8 +668,15 @@ if [[ "$USE_ESSIM" == "True" ]]; then
     fi
 
     if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
-        final_original_file_essim="$final_original_file_avt_1_4"
+        if [[ "$FPS" == 30.0 ]]; then
+            final_original_file_essim="$reference_converted_to_30fps"
+        elif [[ "$FPS" == 15.0 ]]; then
+            final_original_file_essim="$reference_converted_to_15fps"
+        else
+            final_original_file_essim="$INPUT_REFERENCE_DIR/$original"  
+        fi
     fi
+
 
     # Convert video file based on dataset type
     if [[ "$DATASET" == "ITS4S" ]]; then
