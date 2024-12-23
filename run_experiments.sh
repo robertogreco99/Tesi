@@ -101,7 +101,6 @@ fi
 #AVT-VQDB-UHD-1_1 has one original video with 8-bit depth, and the others have 10-bit depth.
 #Convert the reference video to YUV422p with 8-bit depth."
 if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
-    reference_converted_to_8_bit="$OUTPUT_DIR/${original}_8bit.yuv"
     if [[ "$original" != "bigbuck_bunny_8bit.yuv" ]]; then
         if [[ ! -f "$reference_converted_to_8_bit" ]]; then
             ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
@@ -609,9 +608,7 @@ if [[ "$USE_ESSIM" == "True" ]]; then
     final_decoded_file_essim="$final_decoded_file" 
    
     if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
-        if [[ "$original" != "bigbuck_bunny_8bit.yuv" ]]; then
-            final_original_file_essim="$reference_converted_to_8_bit"
-        else
+        if [[ "$original" == "bigbuck_bunny_8bit.yuv" ]]; then
             final_original_file_essim="$INPUT_REFERENCE_DIR/$original"
         fi
     fi
