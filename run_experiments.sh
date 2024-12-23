@@ -102,8 +102,10 @@ fi
 #Convert the reference video to YUV422p with 8-bit depth."
 if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
     if [[ "$original" != "bigbuck_bunny_8bit.yuv" ]]; then
+        reference_converted_to_8_bit="$OUTPUT_DIR/${original}_8bit.yuv"
         if [[ ! -f "$reference_converted_to_8_bit" ]]; then
-            ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
+            #ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
+            ffmpeg -s 3840x2160 -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p -y "$reference_converted_to_8_bit"
             if [[ $? -eq 0 ]]; then  
                 echo "Original Converted to 8bit: $reference_converted_to_8_bit"
             else
@@ -610,6 +612,8 @@ if [[ "$USE_ESSIM" == "True" ]]; then
     if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
         if [[ "$original" == "bigbuck_bunny_8bit.yuv" ]]; then
             final_original_file_essim="$INPUT_REFERENCE_DIR/$original"
+        else
+            final_original_file_essim="$reference_converted_to_8_bit"
         fi
     fi
 
