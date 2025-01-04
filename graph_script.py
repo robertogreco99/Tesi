@@ -53,6 +53,8 @@ temporal_pooling_marker_map = {
     'norm_lp2': 'h',  
     'norm_lp3': 'x',  
     }
+
+
 output_dir = sys.argv[1]
 dataset = sys.argv[2]
 print(dataset)
@@ -104,7 +106,7 @@ else:
 
     hi_lo_output_path = os.path.join(output_path,"HI_LO")
     pvs_path=os.path.join(output_path,"PVS")
-    percentile_path = os.path.join(output_path,"Percentile5_95_vsVmafMean")
+    percentile_path = os.path.join(output_path,"Percentile5_95_vsVmafMeanPercentile_50")
     
     os.makedirs(hi_lo_output_path, exist_ok=True)
     os.makedirs(pvs_path, exist_ok=True)
@@ -404,6 +406,7 @@ else:
     plt.savefig(output_file, bbox_inches='tight')
     plt.close()
     
+    """
     # Percentile
     for vmaf_model in vmaf_models:
         plt.figure(figsize=(10, 6))
@@ -504,3 +507,72 @@ else:
         print(f"Graph saved: {output_file}")  
         plt.savefig(output_file, bbox_inches='tight') 
         plt.close()
+    """
+    
+    for vmaf_model in vmaf_models:
+        plt.figure(figsize=(10, 6))
+        labels = []
+        added_labels = set()
+    
+        for pvs_value in pvs:
+            output_dir = f"{percentile_path}/error_bar/"
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir) 
+            
+            filtered_data = data[data['Distorted_file_name'] == pvs_value]
+            if filtered_data.empty:
+                print(f"No data found for the pvs sequence: {pvs_value} in dataset {dataset}")
+                continue
+        
+            x_value = filtered_data['MOS'].values[0]
+        
+            for temporal_pooling_value in ["mean", "percentile_50"]:
+                temporal_filtered_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_value]
+                temporal_pooling_lo = "percentile_5"
+                percentile_5_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_lo]
+                temporal_pooling_hi = "percentile_95"
+                percentile_95_data = filtered_data[filtered_data['temporal_pooling'] == temporal_pooling_hi]
+            
+                if temporal_filtered_data.empty:
+                    print(f"No data found for temporal pooling {temporal_pooling_value} in {pvs_value}")
+                    continue
+            
+                y_value = temporal_filtered_data[vmaf_model].values
+                if y_value == -1:
+                    continue
+            
+                lo_value_percentile_5 = percentile_5_data[vmaf_model].values
+                hi_value_percentile_95 = percentile_95_data[vmaf_model].values
+            
+                marker = temporal_pooling_marker_map.get(temporal_pooling_value, 'o')  # o is the default marker
+                if temporal_pooling_value == "mean":
+                    color='blue'
+                else:
+                    color='red'
+                plt.errorbar(
+                x_value, 
+                y_value, 
+                yerr=[y_value - lo_value_percentile_5, hi_value_percentile_95 - y_value], 
+                marker=marker,
+                color=color, 
+                label=f"{temporal_pooling_value}" if temporal_pooling_value not in added_labels else ""
+                )
+                added_labels.add(temporal_pooling_value)
+
+        plt.title(f"{x_column} vs {vmaf_model} with percentiles")
+        plt.xlabel("MOS")
+        plt.ylabel(vmaf_model)
+        if "MOS" in axis_limits:
+            plt.xlim(axis_limits["MOS"])
+        if vmaf_model in axis_limits:
+            plt.ylim(axis_limits[vmaf_model])
+    
+        plt.grid(True)
+        plt.xticks(rotation=45)
+        plt.legend(title="Temporal Pooling", loc='center left', bbox_to_anchor=(1, 0.5))
+    
+        output_file = f"{percentile_path}/error_bar/combined_mean_median_{vmaf_model}.png"
+        print(f"Graph saved: {output_file}")
+        plt.savefig(output_file, bbox_inches='tight')
+        plt.close()
+    

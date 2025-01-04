@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import json
 import sys
+import re
 from scipy.stats import gmean
 
 if len(sys.argv) != 18:
@@ -33,6 +34,17 @@ ci = -1
 computed_mos = -1
 
 temporal_pooling_count = 9
+
+essim_params={}
+patterns= ['ws', 'wt', 'mk', 'md']
+for pattern in patterns:
+    match = re.search(rf'{pattern}(\d+)', essim_params_string)
+    if match:
+        essim_params[pattern] = int(match.group(1))
+ws = essim_params['ws']
+wt = essim_params['wt']
+mk = essim_params['mk']
+md = essim_params['md']
 
 print(f"Distorted_video: {distorted_video}")
 #print(f"width_old: {width_old}, height_old: {height_old}")
@@ -126,6 +138,10 @@ if not os.path.isfile(csv_filename):
             "MOS": mos,
             "CI": ci,
             "Computed_Mos": computed_mos,
+            "Window_size" : ws,
+            "Window_stride" : wt,
+            "SSIM_Minkowski_pooling": mk,
+            "Mode": md,
             "temporal_pooling": temporal_pooling_value
         }
         
@@ -168,6 +184,10 @@ else:
                 "MOS": mos,
                 "CI": ci,
                 "Computed_Mos": computed_mos,
+                "Window_size" : ws,
+                "Window_stride" : wt,
+                "SSIM_Minkowski_pooling": mk,
+                "Mode": md,
                 "temporal_pooling": temporal_pooling_value
             }
             
@@ -192,34 +212,34 @@ else:
 if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
     # Create the JSON path name
     if width_old != '1920' or height_old != '1080':
-        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
-        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
+        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
     else:
-        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
-        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
+        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
+        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
 elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3"]:
     if original_video == "bigbuck_bunny_8bit.yuv":
         if width_old != '4000' or height_old != '2250':
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
         else:
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
     else:
         if width_old != '3840' or height_old != '2160':
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
         else:
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
 else:
     if dataset in [ "ITS4S" , "AGH_NTIA_Dolby"]:
         if width_old != '1280' or height_old != '720':
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}_resized_{width}x{height}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
         else:
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{model_version}__{essim_params_string}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
+            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
 
 
 # Print json filename
