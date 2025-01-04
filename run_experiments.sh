@@ -116,29 +116,29 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
 fi
 
 #AVT-VQDB-UHD-1_4 has some videos with a different frame rate than the reference. Convert the reference video to 30fps or 15fps
-
+echo "fps conversion start"
 if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
     if [[ "$FPS" == 30.0 ]]; then
+        echo "30 fps conversion"
         reference_converted_to_30fps="$OUTPUT_DIR/${original}_30fps.yuv"
+        reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
         if [[ ! -f "$reference_converted_to_30fps" ]]; then
-            ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_30fps"
+            ffmpeg -i "$reference_mkv" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_30fps"
         else
             echo "30fps original file already exists: $reference_converted_to_30fps"
         fi
     elif [[ "$FPS" == 15.0 ]]; then
-        echo "fps 15 fps conversion"
+        echo "15 fps conversion"
         reference_converted_to_15fps="$OUTPUT_DIR/${original}_15fps.yuv"
+        reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
         if [[ ! -f "$reference_converted_to_15fps" ]]; then
-            ffmpeg -s "$WIDTH"x"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select='not(mod(n,4))'" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_15fps"
+            ffmpeg -i "$reference_mkv" -vf "select=not(mod(n\,4))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_15fps"
         else
             echo "15fps original file already exists: $reference_converted_to_15fps"
         fi
     fi
 fi
-
-
-echo "fps done"
-
+echo "fps conversion done"
 
 # Print the name of the decoded file
 echo "Decoded file: $distorted_decoded"
@@ -153,10 +153,10 @@ fi
 mkdir -p "$OUTPUT_DIR/${DATASET}/vmaf_results"
 
 #Default Output json 
-output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}.json"
+output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}.json"
 
 #Default Output Essim
-output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}.csv"
+output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}.csv"
 
 #Decoding: (decode only if the decoded file does not exist)
 #   - ITS4S: Decode the distorted video. The result is YUV420p in a .y4m file.
@@ -191,7 +191,7 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
     fi
 elif [[ "$DATASET" == "AVT-VQDB-UHD-1_2" || "$DATASET" == "AVT-VQDB-UHD-1_3" || "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
     if [ ! -f "$distorted_decoded" ]; then
-        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p10le  "$distorted_decoded" -loglevel quiet
+        ffmpeg -i "$INPUT_DISTORTED_DIR/$distorted" -pix_fmt yuv422p10le  "$distorted_decoded" 
     else
         echo "File already exists: $distorted_decoded"
     fi
@@ -245,8 +245,8 @@ if [[ "$DATASET" == "ITS4S" ]]; then
       output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
       width_new=1280
       height_new=720
-      output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
-      output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
+      output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+      output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
     else
         echo "No resizing needed. Dimensions are already 1280x720."
         final_decoded_file="$distorted_decoded"
@@ -273,8 +273,8 @@ elif [[ "$DATASET" == "AGH_NTIA_Dolby" ]]; then
       output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
       width_new=1280
       height_new=720
-      output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
-      output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
+      output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+      output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
     else
         echo "No resizing needed. Dimensions are already 1280x720."
         final_decoded_file="$distorted_decoded"
@@ -302,8 +302,8 @@ elif [[ "$DATASET" == "KUGVD" ]] || [[ "$DATASET" == "GamingVideoSet1" ]] || [[ 
         output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
         width_new=1920
         height_new=1080
-        output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
-        output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
+        output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+        output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
     else
         echo "No resizing needed. Dimensions are already 1920x1080."
         final_decoded_file="$distorted_decoded"
@@ -331,8 +331,8 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
          output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
          width_new=4000
          height_new=2250
-         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
-         output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
+         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+         output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
         else
            echo "No resizing needed. Dimensions are already 4000x2250."
            final_decoded_file="$distorted_decoded"
@@ -358,7 +358,8 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
          output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
          width_new=3840
          height_new=2160
-         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+         output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+         output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
         else
            echo "No resizing needed. Dimensions are already 3840x2160."
            final_decoded_file="$distorted_decoded"
@@ -386,8 +387,8 @@ elif [[ "$DATASET" == "AVT-VQDB-UHD-1_2" ]] || [[ "$DATASET" == "AVT-VQDB-UHD-1_
         output_hash="$HASH_DIR/${DATASET}/${distorted}_decoded_resized.md5"
         width_new=3840
         height_new=2160
-        output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
-        output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
+        output_json="$OUTPUT_DIR/${DATASET}/vmaf_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}_resized_${width_new}x${height_new}.json"
+        output_essim="$OUTPUT_DIR/${DATASET}/essim_results/result__${DATASET}__${original}__${WIDTH}x${HEIGHT}__${BITRATE}__${VIDEO_CODEC}__${FPS}__${MODEL_VERSION}__${ESSIM_PARAMS_STRING}_resized_${width_new}x${height_new}.csv"
      else
         echo "No resizing needed. Dimensions are already 3840x2160."
         final_decoded_file="$distorted_decoded"
