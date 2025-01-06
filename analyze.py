@@ -217,7 +217,7 @@ if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
     else:
         json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
         essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
-elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3"]:
+elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3","AVT-VQDB-UHD-1_4"]:
     if original_video == "bigbuck_bunny_8bit.yuv":
         if width_old != '4000' or height_old != '2250':
             json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
