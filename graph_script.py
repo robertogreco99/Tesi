@@ -508,7 +508,7 @@ else:
         plt.savefig(output_file, bbox_inches='tight') 
         plt.close()
     """
-    
+
     for vmaf_model in vmaf_models:
         plt.figure(figsize=(10, 6))
         labels = []

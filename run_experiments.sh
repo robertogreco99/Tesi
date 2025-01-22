@@ -103,15 +103,21 @@ fi
 if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
     if [[ "$original" != "bigbuck_bunny_8bit.yuv" ]]; then
         reference_converted_to_8_bit="$OUTPUT_DIR/${original}_8bit.yuv"
+        reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
         if [[ ! -f "$reference_converted_to_8_bit" ]]; then
-            #ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
-            ffmpeg -s 3840x2160 -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p -y "$reference_converted_to_8_bit"
-            if [[ $? -eq 0 ]]; then  
-                echo "Original Converted to 8bit: $reference_converted_to_8_bit"
-            else
-                echo "Error in converting original to 8bit: $reference_converted_to_8_bit"
-            fi
+            ffmpeg -i "$reference_mkv" -pix_fmt yuv422p  "$reference_converted_to_8_bit"
+           #ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
+        #ffmpeg -s 3840x2160 -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p -y "$reference_converted_to_8_bit"
         fi
+        #if [[ ! -f "$reference_converted_to_8_bit" ]]; then
+        #    #ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
+        #    ffmpeg -s 3840x2160 -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p -y "$reference_converted_to_8_bit"
+        #    if [[ $? -eq 0 ]]; then  
+        #        echo "Original Converted to 8bit: $reference_converted_to_8_bit"
+        #    else
+        #        echo "Error in converting original to 8bit: $reference_converted_to_8_bit"
+        #    fi
+        #fi
     fi
 fi
 
@@ -139,6 +145,31 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
     fi
 fi
 echo "fps conversion done"
+
+#AVT-VQDB-UHD-1_4 has some videos with a different frame rate than the reference. Convert the reference video to 30fps or 15fps
+#echo "fps conversion start"
+#if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
+#    if [[ "$FPS" == 30.0 ]]; then
+#        echo "30 fps conversion"
+#        reference_converted_to_30fps="$OUTPUT_DIR/${original}_30fps.yuv"
+#        #reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
+#        if [[ ! -f "$reference_converted_to_30fps" ]]; then
+#            ffmpeg -r 60 -t 8 "$WIDTH"X"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_30fps"
+#        else
+#            echo "30fps original file already exists: $reference_converted_to_30fps"
+#        fi
+#    elif [[ "$FPS" == 15.0 ]]; then
+#        echo "15 fps conversion"
+#        reference_converted_to_15fps="$OUTPUT_DIR/${original}_15fps.yuv"
+#        #reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
+#        if [[ ! -f "$reference_converted_to_15fps" ]]; then
+#             ffmpeg -r 60 -t 8 "$WIDTH"X"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,4))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_15fps"
+#        else
+#            echo "15fps original file already exists: $reference_converted_to_15fps"
+#        fi
+#    fi
+#fi
+#echo "fps conversion done"
 
 # Print the name of the decoded file
 echo "Decoded file: $distorted_decoded"

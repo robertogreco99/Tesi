@@ -32,7 +32,7 @@ if __name__ == '__main__':
     dataset = config['DATASET']
     image_name = config["IMAGE_NAME"]
     #command=f"podman run --rm -it -v {output_dir}:/results  {image_name} python3 graph_script.py {dataset}"
-    command=f" python3 graph_script.py {output_dir} {dataset}"
+    command=f" python3 graph_script_error.py {output_dir} {dataset}"
 
     
     if command:
