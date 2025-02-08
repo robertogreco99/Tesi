@@ -7,7 +7,7 @@ import sys
 import re
 from scipy.stats import gmean
 
-if len(sys.argv) != 18:
+if len(sys.argv) not in [17, 18]:  
     print("Error, format is : python3 analyze.py <dataset> <width> <height> <bitrate> <video_codec> <model_version> <output_directory> <original_video> <distorted_video> <width_old> <height_old> <fps> <duration> <mos_dir> <essim_params_string> <use_libvmaf> <use_essim>")
     sys.exit(1)
 
@@ -25,9 +25,10 @@ height_old = sys.argv[11]
 fps = sys.argv[12]
 duration = sys.argv[13]
 mos_dir = sys.argv[14]
-essim_params_string = sys.argv[15]
-use_libvmaf = sys.argv[16]
-use_essim = sys.argv[17]
+use_libvmaf = sys.argv[15]
+use_essim = sys.argv[16]
+
+essim_params_string = sys.argv[17] if len(sys.argv) == 18 else ""
 
 mos = -1
 ci = -1
@@ -35,18 +36,20 @@ computed_mos = -1
 
 temporal_pooling_count = 9
 
-essim_params={}
-patterns= ['ws', 'wt', 'mk', 'md']
-for pattern in patterns:
-    match = re.search(rf'{pattern}(\d+)', essim_params_string)
-    if match:
-        essim_params[pattern] = int(match.group(1))
-ws = essim_params['ws']
-wt = essim_params['wt']
-mk = essim_params['mk']
-md = essim_params['md']
+essim_param_string_list = essim_params_string.split(",")
+print(essim_param_string_list)
+#essim_params={}
+#patterns= ['ws', 'wt', 'mk', 'md']
+#for pattern in patterns:
+#    match = re.search(rf'{pattern}(\d+)', essim_params_string)
+#    if match:
+#        essim_params[pattern] = int(match.group(1))
+#ws = essim_params['ws']
+#wt = essim_params['wt']
+#mk = essim_params['mk']
+#md = essim_params['md']
 
-print(f"Distorted_video: {distorted_video}")
+#print(f"Distorted_video: {distorted_video}")
 #print(f"width_old: {width_old}, height_old: {height_old}")
 
 temporal_pooling_values = ['mean', 'harmonic_mean', 'geometric_mean','percentile_50','percentile_5','percentile_95', 'norm_lp1', 'norm_lp2', 'norm_lp3']
@@ -83,9 +86,11 @@ features = ["cambi",
     "vmaf_b_v0.6.3_ci_p95_lo",    
     "vmaf_b_v0.6.3_ci_p95_hi",
     "integer_vif_scale3",
-    "eSSIM",
-    "SSIM",
     ]
+
+essim_features = [ "eSSIM",
+    "SSIM"]
+
 mos_dataset = f"{mos_dir}/Scores{dataset}.json"
 if not os.path.exists(mos_dataset):
     raise FileNotFoundError(f"Mos file '{mos_dataset}' was not found")
@@ -97,7 +102,7 @@ distorted_file_name_no_extension = distorted_video.rsplit(".", 1)[0]
 for score in data_mos["scores"]:
     # if the distorted file is found in the mos files
     if score["PVS"]["PVS_ID"] == distorted_file_name_no_extension:
-        print(score["PVS"]["PVS_ID"])  
+        #print(score["PVS"]["PVS_ID"])  
         #set mos
         mos = score["MOS"]
         # set ci
@@ -118,7 +123,7 @@ csv_filename = f'{output_directory}/{dataset}/combined_results_{dataset}.csv'
 
 # if csv does not exits create with temporal_pooling_count entries
 if not os.path.isfile(csv_filename):
-    print("Csv does not exist")
+    #print("Csv does not exist")
     
     # rows to add
     new_rows = []
@@ -138,10 +143,10 @@ if not os.path.isfile(csv_filename):
             "MOS": mos,
             "CI": ci,
             "Computed_Mos": computed_mos,
-            "Window_size" : ws,
-            "Window_stride" : wt,
-            "SSIM_Minkowski_pooling": mk,
-            "Mode": md,
+            #"Window_size" : ws,
+            #"Window_stride" : wt,
+            #"SSIM_Minkowski_pooling": mk,
+            #"Mode": md,
             "temporal_pooling": temporal_pooling_value
         }
         
@@ -152,20 +157,26 @@ if not os.path.isfile(csv_filename):
         for feature in features:
             row[feature] = ""  
         
+        if essim_param_string_list[0]!= "":
+            for param_string in essim_param_string_list:
+                for essim_feature in essim_features:
+                    col_name = f"{essim_feature}_{param_string.strip()}"
+                    row[col_name] = -1  
+        
         new_rows.append(row)
     
     # create a dataframe from the rows ( one row for temporal pooling) and convert to csv
     new_df = pd.DataFrame(new_rows)
     new_df.to_csv(csv_filename, mode='w', header=True, index=False)
-    print("CSV created")
+    #print("CSV created")
 else:
     # If csv already exists , verify if distorted_video is present
-    print("Csv already exists, check if distorted_video already exists : ")
+    #rint("Csv already exists, check if distorted_video already exists : ")
     
     df_existing = pd.read_csv(csv_filename)
     
     if distorted_video not in df_existing['Distorted_file_name'].values:
-        print(f"{distorted_video} not found in the csv, adds rows")
+        #print(f"{distorted_video} not found in the csv, adds rows")
         #add new rows if it another distorted video
         new_rows = []
         for temporal_pooling_value in temporal_pooling_values:
@@ -184,67 +195,94 @@ else:
                 "MOS": mos,
                 "CI": ci,
                 "Computed_Mos": computed_mos,
-                "Window_size" : ws,
-                "Window_stride" : wt,
-                "SSIM_Minkowski_pooling": mk,
-                "Mode": md,
+                #"Window_size" : ws,
+                #"Window_stride" : wt,
+                #"SSIM_Minkowski_pooling": mk,
+                #"Mode": md,
                 "temporal_pooling": temporal_pooling_value
             }
             
             # Add void columns for models and features
             for model in vmaf_models:
                 row[model] = ""  
-                for feature in features:
-                    row[feature] = ""  
             
+            for feature in features:
+                    row[feature] = ""  
+            if essim_param_string_list[0]!= "":
+                for param_string in essim_param_string_list:
+                    for essim_feature in essim_features:
+                        col_name = f"{essim_feature}_{param_string.strip()}"
+                        if col_name not in df_existing.columns:
+                            df_existing[col_name] = -1  
+                            row[col_name] = -1 
+
             new_rows.append(row)
         
         # Add new rows to already existing dataframe
         new_df = pd.DataFrame(new_rows)
         df_existing = pd.concat([df_existing, new_df], ignore_index=True)
         
+        #fill void with -1
+        for col in df_existing.columns:
+            df_existing[col] = df_existing[col].fillna(-1)
+
         # update csv with new dataframe
         df_existing.to_csv(csv_filename, mode='w', header=True, index=False)
-        print("temporal_pooling_count rows added to csv.")
+        #print("temporal_pooling_count rows added to csv.")
     else:
         print(f"{distorted_video} is already present in the csv")
+        df_existing = pd.read_csv(csv_filename)
+        if essim_param_string_list[0]!= "":
+            for param_string in essim_param_string_list:
+                for essim_feature in essim_features:
+                    col_name = f"{essim_feature}_{param_string.strip()}"
+                    if col_name not in df_existing.columns:
+                        #print(f"Column {col_name} does not exist. Adding to the DataFrame.")
+                        df_existing[col_name] = -1 
+
+            df_existing = df_existing.fillna(-1)   
+            df_existing.to_csv(csv_filename, mode='w', header=True, index=False)
+        #print("Missing columns added to the csv.")
+
+        
+        
+        
 #todo : remove lines here
 if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
     # Create the JSON path name
     if width_old != '1920' or height_old != '1080':
-        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
-        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__resized_{width}x{height}.json'
+        #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}__resized_{width}x{height}.csv'
     else:
-        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
-        essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
+        json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}.json'
+        #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}.csv'
 elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3","AVT-VQDB-UHD-1_4"]:
     if original_video == "bigbuck_bunny_8bit.yuv":
         if width_old != '4000' or height_old != '2250':
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__resized_{width}x{height}.json'
+            #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}__resized_{width}x{height}.csv'
         else:
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}.json'
+            #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}.csv'
     else:
         if width_old != '3840' or height_old != '2160':
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__resized_{width}x{height}.json'
+            #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}__resized_{width}x{height}.csv'
         else:
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}.json'
+            #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}.csv'
 else:
     if dataset in [ "ITS4S" , "AGH_NTIA_Dolby"]:
         if width_old != '1280' or height_old != '720':
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}_resized_{width}x{height}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}_resized_{width}x{height}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__resized_{width}x{height}.json'
+            #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}__resized_{width}x{height}.csv'
         else:
-            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}.json'
-            essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{model_version}__{essim_params_string}.csv'
+            json_filename = f'{output_directory}/{dataset}/vmaf_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}.json'
+            #essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{essim_params_string}.csv'
 
 
 # Print json filename
-print(f"Json file path: {json_filename}")
-
+#print(f"Json file path: {json_filename}")
 
 try:
     with open(json_filename) as f:
@@ -253,7 +291,37 @@ except FileNotFoundError:
     print(f"Error: Json file  '{json_filename}' not found.")
     #sys.exit(1)
 
-print(essim_filename)
+essim_file_names = []
+if essim_param_string_list!=['']:
+    for string_i in essim_param_string_list:
+        if dataset in ["KUGVD", "GamingVideoSet1", "GamingVideoSet2"]:
+            if width_old != '1920' or height_old != '1080':
+                essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}__resized_{width}x{height}.csv'
+            else:
+                essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}.csv'
+        elif dataset in ["AVT-VQDB-UHD-1_1", "AVT-VQDB-UHD-1_2", "AVT-VQDB-UHD-1_3", "AVT-VQDB-UHD-1_4"]:
+            if original_video == "bigbuck_bunny_8bit.yuv":
+                if width_old != '4000' or height_old != '2250':
+                    essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}__resized_{width}x{height}.csv'
+                else:
+                    essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}.csv'
+            else:
+                if width_old != '3840' or height_old != '2160':
+                    essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}__resized_{width}x{height}.csv'
+                else:
+                    essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}.csv'
+        else:
+            if dataset in ["ITS4S", "AGH_NTIA_Dolby"]:
+                if width_old != '1280' or height_old != '720':
+                    essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}__resized_{width}x{height}.csv'
+                else:
+                    essim_filename = f'{output_directory}/{dataset}/essim_results/result__{dataset}__{original_video}__{distorted_video}__{width_old}x{height_old}__{bitrate}__{video_codec}__{fps}__{duration}__{model_version}__{string_i}.csv'
+
+    essim_file_names.append(essim_filename)
+
+#for filename in essim_file_names:
+#    print(filename)
+#print(essim_filename)
 #print(use_essim)
 #print(use_libvmaf)
 
@@ -273,18 +341,46 @@ if (use_libvmaf == "True"):
     # Create a DataFrame for current file's metrics
     dframes = pd.DataFrame(frames_rows)
     
+    
 
 if (use_essim == "True" and use_libvmaf == "True"):
-    essim_dframes = pd.read_csv(essim_filename)
-    # Merge: add essim columns to vmaf columns
-    merged_df = pd.merge(dframes, essim_dframes, on='Frame', how='left')
-    #print(merged_df)
 
+    essim_dframes_list = []
+    for essim_file_name, param_string in zip(essim_file_names, essim_param_string_list):
+        essim_dframes = pd.read_csv(essim_file_name)
+        essim_dframes.columns = essim_dframes.columns.str.strip()
+        essim_dframes.rename(columns={
+        'eSSIM': f'eSSIM_{param_string}',
+        'SSIM': f'SSIM_{param_string}'
+    }, inplace=True)
+        essim_dframes_list.append(essim_dframes)
+
+    merged_df = dframes.copy()
+
+    for essim_df in essim_dframes_list:
+        merged_df = pd.merge(merged_df, essim_df, on='Frame', how='left')
+   
+#to redo 
+if use_essim == "True" and use_libvmaf == "False":
+
+    essim_dframes_list = []
     
-    
-if (use_essim=="True" and use_libvmaf =="False"):
-    essim_dframes = pd.read_csv(essim_filename)
-    
+    for essim_file_name, param_string in zip(essim_file_names, essim_param_string_list):
+        essim_dframes = pd.read_csv(essim_file_name)
+        essim_dframes.columns = essim_dframes.columns.str.strip()
+        essim_dframes.rename(columns={
+            'eSSIM': f'eSSIM_{param_string}',
+            'SSIM': f'SSIM_{param_string}'
+        }, inplace=True)
+        essim_dframes_list.append(essim_dframes)
+
+    merged_essim_df = essim_dframes_list[0]
+
+    for essim_df in essim_dframes_list[1:]:
+        merged_essim_df = pd.merge(merged_essim_df, essim_df, on='Frame', how='left')
+        
+    print(merged_essim_df)
+
 
 
 def calculate_metrics(dataframe_name,column_name):
@@ -345,9 +441,14 @@ if model_version == "vmaf_v0.6.1.json":
         "psnr_hvs_cr",
         "psnr_hvs",
         "integer_vif_scale3",
-        "eSSIM",
-        "SSIM" ,
+        #"eSSIM",
+        #"SSIM" ,
     ]
+    if essim_param_string_list[0]!="":
+        for string in essim_param_string_list:
+            metrics_to_evaluate.append(f"eSSIM_{string}")
+            metrics_to_evaluate.append(f"SSIM_{string}")
+
 elif model_version in ["vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
     metrics_to_evaluate = [
         "vmaf",
@@ -359,12 +460,13 @@ elif model_version in ["vmaf_b_v0.6.3.json", "vmaf_float_b_v0.6.3.json"]:
 else:
     metrics_to_evaluate = ["vmaf"]
 
+
 metrics_results = {}
 for metric in metrics_to_evaluate:
     if use_essim == "True" and use_libvmaf == "True":
         results = calculate_metrics(merged_df,metric)
     elif use_essim =="True" and use_libvmaf =="False":
-        results= calculate_metrics(essim_dframes,metric)
+        results= calculate_metrics(merged_essim_df,metric) #@toredo
     else:
         results= calculate_metrics(dframes,metric)
     if results:
@@ -377,6 +479,8 @@ df_existing = pd.read_csv(csv_filename)
 
 def fill_dataframe(df, model_version, metric, values, start_row, temporal_pooling_count):
     # Fill the column with values for temporal_pooling_count rows starting from start_row
+    values = np.array(values, dtype=np.float64)
+    df[metric] = df[metric].astype(np.float64)
     mean, harmonic_mean, geometric_mean, percentile_50,percentile_5, percentile_95, norm_lp_1, norm_lp_2, norm_lp_3 = values
     df.loc[start_row:start_row + temporal_pooling_count - 1, metric] = [
         mean,
@@ -396,6 +500,7 @@ def process_metrics(df_existing, metrics_results, model_version, temporal_poolin
     # Find the first occurrence of 'distorted_video' in the 'Distorted_file_name' column
     first_occurrence_row = df_existing[df_existing["Distorted_file_name"] == distorted_video].index[0]
     
+ 
     # Loop through each metric in metrics_results
     for metric, values in metrics_results.items():
         if metric == "vmaf":

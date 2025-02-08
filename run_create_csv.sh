@@ -1,5 +1,11 @@
 #!/bin/bash
 
+result_dir="/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result"
+mos_dir="/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Mos"
+dataset="KUGVD"
+use_libvmaf=True
+use_essim=True
+
 # Check if the virtual environment exists
 if [ ! -d "csv_virtual_env" ]; then
     echo "Virtual environment not found. Creating the environment..."
@@ -10,13 +16,13 @@ if [ ! -d "csv_virtual_env" ]; then
     # Install the required packages
     pip install -r requirements.txt
     # Run the script
-    python3 run_analyze_script_simulation.py Json/config.json
+    python3 analyze_results_script.py "$result_dir" "$mos_dir" "$dataset" "$use_libvmaf" "$use_essim" 
     # Deactivate the virtual environment
     deactivate
 else
     echo "Virtual environment exists. Running the script : "
     # If the environment exists, run the script without creating the environment
     source csv_virtual_env/bin/activate
-    python3 run_analyze_script_simulation.py Json/config.json
+    python3 analyze_results_script.py "$result_dir" "$mos_dir" "$dataset" "$use_libvmaf" "$use_essim" 
     deactivate
 fi
