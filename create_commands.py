@@ -4,12 +4,18 @@ import json
 from jsonschema import validate, ValidationError
 import re
 
-def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_video, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf,use_essim,essim_params_string,features_list):
+def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_video, model_version, model_version_list_to_analyze,dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf,use_essim,essim_params_string_list,features_list):
     
     original_video = f'"{original_video}"'
     distorted_video = f'"{distorted_video}"'
     # The features are in a list, and I create a single string where they are joined by a comma (',')
     features = ','.join(features_list)  
+    if essim_params_string != "no_essim":
+        essim_params_string_list = ','.join(essim_params_strings)
+    else:
+        essim_params_string_list = "no_essim"
+        
+    model_version_list = ','.join(model_version_list_to_analyze)
     #commands creation with features if model is vmaf_v0.6.1.json
     if model_version == "vmaf_v0.6.1.json":
         command = f"podman run --rm -it \
@@ -19,7 +25,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
         -v {hash_dir}:/hash \
         -v {mos_dir}:/mos \
         {image_name} \
-        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {essim_params_string} {use_libvmaf} {use_essim}  {features}'"
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {model_version_list} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {essim_params_string_list} {use_libvmaf} {use_essim}  {features}'"
     else:
         command = f"podman run --rm -it\
         -v {input_reference_dir}:/reference \
@@ -28,7 +34,7 @@ def create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, ou
         -v {hash_dir}:/hash \
         -v {mos_dir}:/mos \
         {image_name} \
-        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {essim_params_string} {use_libvmaf} {use_essim}  {""}'"
+        /bin/bash -c './run_experiments.sh /reference /distorted /results /hash /mos {model_version} {model_version_list}  {dataset} {width} {height} {bitrate} {video_codec} {pixel_format} {bit_depth} {fps} {duration} {original_video} {distorted_video} {output_dir} {hash_dir} {mos_dir} {essim_params_string_list} {use_libvmaf} {use_essim}  {""}'"
     return command
 
 if __name__ == '__main__':
@@ -78,18 +84,28 @@ hash_dir = config['HASH_DIR']
 mos_dir = config['MOS_DIR']
 dataset_dir = config['DATASET_DIR']
 original_video = config['ORIGINAL_VIDEO']
-model_version_file = config['MODEL_VERSION']
+model_version_list = config['MODEL_VERSION']
 dataset = config['DATASET']
 features_list = config['FEATURES']
 use_libvmaf = config['USE_LIBVMAF']
 use_essim = config ['USE_ESSIM']
-essim_params =config["ESSIM_PARAMETERS"]
-ws = essim_params["Window_size"]
-wt = essim_params["Window_stride"]
-mink = essim_params["SSIM_Minkowski_pooling"]
-mode = essim_params["Mode"]
-essim_params_string = f"ws{ws}_wt{wt}_mk{mink}_md{mode}"
 
+
+essim_params_list =config["ESSIM_PARAMETERS"]
+essim_params_strings = []
+if not essim_params_list:
+    essim_params_string="no_essim"
+else:
+    for param_string in essim_params_list:
+        ws = param_string["Window_size"]
+        wt = param_string["Window_stride"]
+        mink = param_string["SSIM_Minkowski_pooling"]
+        mode = param_string["Mode"]
+        essim_params_string = f"ws{ws}_wt{wt}_mk{mink}_md{mode}"
+        essim_params_strings.append(essim_params_string)
+
+
+    
 # Create the directories if they do not exist
 os.makedirs(hash_dir, exist_ok=True)
 os.makedirs(mos_dir, exist_ok=True)
@@ -124,12 +140,12 @@ with open(dataset_file, 'r') as f:
 original_without_extension = os.path.splitext(os.path.basename(original_video))[0]
 if dataset == "ITS4S":
     original_without_extension = original_without_extension.replace("_SRC", "")
-    print(original_without_extension)
+    #print(original_without_extension)
 elif dataset == "AGH_NTIA_Dolby":
     original_without_extension = original_without_extension.replace("_original", "") 
 # Removes whitespaces from the string.
 original_without_extension = original_without_extension.strip()
-print(f"Original video name (without extension): {original_without_extension}")
+#print(f"Original video name (without extension): {original_without_extension}")
 
 # Create the regex pattern to match the exact original_without_extension
 # escaping any special characters
@@ -152,7 +168,7 @@ for distorted_file in os.listdir(input_distorted_dir):
         for video in video_metadata["distorted_videos"]:
             if video["file_name"] == distorted_full_name:
                 metadata = video
-                print(f"Metadata found for {distorted_full_name}: {metadata}")  
+                #print(f"Metadata found for {distorted_full_name}: {metadata}")  
                 break
 
         # If the video exists, extract its metadata
@@ -166,26 +182,27 @@ for distorted_file in os.listdir(input_distorted_dir):
             fps = metadata["fps"]
             duration = metadata["duration"]
         
-            print(f"Metadata for {distorted_full_name}:")
-            print(f"Width: {width}, Height: {height}, Bitrate: {bitrate}, Video Codec: {video_codec}, Pixel Format: {pixel_format}, Bit Depth: {bit_depth}, FPS: {fps}, Duration: {duration}")  
+            #print(f"Metadata for {distorted_full_name}:")
+            #print(f"Width: {width}, Height: {height}, Bitrate: {bitrate}, Video Codec: {video_codec}, Pixel Format: {pixel_format}, Bit Depth: {bit_depth}, FPS: {fps}, Duration: {duration}")  
             # where the commands are saved
             output_dataset_dir = os.path.join(output_dir, dataset)
             os.makedirs(output_dataset_dir, exist_ok=True)
             # output file name
             commands_file_name = f"commands_{dataset}.txt"
-            if model_version_file == 'VMAF_ALL':   
+            if model_version_list[0] == 'VMAF_ALL':   
                 for model_version in vmaf_models:
-                    command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf, use_essim, essim_params_string,features_list)
-                    print(f"Generated command: {command}")  
+                    command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version,vmaf_models, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf, use_essim,essim_params_strings,features_list)
+                    #print(f"Generated command: {command}")  
                     with open(os.path.join(output_dataset_dir, commands_file_name), 'a') as f:
                         f.write(command + '\n')
-                        print(f"Command written to {os.path.join(output_dataset_dir, commands_file_name)}")
-            else:  
-                command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version_file, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf, use_essim, essim_params_string, features_list)
-                print(f"Generated command: {command}")  
-                with open(os.path.join(output_dataset_dir, commands_file_name), 'a') as f:
-                    f.write(command + '\n')
-                    print(f"Command written to {os.path.join(output_dataset_dir, commands_file_name)}")
+                        #print(f"Command written to {os.path.join(output_dataset_dir, commands_file_name)}")
+            else: 
+                for model_version in model_version_list:
+                    command = create_vmaf_command(image_name, input_reference_dir, input_distorted_dir, output_dir, hash_dir, mos_dir, original_video, distorted_full_name, model_version,model_version_list, dataset, width, height, bitrate, video_codec, pixel_format, bit_depth, fps, duration, use_libvmaf, use_essim, essim_params_strings, features_list)
+                    #print(f"Generated command: {command}")  
+                    with open(os.path.join(output_dataset_dir, commands_file_name), 'a') as f:
+                        f.write(command + '\n')
+                        #print(f"Command written to {os.path.join(output_dataset_dir, commands_file_name)}")
         else:
             print(f"{distorted_full_name} was not found in the metadata.")
 
