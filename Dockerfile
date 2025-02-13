@@ -2,7 +2,7 @@
 FROM python:3.12-bookworm
 
 # Update packages and install necessary packets
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
     bash=5.2.15-2+b7 \
     build-essential=12.9 \
     meson=1.0.1-5\
