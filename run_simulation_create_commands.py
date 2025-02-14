@@ -42,6 +42,7 @@ if __name__ == '__main__':
         print(f"Error: Schema file '{schema_file_path}' not found.")
         sys.exit(1)
 
+    reference_dir=config['INPUT_REF_DIR']
     output_dir = config['OUTPUT_DIR']
     dataset = config['DATASET']
     simulations_dir=config['SIMULATIONS_DIR']
