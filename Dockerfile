@@ -2,13 +2,13 @@
 FROM python:3.12-bookworm
 
 # Update packages and install necessary packets
-RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     bash=5.2.15-2+b7 \
     build-essential=12.9 \
     meson=1.0.1-5\
     nasm=2.16.01-1\
     yasm=1.3.0-4\
-    git=1:2.39.5-0+deb12u1\
+    git=1:2.39.5-0+deb12u2\
     python3-dev=3.11.2-1+b1\
     gcc=4:12.2.0-3\
     libtool=2.4.7-7~deb12u1\
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgra
     libjpeg-dev=1:2.1.5-2\
     zlib1g-dev=1:1.2.13.dfsg-1\
     linux-headers-amd64\  
-    vim=2:9.0.1378-2\
+    vim=2:9.0.1378-2+deb12u2\
     nano=7.2-1+deb12u1\
     libx264-dev=2:0.164.3095+gitbaee400-3\
     libx265-dev=3.5-2+b1\
@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgra
     libvorbis-dev=1.3.7-1\
     libopus-dev=1.3.1-3\
     libaom-dev=3.6.0-1+deb12u1\
-    xxd=2:9.0.1378-2\
+    xxd=2:9.0.1378-2+deb12u2\
     cmake=3.25.1-1\
     clang-tidy=1:14.0-55.7~deb12u1\
     clang-format=1:14.0-55.7~deb12u1
@@ -55,16 +55,6 @@ RUN curl -L https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n7.0.2.zip -o ffm
     && make install \
     && ldconfig  
 
-#Download the ZIP of the ESSIM Git repository, with the version fixed to a specific commit.
-#RUN curl -L https://github.com/facebookresearch/essim/archive/refs/heads/main.zip -o essim.zip \
-#    && unzip essim.zip \
-#    && mv essim-main /essim \ 
-#    && cd /essim \
-#    #&& git checkout 4131785b1fe2b920af9c698066fde79df76982b8 \
-#    && mkdir build \
-#    && cd build \
-#    && cmake .. -G Ninja \ 
-#    && cmake --build . --parallel
 
 #Download the ZIP of the ESSIM Git repository, with the version fixed to a specific commit.
 RUN curl -L https://github.com/facebookresearch/essim/archive/4131785b1fe2b920af9c698066fde79df76982b8.zip -o essim.zip \
@@ -84,20 +74,10 @@ RUN mkdir -p /reference /distorted /results /hash /mos
 WORKDIR /app
 
 # Copy scripts
-#COPY analyze.py .
+
 COPY run_experiments.sh .
-#COPY Mos/ScoresAVT-VQDB-UHD-1_1.json /mos
-#COPY Mos/ScoresAVT-VQDB-UHD-1_2.json /mos
-#COPY Mos/ScoresAVT-VQDB-UHD-1_3.json /mos
-#COPY Mos/ScoresAVT-VQDB-UHD-1_4.json /mos
-#COPY Mos/ScoresGamingVideoSet1.json /mos
-#COPY Mos/ScoresGamingVideoSet2.json /mos
-#COPY Mos/ScoresKUGVD.json /mos
-#COPY Mos/ScoresITS4S.json /mos
-#COPY Mos/ScoresAGH_NTIA_Dolby.json /mos
-#COPY graph_script.py .
+
 # Make scripts executable
 RUN chmod +x run_experiments.sh 
-#analyze.py graph_script.py
 
 CMD ["/bin/sh"]
