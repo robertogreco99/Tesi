@@ -67,16 +67,40 @@ Example template:
     - If use_essim is set to true: results will be saved in {output_dir}/{dataset}/essim_results.Otherwise, no results will be generated.
 
 4. **Generate Final CSV**  
+
+
+
    ```bash
     chmod +x run_create_csv.sh
-    ./run_create_csv.sh
    ```
+    Set up the following variables in run_create_csv.sh:
+
+    ```bash
+    result_dir=""
+    mos_dir=""
+    dataset=""
+    use_libvmaf="" (true or false)
+    use_essim=""   (true or false)
+    ```
+    Then :
+    ```bash
+    ./run_create_csv.sh
+    ```
    Output= {output_dir}/{dataset}/combined_results_{dataset}.csv
 
 
 5. **Generate Graphs**  
    ```bash
     chmod +x run_create_graphs.sh
-    ./run_create_csv.sh
    ```
+   Set up the following variables in run_create_graphs.sh:
+
+    ```bash
+    output_dir=""
+    dataset=""
+    ```
+    Then :
+    ```bash
+    ./run_create_csv.sh
+    ```
    Graph results in {output_dir}/{dataset}/graph_results
