@@ -2,12 +2,6 @@ import os
 import subprocess
 import sys
 
-#result_dir="/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result"
-#mos_dir="/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Mos"
-#dataset="KUGVD"
-#use_libvmaf=True
-#use_essim=True
-
 if len(sys.argv) < 6:
     print("You need to call like analyze_results_script <result_dir> <mos_dir> <dataset_name> <use_libvmaf> <use_essim> ")
     sys.exit(1)
@@ -101,7 +95,7 @@ for filename in os.listdir(essim_dir):
                     dimensions = os.path.splitext(file_name)[0].split('_')[-1]  
                     width_new, height_new = map(int, dimensions.split('x'))  
                 else:
-                    print(f"File {file_name} non ha sufficienti parti per estrarre width_new e height_new.")
+                    print(f"File {file_name}: format is wrong ")
                     width_new, height_new = width_old, height_old 
             else:
                 width_new, height_new = width_old, height_old
