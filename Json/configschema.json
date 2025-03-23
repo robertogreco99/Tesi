@@ -9,7 +9,7 @@
         "HASH_DIR": { "type": "string" , "description": "The path where the hash files will be saved"},
         "MOS_DIR": { "type": "string" , "description": "The path where MOS description file can be found"},
         "DATASET_DIR": { "type": "string" , "description": "The path where datasets description files can be found"},
-        "SIMULATIONS_DIR": { "type": "string" , "description": "The path where  the original video file list description files can be found"},
+        "REFERENCE_VIDEO_LIST_DIR": { "type": "string" , "description": "The path where the original video file list description files can be found"},
         "JSON_DIR": { "type": "string" , "description": "The path where json config file can be found"},
         "ORIGINAL_VIDEO": { "type": "string", "description": "The video chosen to be analyzed" },
         "MODEL_VERSION": {
@@ -110,7 +110,7 @@
       "uniqueItems": true
     }
   },
-    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR","DATASET_DIR","SIMULATIONS_DIR","JSON_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES","USE_LIBVMAF","USE_ESSIM","ESSIM_PARAMETERS"],
+    "required": ["IMAGE_NAME", "INPUT_REF_DIR", "INPUT_DIST_DIR", "OUTPUT_DIR", "HASH_DIR","MOS_DIR","DATASET_DIR","REFERENCE_VIDEO_LIST_DIR","JSON_DIR", "ORIGINAL_VIDEO", "MODEL_VERSION", "DATASET", "FEATURES","USE_LIBVMAF","USE_ESSIM","ESSIM_PARAMETERS"],
     "dependencies": {
         "FEATURES": {
             "oneOf": [
