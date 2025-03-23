@@ -1,7 +1,7 @@
 #!/bin/bash
 
 output_dir="/home/roberto/Scaricati/Tesi/Lavorosullatesi/Tesi/Result"
-dataset="KUGVD"
+dataset="ITS4S"
 
 # Check if the virtual environment exists
 if [ ! -d "csv_virtual_env" ]; then
