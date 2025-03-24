@@ -68,13 +68,6 @@ for dir in "$INPUT_REFERENCE_DIR" "$INPUT_DISTORTED_DIR" "$OUTPUT_DIR" "$HASH_DI
         exit 1
     fi
 done
-# File where to save the Python commands for analyzing the JSON output from VMAF.
-FILE_COMMANDS="$OUTPUT_DIR/$DATASET/analyzescriptcommands_${DATASET}.txt"
-
-# Create if it does not exist
-#if [ ! -f "$FILE_COMMANDS" ]; then
-#    touch "$FILE_COMMANDS"
-#fi
 
 #Set filenames :
 original="$ORIGINAL_VIDEO"
@@ -108,18 +101,7 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_1" ]]; then
         reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
         if [[ ! -f "$reference_converted_to_8_bit" ]]; then
             ffmpeg -i "$reference_mkv" -pix_fmt yuv422p  "$reference_converted_to_8_bit"
-           #ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
-        #ffmpeg -s 3840x2160 -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p -y "$reference_converted_to_8_bit"
         fi
-        #if [[ ! -f "$reference_converted_to_8_bit" ]]; then
-        #    #ffmpeg -s 3840x2160 -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p "$reference_converted_to_8_bit"
-        #    ffmpeg -s 3840x2160 -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -pix_fmt yuv422p -y "$reference_converted_to_8_bit"
-        #    if [[ $? -eq 0 ]]; then  
-        #        echo "Original Converted to 8bit: $reference_converted_to_8_bit"
-        #    else
-        #        echo "Error in converting original to 8bit: $reference_converted_to_8_bit"
-        #    fi
-        #fi
     fi
 fi
 
@@ -148,30 +130,7 @@ if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
 fi
 echo "fps conversion done"
 
-#AVT-VQDB-UHD-1_4 has some videos with a different frame rate than the reference. Convert the reference video to 30fps or 15fps
-#echo "fps conversion start"
-#if [[ "$DATASET" == "AVT-VQDB-UHD-1_4" ]]; then
-#    if [[ "$FPS" == 30.0 ]]; then
-#        echo "30 fps conversion"
-#        reference_converted_to_30fps="$OUTPUT_DIR/${original}_30fps.yuv"
-#        #reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
-#        if [[ ! -f "$reference_converted_to_30fps" ]]; then
-#            ffmpeg -r 60 -t 8 "$WIDTH"X"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,2))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_30fps"
-#        else
-#            echo "30fps original file already exists: $reference_converted_to_30fps"
-#        fi
-#    elif [[ "$FPS" == 15.0 ]]; then
-#        echo "15 fps conversion"
-#        reference_converted_to_15fps="$OUTPUT_DIR/${original}_15fps.yuv"
-#        #reference_mkv="${INPUT_REFERENCE_DIR}/${original%.*}.mkv"
-#        if [[ ! -f "$reference_converted_to_15fps" ]]; then
-#             ffmpeg -r 60 -t 8 "$WIDTH"X"$HEIGHT" -pix_fmt yuv422p10le -i "$INPUT_REFERENCE_DIR/$original" -vf "select=not(mod(n\,4))" -vsync 0 -strict -1 -pix_fmt yuv422p10le "$reference_converted_to_15fps"
-#        else
-#            echo "15fps original file already exists: $reference_converted_to_15fps"
-#        fi
-#    fi
-#fi
-#echo "fps conversion done"
+
 
 # Print the name of the decoded file
 echo "Decoded file: $distorted_decoded"
@@ -682,8 +641,6 @@ fi
 mkdir -p "$OUTPUT_DIR/${DATASET}/essim_results"
 
 
-#Function to interpret the model string:
-
 
 
 if [[ "$USE_ESSIM" == "True" ]]; then
@@ -833,34 +790,4 @@ fi
 
 
 
-    #RUN PYTHON 
-    #python3 analyze.py {dataset} {width} {height} {bitrate} {video_codec} {model_version}  /results {original_video}'
-#echo "Dataset: $DATASET"
-#echo "Width: $width_new"
-#echo "Height: $height_new"
-#echo "Bitrate: $BITRATE"
-#echo "Video Codec: $VIDEO_CODEC"
-#echo "Model Version: $MODEL_VERSION"
-#echo "Output Directory: $OUTPUT_DIR"
-#echo "MOS Directory: $MOS_DIR"
-#echo "Original Video: $ORIGINAL_VIDEO"
-#echo "Distorted Video : $DISTORTED_VIDEO"
-#echo "Old WIDTH : $width_old"
-#echo "Old HEIGHT : $height_old"
-##echo "FPS : $FPS"
-#echo "Duration : $DURATION"
-##echo "Output Directory server: $OUTPUT_DIR_SERVER"
-##echo "Hash Directory sercer: $HASH_DIR_SERVER"
-#echo "MOS Directory: $MOS_DIR_SERVER"
-#echo "Essim String : $default_essim_string"
-#echo "USE_LIBVMAF : $USE_LIBVMAF"
-#echo "USE_ESSIM : $USE_ESSIM"
-
-#python3 analyze.py "$DATASET" "$width_new" "$height_new" "$BITRATE" "$VIDEO_CODEC" "$MODEL_VERSION" "$OUTPUT_DIR" "$ORIGINAL_VIDEO" "$DISTORTED_VIDEO" "$width_old" "$height_old" "$FPS" "$DURATION" "$MOS_DIR"
-
-# echo "python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR_SERVER\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR_SERVER\" " >> "$FILE_COMMANDS"
-#echo "python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR_SERVER\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR_SERVER\" \"$ESSIM_PARAMS_STRING\" \"$USE_LIBVMAF\" \"$USE_ESSIM\"" >> "$FILE_COMMANDS"
-
-#for essim_params_string in "${essim_params_strings_array[@]}"; do
-#  echo "python3 analyze.py \"$DATASET\" \"$width_new\" \"$height_new\" \"$BITRATE\" \"$VIDEO_CODEC\" \"$MODEL_VERSION\" \"$OUTPUT_DIR_SERVER\" \"$ORIGINAL_VIDEO\" \"$DISTORTED_VIDEO\" \"$width_old\" \"$height_old\" \"$FPS\" \"$DURATION\" \"$MOS_DIR_SERVER\" \"$essim_params_string\" \"$USE_LIBVMAF\" \"$USE_ESSIM\"" >> "$FILE_COMMANDS"
-#done
+   
