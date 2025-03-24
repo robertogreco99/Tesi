@@ -161,7 +161,7 @@ This script performs the following steps:
     - For each file, extracts information from the filename (such as dataset, original video, distorted video, dimensions, bitrate, codec, fps, and model version).
     - Constructs a command to analyze the VMAF results using analyze.py and executes it.
 
-  - Processing eSSIM Results:
+   - Processing eSSIM Results:
 
     Loops through the files in the essim_results directory.
 
