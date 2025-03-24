@@ -360,7 +360,7 @@ if (use_essim == "True" and use_libvmaf == "True"):
     for essim_df in essim_dframes_list:
         merged_df = pd.merge(merged_df, essim_df, on='Frame', how='left')
    
-#to redo 
+
 if use_essim == "True" and use_libvmaf == "False":
 
     essim_dframes_list = []
