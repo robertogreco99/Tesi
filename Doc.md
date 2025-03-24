@@ -276,8 +276,7 @@ The script :
   "reference_videos": [ {
       "id": 1,
       "file_name": "CSGO_30fps_30sec_Part1.yuv"
-    },
-    ...
+    }
   ],
   "distorted_videos": [
     {
@@ -296,7 +295,7 @@ The script :
 }
 ```
 - A JSON file with the Mean Opinion Score (MOS). It is essential that the PVS_ID matches the file_name field of the distorted video in the distorted_videos JSON structure. The MOS file can also include additional fields such as Confidence Intervals (CI).
-````json
+```json
 "scores": [
         {
             "PVS": {
